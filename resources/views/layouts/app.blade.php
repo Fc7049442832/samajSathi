@@ -22,8 +22,7 @@
         <div class="container-xxl" style="height: 10000px;">
             <x-header />
             <x-carousel />
-            <x-searchPartner  />
-            <x-searchPartner />
+            <x-searchPartner  />           
             <x-registration-step />
             <x-ImageCard />
             <div class="row">

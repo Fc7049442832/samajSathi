@@ -42,49 +42,49 @@
             <button type="submit" class="search-button ">Search Partner</button>
         </form>
     </div>
+    <div id="formContainer">
+        <form class="search-form">
+            <div class="form-group">
+                <label for="looking-for">Looking for</label>
+                <select id="looking-for" name="looking-for">
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Mini Age</label>
+                <select name="" id="">
+                    @for ($i = 18; $i <= 45; $i++)
+                        <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
+                </select>
+            </div>
+            <span>To</span>
+            <div class="form-group">
+                <label for="age">Max Age</label>
+                <select name="" id="">
+                    @for ($i = 21; $i <= 50; $i++)
+                        <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="religion">Religion</label>
+                <select id="religion" name="religion">
+                    <option value="any">Any</option>
+                    <option value="hindu">Hindu</option>
+                    <option value="muslim">Muslim</option>
+                    <option value="christian">Christian</option>
+                </select>
+            </div>
+
+            <button type="submit" class="search-button ">Search Partner</button>
+        </form>
+    </div>
 </div>
 
-<div id="formContainer">
-    <form class="search-form">
-        <div class="form-group">
-            <label for="looking-for">Looking for</label>
-            <select id="looking-for" name="looking-for">
-                <option value="female">Female</option>
-                <option value="male">Male</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="age">Mini Age</label>
-            <select name="" id="">
-                @for ($i = 18; $i <= 45; $i++)
-                    <option value="{{ $i }}">{{ $i }}</option>
-                @endfor
-            </select>
-        </div>
-        <span>To</span>
-        <div class="form-group">
-            <label for="age">Max Age</label>
-            <select name="" id="">
-                @for ($i = 21; $i <= 50; $i++)
-                    <option value="{{ $i }}">{{ $i }}</option>
-                @endfor
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="religion">Religion</label>
-            <select id="religion" name="religion">
-                <option value="any">Any</option>
-                <option value="hindu">Hindu</option>
-                <option value="muslim">Muslim</option>
-                <option value="christian">Christian</option>
-            </select>
-        </div>
-
-        <button type="submit" class="search-button ">Search Partner</button>
-    </form>
-</div>
 
 <style>
     /* top form ih header which show on scrolling */
@@ -183,10 +183,12 @@
     }
 
     select {
-      padding: 8px; /* Reduced padding */
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 18px; /* Reduced font size */
+        padding: 8px;
+        /* Reduced padding */
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 18px;
+        /* Reduced font size */
     }
 
     input[type="number"] {
@@ -283,19 +285,17 @@
             formContainer.style.display = 'block';
 
             targetDiv.classList.add('hidden');
-        } 
-        else if(targetRect.top <= 0 && targetRect.bottom <= 0) {
+        } else if (targetRect.top <= 0 && targetRect.bottom <= 0) {
             // Show form and completely hide targetDiv
             formContainer.style.display = 'block';
 
             targetDiv.classList.add('hidden');
-        } 
-        else if (currentScrollPosition < lastScrollPosition) {
+        } else if (currentScrollPosition < lastScrollPosition) {
             // On scroll up, show targetDiv and hide form
             formContainer.style.display = 'none';
 
             targetDiv.classList.remove('hidden');
-        }  
+        }
 
         // Update last scroll position
         lastScrollPosition = currentScrollPosition;
