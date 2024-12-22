@@ -8,22 +8,22 @@
       <div class="carousel-item active">
         <img src="{{ asset('images/couple2.jpeg')}}" class="d-block w-100 carosel-image" alt="...">
         <div class="carousel-caption d-none d-md-block">
-          <h5>First slide label</h5>
-          <p>Some representative placeholder content for the first slide.</p>
+          {{-- <h5>First slide label</h5>
+          <p>Some representative placeholder content for the first slide.</p> --}}
         </div>
       </div>
       <div class="carousel-item">
         <img src="{{ asset('images/couple1.jpg')}}" class="d-block w-100 carosel-image" alt="...">
         <div class="carousel-caption d-none d-md-block">
-          <h5>Second slide label</h5>
-          <p>Some representative placeholder content for the second slide.</p>
+          {{-- <h5>Second slide label</h5>
+          <p>Some representative placeholder content for the second slide.</p> --}}
         </div>
       </div>
       <div class="carousel-item">
         <img src="{{ asset('images/couple3.jpg')}}" class="d-block w-100 carosel-image" alt="...">
         <div class="carousel-caption d-none d-md-block">
-          <h5>Third slide label</h5>
-          <p>Some representative placeholder content for the third slide.</p>
+          {{-- <h5>Third slide label</h5>
+          <p>Some representative placeholder content for the third slide.</p> --}}
         </div>
       </div>
     </div>

@@ -20,6 +20,7 @@
         <div class="container-xxl">
             <x-header />
             <x-carousel />
+            <x-searchPartner />
             <div class="row">
                 @yield('content')
             </div>
