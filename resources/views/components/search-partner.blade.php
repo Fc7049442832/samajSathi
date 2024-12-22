@@ -183,12 +183,10 @@
     }
 
     select {
-        padding: 8px;
-        /* Reduced padding */
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 12px;
-        /* Reduced font size */
+      padding: 8px; /* Reduced padding */
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 18px; /* Reduced font size */
     }
 
     input[type="number"] {
