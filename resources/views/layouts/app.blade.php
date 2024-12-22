@@ -17,10 +17,10 @@
       
     </head>
     <body>
-        <div class="container-xxl">
+        <div class="container-xxl" style="height: 10000px;">
             <x-header />
             <x-carousel />
-            <x-searchPartner />
+            <x-searchPartner  />
             <div class="row">
                 @yield('content')
             </div>

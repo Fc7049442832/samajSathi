@@ -18,3 +18,7 @@ use App\Http\Controllers\SettingController;
 Route::get('/', function () {
     return view('index');
 });
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
