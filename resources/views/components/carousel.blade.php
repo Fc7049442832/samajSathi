@@ -41,7 +41,7 @@
     border-radius: 10% !important;
   } */
    .carosel-image {
-    height: 80vh; /* Default height for PCs or larger screens */
+    height: 70vh; /* Default height for PCs or larger screens */
    }
     /* Optional: Add border radius to the entire carousel container */
 #carouselExampleCaptions {
