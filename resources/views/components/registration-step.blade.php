@@ -3,21 +3,25 @@
     <div class="steps">
       <div class="step">
         <img src=" {{ asset('images/profileCreateLogo.png')}} " alt="Create Profile">
+        <div class="step-no"><span class="stepNo">1</span></div>
         <h3>Create Your Profile</h3>
         <p>Just fill basic details & access the huge database of Brides / Grooms.</p>
       </div>
       <div class="step">
-        <img src="{{ asset('images/profileCreateLogo.png')}}" alt="Set Preference">
+        <img src="{{ asset('images/call.jpg')}}" alt="Set Preference">
+        <div class="step-no"><span class="stepNo">2</span></div>
         <h3>Set Partner Preference</h3>
         <p>Set your Partner Preference & let’s match your requirement with others.</p>
       </div>
       <div class="step">
-        <img src="{{ asset('images/profileCreateLogo.png')}}" alt="Receive Profiles">
+        <img src="{{ asset('images/matching.png')}}" alt="Receive Profiles">
+        <div class="step-no"><span class="stepNo">3</span></div>
         <h3>Receive Matching Profiles</h3>
         <p>Receive matching profiles daily as per your set partner preference.</p>
       </div>
       <div class="step">
-        <img src="{{ asset('images/profileCreateLogo.png')}}" alt="Send Interest">
+        <img src="{{ asset('images/set_partner_per.jpg')}}" alt="Send Interest">
+        <div class="step-no"><span class="stepNo">4</span></div>
         <h3>Send/Receive Interest & Calls</h3>
         <p>Send/receive interest to suitable profiles and connect.</p>
       </div>
@@ -60,6 +64,23 @@
       flex: 1;
       min-width: 150px;
       text-align: center;
+    }
+    .step-no{
+      font-size: 24px;
+      border-radius: 50%;
+      height: 30px;
+      width: 100%;
+      margin-top: -35px;
+      margin-bottom: 35px;
+      text-align: center;
+      align-self: center;
+    }
+    .stepNo{
+      padding: 10px 20px;
+      font-size: 22px;
+      font-weight: 800; 
+      background: #44517e;
+      border-radius: 50%;
     }
 
     .step img {
