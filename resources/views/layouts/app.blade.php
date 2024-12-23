@@ -25,6 +25,7 @@
             <x-searchPartner  />           
             <x-registration-step />
             <x-ImageCard />
+            <x-QuestionsBox />
             <div class="row">
                 @yield('content')
             </div>
