@@ -5,9 +5,11 @@
         </a>
     </div>
     <!-- Link trigger modal -->
-    <a href="#" class="btn btn-primary register-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        Registration Free
-    </a>
+    @guest
+        <a href="#" class="btn btn-primary register-button" data-bs-toggle="modal" data-bs-target="#RegisterModal">
+            Registration Free
+        </a>
+    @endguest
     {{-- <a href="#register" class="">REGISTER FREE</a> --}}
 
     <div class="menu-toggle" onclick="toggleMenu()">
@@ -15,14 +17,18 @@
     </div>
     <nav class="nav-links" id="nav-links">
         <a href="#browse-profiles">Browse Profiles</a>
-        <a href="#login">Member Login <i class="fas fa-user"></i></a>
+        @guest
+            <a href="#" data-bs-toggle="modal" data-bs-target="#LoginModal">
+                Member Login <i class="fas fa-user"></i>
+            </a>
+        @endguest
         <a href="#help">Help <i class="fas fa-caret-down"></i></a>
     </nav>
     
 </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <!-- Registration Modal -->
+  <div class="modal fade" id="RegisterModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -56,6 +62,35 @@
             @enderror
 
             <input type="password" name="password" id="" placeholder="Password (Minmum 5 digit)">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+          </form>
+          {{-- Form End --}}
+      </div>
+    </div>
+  </div>
+   <!-- Login Modal -->
+   <div class="modal fade" id="LoginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Member Login </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            {{-- Form Start --}}
+          <form action="{{route('login.submit')}}" method="post">
+            @csrf
+
+            <input type="email" name="email" id="" placeholder="Email id"  value="{{ old('email') }}"  required>
+            @error('email')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
+
+            <input type="password" name="password" id="" placeholder="Password (Minmum 5 digit)"  value="{{ old('password') }}"  required>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
