@@ -60,5 +60,4 @@
     .accordion-item {
       margin: 0px 0; /* 15px top & bottom, 0px left & right */
     }
-
 </style>

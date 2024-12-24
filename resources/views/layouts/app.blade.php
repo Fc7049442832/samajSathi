@@ -22,7 +22,8 @@
         <div class="container-xxl" style="height: 10000px;">
             <x-header />
             <x-carousel />
-            <x-searchPartner  />           
+            <x-searchPartner  />  
+            <x-showPartner />
             <x-registration-step />
             <x-ImageCard />
             <x-QuestionsBox />

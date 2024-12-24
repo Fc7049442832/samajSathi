@@ -19,6 +19,7 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::post('/register',[HomeController::class, 'ContactStore'])->name('Basic_Contact');
 // Route::get('/', function () {
 //     return view('welcome');
 // });

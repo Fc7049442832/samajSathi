@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->enum('gender', ['male', 'female', 'other'])->nullable();
             $table->date('dob')->nullable();
-            $table->integer('age')->nullable();
             $table->string('profile_image')->nullable();
             $table->text('bio')->nullable();
             $table->enum('marital_status', ['single', 'married', 'divorced', 'widowed'])->nullable();
