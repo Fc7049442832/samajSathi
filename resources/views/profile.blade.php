@@ -45,15 +45,13 @@
 
                             <div class="info-row">
                                 <span>Age</span> <span><b>:</b> <input type="text" id="age" name="age" readonly
-                                        style="color: black;margin:0px;padding:0px"></span>
+                                        ></span>
                                 <span>Special Case</span> <span><b>:</b> Not Specified</span>
                             </div>
 
-                            <div class="info-row">
-                                {{-- <span><label for="dob">Date of Birth:</label>
-                                    <input type="date" id="dob" name="dob" required></span> --}}
+                            <div class="info-row">                                 
                                 <span>Date of Birth</span> <b>:</b><span><input type="date" id="dob" name="dob"
-                                        required style="color: black;padding:0px;margin:0px"
+                                        required
                                         onchange="calculateAge()"></span>
                                 <span>Body Type</span> <span><b>:</b> Not Specified</span>
                             </div>
@@ -182,8 +180,15 @@
             if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
                 age--;
             }
-
+            if(age >=18){
             document.getElementById('age').value = age;
+            }
+            else{                        
+              alert('Minimum age 18 year required!!!');
+              document.getElementById('dob').value = ''; // Clear DOB field
+              document.getElementById('age').value = ''; // Clear Age field
+            }
+
         }
 
         // Function to toggle between div and form
@@ -209,9 +214,6 @@
 @endsection
 
 <style>
-
-  
-
     /* All profile page Css */
     .profile-Container {
         margin: 20px;
@@ -220,6 +222,12 @@
         border-radius: 5px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         position: relative;
+    }
+
+    #age,#dob{
+      color: black;
+      padding:0px;
+      margin:0px;
     }
 
     .profile-Container h5 {
