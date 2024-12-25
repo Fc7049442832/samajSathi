@@ -18,9 +18,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'name', 'age', 'gender', 'email', 'phone',
         'password',
+        'is_verified',
+        'role',
     ];
 
     /**
@@ -42,4 +43,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function partnerPreference()
+    {
+        return $this->hasOne(PartnerPreference::class);
+    }
 }
