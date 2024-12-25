@@ -286,7 +286,10 @@
                     let feet = 30.48;
                     let inch = 2.54;
                     let height_value = (i * feet) + (j * 2.54);
-                    let floor_value = Math.floor(height_value);
+                    let floor_value = height_value.toFixed(2); //for exact value after decimal
+
+                    // let floor_value = Math.floor(height_value); //for floor value after decimal
+
                     opt.value = floor_value;
                     opt.textContent = i + "'" + j + "(" + floor_value + " cm)"
                     heightSelect.appendChild(opt);
