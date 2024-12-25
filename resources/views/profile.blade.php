@@ -105,11 +105,33 @@
                 </div>
                 <div class="info-row">
                     <span>Age</span> <span><b>:</b> 25</span>
-                    <span>Special Case</span> <span><b>:</b> Not Specified</span>
+                    <span>Special Case</span>
+                    <span><b>:</b>
+                       <select name="specialCase" id="">
+                        <option disabled >Not Specified</option>
+                        <option value="None">None</option>
+                        <option value="HIV Positive">HIV Positive</option>
+                        <option value="Mentally Challenged">Mentally Challenged</option>
+                        <option value="Physically Challenged">Physically Challenged</option>
+                        <option value="Other">Other</option>
+                        <option value="Thalassemia Major">Thalassemia Major</option>
+                       </select>  
+                    </span>
                 </div>
                 <div class="info-row">
                     <span>Date of Birth</span> <span><b>:</b> 12-Dec-1999</span>
-                    <span>Body Type</span> <span><b>:</b> Not Specified</span>
+                    <span>Body Type</span>
+                    <span><b>:</b> 
+                      <select name="bodyType" id="">
+                        <option value="Athletic">Athletic</option>
+                        <option value="Thin">Thin</option>
+                        <option value="Slim">Slim</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Slightly Heavy">Slightly Heavy</option>
+                        <option value="Heavy">Heavy</option>
+                        <option value="Prefer Not to Say">Prefer Not to Say</option>
+                      </select>
+                    </span>
                 </div>
                 <div class="info-row">
                     <span>Marital Status</span> 
@@ -123,7 +145,10 @@
                         <option value="Annulled">Annulled</option>
                       </select>
                     </span>
-                    <span>Body Weight</span> <span><b>:</b> Not Specified</span>
+                    <span>Body Weight</span>
+                    <span><b>:</b> 
+                      <input type="number" name="bodyWeight" id="">KG. 
+                    </span>
                 </div>
                 <div class="info-row">
                     <span>Citizenship</span> <span><b>:</b> Not Specified</span>
@@ -139,8 +164,6 @@
               </div>
             </div>
         </form>
-
-
 
       </div>
   

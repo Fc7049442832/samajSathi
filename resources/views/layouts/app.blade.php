@@ -35,12 +35,13 @@
       
     </head>
     <body>
-        <div class="container-xxl" style="height: 10000px;">
+        <div class="container-xxl" style="">
             @if (session('success'))
                 <div id="alert-box" class="alert alert-success">
                     {{ session('success') }}
                 </div>
             @endif
+
             <x-header />
             
             @yield('content')
