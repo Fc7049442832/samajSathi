@@ -45,14 +45,15 @@
                             </div>
 
                             <div class="info-row">
-                                <span>Age</span> <span><b>:</b> <input type="text" id="age" name="age"
-                                        readonly></span>
+                                <span>Age</span> <span><b>:</b> <input type="text" id="age" name="age" readonly
+                                        ></span>
                                 <span>Special Case</span> <span><b>:</b> Not Specified</span>
                             </div>
 
-                            <div class="info-row">
+                            <div class="info-row">                                 
                                 <span>Date of Birth</span> <b>:</b><span><input type="date" id="dob" name="dob"
-                                        required onchange="calculateAge()"></span>
+                                        required
+                                        onchange="calculateAge()"></span>
                                 <span>Body Type</span> <span><b>:</b> Not Specified</span>
                             </div>
 
@@ -73,6 +74,7 @@
 
                             <div class="info-row">
                                 <span>Features</span> <span><b>:</b> Not Specified</span>
+                                <span></span> <span></span>
                             </div>
 
                         </div>
@@ -89,74 +91,137 @@
                             <i class="bi bi-pencil"></i> Cancel
                         </span>
 
-                        <div class="p-3">
-                            <div class="info-content">
-                                <div class="info-row">
-                                    <span>Gender</span>
-                                    <span><b>:</b>
-                                        <select name="gender" id="" class="" valu="">
-                                            <option disabled>Select</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                        </select>
-                                    </span>
-                                    <span>Blood Group</span>
-                                    <span><b>:</b>
-                                        <select name="bloodGroup" id="">
-                                            <option disabled>Not Specified</option>
-                                            <option value="A+">A+</option>
-                                            <option value="A-">A-</option>
-                                            <option value="B+">B+</option>
-                                            <option value="B-">B-</option>
-                                            <option value="AB+">AB+</option>
-                                            <option value="AB-">AB-</option>
-                                            <option value="O+">O+</option>
-                                            <option value="O-">O-</option>
-                                            <option value="">Do Not Know</option>
-                                        </select>
-                                    </span>
-                                </div>
-                                <div class="info-row">
-                                    <span>Age</span> <span><b>:</b> 25</span>
-                                    <span>Special Case</span> <span><b>:</b> Not Specified</span>
-                                </div>
-                                <div class="info-row">
-                                    <span>Date of Birth</span> <span><b>:</b> 12-Dec-1999</span>
-                                    <span>Body Type</span> <span><b>:</b> Not Specified</span>
-                                </div>
-                                <div class="info-row">
-                                    <span>Marital Status</span>
-                                    <span><b>:</b>
-                                        <select name="maritalStatus" id="">
-                                            <option disabled>Select Marital Status</option>
-                                            <option value="Never Married">Never Married</option>
-                                            <option value="Divorced">Divorced</option>
-                                            <option value="Widowed">Widowed</option>
-                                            <option value="Awaiting Divorced">Awaiting Divorced</option>
-                                            <option value="Annulled">Annulled</option>
-                                        </select>
-                                    </span>
-                                    <span>Body Weight</span> <span><b>:</b> Not Specified</span>
-                                </div>
-                                <div class="info-row">
-                                    <span>Citizenship</span> <span><b>:</b> Not Specified</span>
-                                    <span>Immigration Status</span> <span><b>:</b> Not Specified</span>
-                                </div>
-                                <div class="info-row">
-                                    <span>Height</span> <span><b>:</b> 5' 09" (175 cm)</span>
-                                    <span>Complexion</span> <span><b>:</b> Not Specified</span>
-                                </div>
-                                <div class="info-row">
-                                    <span>Features</span> <span><b>:</b> Not Specified</span>
-                                </div>
-                            </div>
-                        </div>
-                </form>
-
-
-
+            <div class="p-3">
+              <div class="info-content">
+                <div class="info-row">
+                    <span>Gender</span> 
+                    <span><b>:</b> 
+                        <select name="gender" id="" class="profile-input" valu="">
+                          <option disabled >Select</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select>
+                    </span>
+                    <span>Blood Group</span>
+                    <span><b>:</b> 
+                      <select name="bloodGroup" id="" class="profile-input">
+                        <option disabled >Not Specified</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="">Do Not Know</option>
+                      </select>
+                    </span>
+                </div>
+                <div class="info-row">
+                  <span>Age</span> <span><b>:</b> <input type="text" id="age" name="age" class="profile-input" placeholder="Auto fill DOB base" readonly></span>
+                    
+                    <span>Special Case</span>
+                    <span><b>:</b>
+                       <select name="specialCase" id="" class="profile-input">
+                        <option disabled >Not Specified</option>
+                        <option value="None">None</option>
+                        <option value="HIV Positive">HIV Positive</option>
+                        <option value="Mentally Challenged">Mentally Challenged</option>
+                        <option value="Physically Challenged">Physically Challenged</option>
+                        <option value="Other">Other</option>
+                        <option value="Thalassemia Major">Thalassemia Major</option>
+                       </select>  
+                    </span>
+                </div>
+                <div class="info-row">
+                  <span>Date of Birth</span> <b>:</b>
+                  <span> <input type="date" id="dob" class="profile-input" name="dob" required
+                    onchange="calculateAge()"></span>
+                    <span>Body Type</span>
+                    <span><b>:</b> 
+                      <select name="bodyType" id="" class="profile-input">
+                        <option value="Athletic">Athletic</option>
+                        <option value="Thin">Thin</option>
+                        <option value="Slim">Slim</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Slightly Heavy">Slightly Heavy</option>
+                        <option value="Heavy">Heavy</option>
+                        <option value="Prefer Not to Say">Prefer Not to Say</option>
+                      </select>
+                    </span>
+                </div>
+                <div class="info-row">
+                    <span>Marital Status</span> 
+                    <span><b>:</b> 
+                      <select name="maritalStatus" id="" class="profile-input">
+                        <option disabled >Select Marital Status</option>
+                        <option value="Never Married">Never Married</option>
+                        <option value="Divorced">Divorced</option>
+                        <option value="Widowed">Widowed</option>
+                        <option value="Awaiting Divorced">Awaiting Divorced</option>
+                        <option value="Annulled">Annulled</option>
+                      </select>
+                    </span>
+                    <span>Body Weight</span>
+                    <span><b>:</b> 
+                      <input type="number" name="bodyWeight" class="profile-input" id="">KG. 
+                    </span>
+                </div>
+                <div class="info-row">
+                    <span>Citizenship</span> <span><b>:</b> Not Specified</span>
+                    <span>Immigration Status</span> 
+                    <span><b>:</b>
+                       <select name="immigrationStatus" class="profile-input" id="">
+                          <option disabled >Select Immigration Status</option>
+                          <option value="Permanent Resident">Permanent Resident</option>
+                          <option value="Exchang visitor">Exchang Visitor</option>
+                          <option value="Temporary Resident">Temporary Resident</option>                        
+                       </select>
+                    </span>
+                </div>
+                <div class="info-row">
+                    <span>Height</span>
+                    <span><b>:</b>
+                      <select name="height" class="profile-input" id="">
+                        <option disabled >Select Height</option>
+                        <option value="Below 120">Below 4'</option>
+                        {{-- loop --}}
+                        <option value="Above 182">Above 6'</option>
+                      </select>
+                    </span>
+                    <span>Complexion</span>
+                    <span><b>:</b>
+                       <select name="complexion" class="profile-input" id="">
+                        <option disabled >Select Complexion</option>
+                        <option value="Fair">Fair</option>
+                        <option value="Wheatish">Wheatish</option>
+                        <option value="Dark">Dark</option>
+                        <option value="Prefer Not to Say">Prefer Not to Say</option>
+                       </select>
+                    </span>
+                </div>
+                <div class="info-row">
+                    <span>Features</span> 
+                    <span><b>:</b>
+                       <select name="features" class="profile-input" id="">
+                        <option value="Prefer not to Say">Prefer not to Say</option>
+                        <option value="Sharp">Sharp</option>
+                        <option value="Handsome">Handsome</option>
+                        <option value="Good Looking">Good Looking</option>
+                        <option value="Average">Average</option>
+                       </select>
+                    </span>
+                    <span></span> <span></span>
+                </div>
+              </div>
             </div>
+        </form>
 
+
+
+      </div>
+  
 
         </div>
     </div>
@@ -226,11 +291,10 @@
         position: relative;
     }
 
-    #age,
-    #dob {
-        color: black;
-        padding: 0px;
-        margin: 0px;
+    #age,#dob{
+      color: black;
+      padding:0px;
+      margin:0px;
     }
 
     .profile-Container h5 {
@@ -312,7 +376,7 @@
 
     .info-row span {
         display: inline-block;
-        width: 45%;
+        width: 100%;
         color: #555;
     }
 
