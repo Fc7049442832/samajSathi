@@ -39,20 +39,20 @@
                     <div class="p-3">
                         <div class="info-content">
                             <div class="info-row">
-                                <span>Gender</span> <span><b>:</b> Male</span>
+                                <span>Gender</span> <span><b>:</b> Male</span><br>
                                 <span>Blood Group</span> <span><b>:</b> Not Specified</span>
+ 
                             </div>
 
                             <div class="info-row">
-                                <span>Age</span> <span><b>:</b> <input type="text" id="age" name="age" readonly
-                                        ></span>
+                                <span>Age</span> <span><b>:</b> <input type="text" id="age" name="age"
+                                        readonly></span>
                                 <span>Special Case</span> <span><b>:</b> Not Specified</span>
                             </div>
 
-                            <div class="info-row">                                 
+                            <div class="info-row">
                                 <span>Date of Birth</span> <b>:</b><span><input type="date" id="dob" name="dob"
-                                        required
-                                        onchange="calculateAge()"></span>
+                                        required onchange="calculateAge()"></span>
                                 <span>Body Type</span> <span><b>:</b> Not Specified</span>
                             </div>
 
@@ -70,12 +70,15 @@
                                 <span>Height</span> <span><b>:</b> 5' 09" (175 cm)</span>
                                 <span>Complexion</span> <span><b>:</b> Not Specified</span>
                             </div>
+
                             <div class="info-row">
                                 <span>Features</span> <span><b>:</b> Not Specified</span>
                             </div>
+
                         </div>
                     </div>
                 </div>
+
                 {{-- Basics information edit form  --}}
                 <form action="" id="edit-info" onsubmit="updateAbout(event)">
                     <div id="basics-info" class="row mt-4 justify-content-between">
@@ -180,13 +183,12 @@
             if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
                 age--;
             }
-            if(age >=18){
-            document.getElementById('age').value = age;
-            }
-            else{                        
-              alert('Minimum age 18 year required!!!');
-              document.getElementById('dob').value = ''; // Clear DOB field
-              document.getElementById('age').value = ''; // Clear Age field
+            if (age >= 18) {
+                document.getElementById('age').value = age;
+            } else {
+                alert('Minimum age 18 year required!!!');
+                document.getElementById('dob').value = ''; // Clear DOB field
+                document.getElementById('age').value = ''; // Clear Age field
             }
 
         }
@@ -224,10 +226,11 @@
         position: relative;
     }
 
-    #age,#dob{
-      color: black;
-      padding:0px;
-      margin:0px;
+    #age,
+    #dob {
+        color: black;
+        padding: 0px;
+        margin: 0px;
     }
 
     .profile-Container h5 {
@@ -297,6 +300,7 @@
 
     .info-content {
         margin-top: 10px;
+
     }
 
     .info-row {
