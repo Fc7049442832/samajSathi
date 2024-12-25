@@ -22,6 +22,6 @@ Route::get('/', function () {
 Route::post('/register',[HomeController::class, 'ContactStore'])->name('Basic_Contact');
 Route::post('/Userlogin', [HomeController::class, 'login'])->name('login.submit');
 Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+
+
+Route::view('profile','profile')->name('profile');

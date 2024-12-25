@@ -17,11 +17,13 @@
     </div>
     <nav class="nav-links" id="nav-links">
         <a href="#browse-profiles">Browse Profiles</a>
-        @guest
+        @if(Auth::check())
+        <a href="#My-profiles">My Profiles</a>
+        @else
             <a href="#" data-bs-toggle="modal" data-bs-target="#LoginModal">
                 Member Login <i class="fas fa-user"></i>
             </a>
-        @endguest
+        @endif
         <a href="#help">Help <i class="fas fa-caret-down"></i></a>
     </nav>
     
@@ -46,7 +48,7 @@
 
             <input type="text" name="age" id="" placeholder="Age (only two digit number)">
 
-            <select name="gender" id="" class="ml-3" style=" ">
+            <select name="gender" id="" class="ml-3 header-select">
                 <option value="male">Male</option>
                 <option value="female">Female</option>
             </select>
@@ -176,7 +178,7 @@
         font-weight: 700;
         font-size: 22px;
     }
-    input, select{
+    input, .header-select{
         width: 90%;
         background: transparent;
         padding: 5px;
