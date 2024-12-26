@@ -14,22 +14,61 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->date('dob')->nullable();
             $table->string('profile_image')->nullable();
-            $table->text('bio')->nullable();
-            $table->enum('marital_status', ['single', 'married', 'divorced', 'widowed'])->nullable();
-            $table->string('religion', 50)->nullable();
-            $table->string('caste', 50)->nullable();
-            $table->string('education', 100)->nullable();
-            $table->string('profession', 100)->nullable();
-            $table->string('income', 50)->nullable();
-            $table->float('height')->nullable();
-            $table->float('weight')->nullable();
-            $table->text('hobbies')->nullable();
-            $table->text('languages')->nullable();
-            $table->string('city', 100)->nullable();
-            $table->string('state', 100)->nullable();
-            $table->string('country', 100)->nullable();
+            
+            // About Me
+            $table->text('about_me')->nullable();
+
+            // Basic Info
+            $table->date('dob')->nullable();
+            $table->string('marital_status')->nullable();
+            $table->string('citizenship')->nullable();
+            $table->string('blood_group')->nullable();
+            $table->string('immigration')->nullable();
+            $table->boolean('special_case')->default(false);
+            $table->string('status')->nullable();
+            $table->string('body_type')->nullable();
+            $table->string('height')->nullable();
+            $table->string('weight')->nullable();
+            $table->string('complexion')->nullable();
+            $table->string('features')->nullable();
+
+            // Lifestyle
+            $table->string('living_situation')->nullable();
+            $table->string('house_ownership')->nullable();
+            $table->string('diet')->nullable();
+            $table->string('drink')->nullable();
+            $table->string('smoke')->nullable();
+
+            // Religious Background
+            $table->string('religion')->nullable();
+            $table->string('caste')->nullable();
+            $table->string('sub_caste')->nullable();
+            $table->string('mother_tongue')->nullable();
+            $table->string('gothra')->nullable();
+
+             // Family Details
+             $table->string('father_status')->nullable();
+             $table->string('mother_status')->nullable();
+             $table->integer('total_sister')->nullable();
+             $table->integer('total_brother')->nullable();
+             $table->string('family_type')->nullable();
+             $table->string('family_values')->nullable();
+             $table->string('family_status')->nullable();
+             $table->string('native_place')->nullable();
+ 
+             // Education
+             $table->string('education')->nullable();
+             $table->string('working_as')->nullable();
+             $table->string('working_with')->nullable();
+             $table->string('income')->nullable();
+
+             // Location of Groom
+            $table->string('country')->nullable();
+            $table->string('state')->nullable();
+            $table->string('city')->nullable();
+            $table->string('postal_code')->nullable();
+
             $table->boolean('is_active')->default(true);
             $table->timestamps();
 
