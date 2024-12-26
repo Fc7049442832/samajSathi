@@ -241,7 +241,7 @@
 
                 {{-- Life Sytle section code start --}}
                  {{-- Default Display --}}
-                <div id="life-style" class="row mt4 justify-content-between">
+                <div id="life-style" class="row mt-3 justify-content-between">
                   <h5 class="col-md-4 col-8 ">
                     Life Style
                   </h5>
@@ -251,23 +251,23 @@
                   <div class="row">
                     <div class="col-md-3 col-6">Living Situation</div>
                     <div class="col-md-3 col-6"><b>:</b>
-                     Living with Family
+                      {{ $user->livingSitustion ?? 'Living with Family' }}
                     </div>
                     <div class="col-md-3 col-6">House Ownership</div>
                     <div class="col-md-3 col-6"><b>:</b>
-                     Rent
+                      {{ $user->houseOwnership ?? 'Rent' }}
                     </div>
                     <div class="col-md-3 col-6">Diet</div>
                     <div class="col-md-3 col-6"><b>:</b>
-                     Vegetarian
+                      {{ $user->diet ?? 'Non-Vegetarian' }}
                     </div>
                     <div class="col-md-3 col-6">Drink</div>
                     <div class="col-md-3 col-6"><b>:</b>
-                     No
+                      {{ $user->drink ?? 'Yes' }}
                     </div>
                     <div class="col-md-3 col-6">Smoke</div>
                     <div class="col-md-3 col-6"><b>:</b>
-                     No
+                      {{ $user->smoke ?? 'Yes' }}
                     </div>
                   </div>
                 </div>
@@ -285,7 +285,7 @@
                   <div class="info-row">
                     <span>Living Situation</span>
                     <span><b>:</b>
-                      <select name="living_situation" class="profile-input" id="">
+                      <select name="living_situation" class="profile-input" id="" valu="{{ $user->living_situation ?? 'Prefer not to Say' }}" >
                         <option value="Prefer not to Say">Prefer not to Say</option>
                         <option value="Living with Family">Living with Family</option>
                         <option value="Living with Friends">Living with Friends</option>
@@ -350,17 +350,455 @@
                 {{-- Life Sytle section code end --}}
 
                 {{-- Religious Background section code start --}}
-                <div id="religious-bg" class="row mt-4 justify-content-between">
+                  {{-- Default display --}}
+                <div id="religious-bg" class="row mt-5 justify-content-between">
                   <h5 class="col-md-4 col-8 ">
                     Religious Background
                   </h5>
                   <span class="edit-icon  col-md-2 col-4" onclick="toggleDivAndForm('religious-bg', 'edit-relgious', true)">
                     <i class="bi bi-pencil"></i> Edit
                   </span>
+                  <div class="row mt-2">
+                    <div class="col-md-3 col-6">
+                      Religion
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <b>:</b> {{ $user->religion ?? 'Not Available' }}
+                    </div>
+                    <div class="col-md-3 col-6">
+                      Gothra / Gothrom
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <b>:</b> {{ $user->religion ?? 'Not Available' }}
+                    </div>
+                    <div class="col-md-3 col-6">
+                      Caste
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <b>:</b> {{ $user->caste ?? 'Not Available' }}
+                    </div>
+                    <div class="col-md-3 col-6">
+                      Mother Tongue
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <b>:</b> {{ $user->motherTongue ?? 'Not Available' }}
+                    </div>
+                    <div class="col-md-3 col-6">
+                      Sub-caste
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <b>:</b> {{ $user->subCaste ?? 'Not Available' }}
+                    </div>
+                  </div>
+                </div>
+                {{-- Religious Background edit form --}}
+                <form action="" method="post" id="edit-relgious">
+                  <h5 class="col-md-4 mt-5 col-6">
+                    Edit Religion Background
+                  </h5>
+                  <span class="edit-icon  col-md-2 col-4" onclick="toggleDivAndForm('religious-bg', 'edit-relgious', false)">
+                    <i class="bi bi-x"></i> Cancel
+                  </span>
+                  @csrf
+                  {{-- Religion --}}
+                  <div class="info-row">
+                    <span>Religion</span>
+                    <span><b>:</b>
+                      <select name="religion" class="profile-input" id="">
+                        <option disabled>Select Religion</option>
+                        <option value="Hindu">Hindu</option>
+                        <option value="Muslim">Muslim</option>
+                        <option value="Christian">Christian</option>
+                        <option value="Sikh">Sikh</option>
+                        <option value="Buddhist">Buddhist</option>
+                        <option value="Jain">Jain</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </span>
+                  </div>
+                  {{-- Caste --}}
+                  <div class="info-row">
+                    <span>Caste</span>
+                    <span><b>:</b>
+                      <input type="text" name="caste" class="profile-input" id="" value="{{ $user->caste ?? 'Caste Name' }}">
+                    </span>
+                  </div>
+                  {{-- Sub Community --}}
+                  <div class="info-row">
+                    <span>Sub Community</span>
+                    <span><b>:</b>
+                      <input type="text" name="subCommunity" class="profile-input" id="" value="{{ $user->subCommunity ?? 'Sub Community' }}">
+                    </span>
+                  </div>
+                  {{-- Mother Tongue --}}
+                  <div class="info-row">
+                    <span>Mother Tongue</span>
+                    <span><b>:</b>
+                      <select name="motherTongue" class="profile-input" id="" value="{{ $user->motherTongue ?? 'Mother Tongue' }}">
+                        <option value="Prefer not to Say">Prefer not to Say</option>
+                        <option value="Hindi">Hindi</option>
+                        <option value="English">English</option>
+                        <option value="Bengali">Bengali</option>
+                        <option value="Gujarati">Gujarati</option>
+                        <option value="Punjabi">Punjabi</option>
+                        <option value="Marathi">Marathi</option>
+                        <option value="Tamil">Tamil</option>
+                        <option value="Telugu">Telugu</option>
+                        <option value="Kannada">Kannada</option>
+                        <option value="Malayalam">Malayalam</option>
+                        <option value="Odia">Odia</option>
+                        <option value="Urdu">Urdu</option>
+                        <option value="Other">Other</option>
+                     </select>
+                    </span>
+                  </div>
+                  {{-- Gothra / Gothram --}}
+                  <div class="info-row">
+                    <span>Gothra / Gothram</span>
+                    <span><b>:</b>
+                      <input type="text" name="gorthra" id="" class="profile-input" value="{{ $user->gorthra ?? 'Gothra / Gothram' }}" \>
+                    </span>
+                  </div>
+                  {{-- form submit button --}}
+                  <div class="mt-2">
+                    <button type="submit" class="btn btn-update">Update</button>
+                    <span class="edit-icon  col-md-2 col-4" onclick="toggleDivAndForm('relgious-bg', 'edit-relgious', false)">
+                      <i class="bi bi-x"></i> Cancel
+                    </span>
+                  </div>
+                </form>
+                {{-- Religious Backgroud section code end --}}
 
+                {{-- Family Details section code start --}}
+                  {{-- Default display --}}
+                <div id="family-info" class="row mt-5 justify-content-between">
+                  <h5 class="col-md-4 col-8 ">
+                    Family Details
+                  </h5>
+                  <span class="edit-icon  col-md-2 col-4" onclick="toggleDivAndForm('family-info', 'edit-family-info', true)">
+                    <i class="bi bi-pencil"></i> Edit
+                  </span>
+                  <div class="row mt-2">
+                    <div class="col-md-3 col-6">
+                      Father's Status :
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <b>:</b> {{ $user->father_status ?? 'Not Specified' }}
+                    </div>
+                    <div class="col-md-3 col-6">
+                      Mother's Status
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <b>:</b> {{ $user->mother_status ?? 'Not Specified' }}
+                    </div>
+                    <div class="col-md-3 col-6">
+                      Family Values
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <b>:</b> {{ $user->family_values ?? 'Not Specified' }}
+                    </div>
+                    <div class="col-md-3 col-6">
+                      Family Type
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <b>:</b> {{ $user->family_type ?? 'Not Specified' }}
+                    </div>
+                    <div class="col-md-3 col-6">
+                      No. of Brothers
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <b>:</b> {{ $user->brothersNo ?? 'Not Specified' }}
+                    </div>
+                    <div class="col-md-3 col-6">
+                      No. of Sisters
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <b>:</b> {{ $user->sistersNo ?? 'Not Specified' }}
+                    </div>
+                    <div class="col-md-3 col-6">
+                      Family Status
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <b>:</b> {{ $user->family_status ?? 'Not Specified' }}
+                    </div>
+                    <div class="col-md-3 col-6">
+                      Native Place
+                    </div>
+                    <div class="col-md-3 col-6">
+                      <b>:</b> {{ $user->native_place ?? 'Not Specified' }}
+                    </div>
+                  </div>
+                </div>
+                {{-- Religious Background edit form --}}
+                <form action="" method="post" id="edit-family-info">
+                  <h5 class="col-md-4 mt-5 col-6">
+                    Edit Family Details
+                  </h5>
+                  <span class="edit-icon  col-md-2 col-4" onclick="toggleDivAndForm('family-info', 'edit-family-info', false)">
+                    <i class="bi bi-x"></i> Cancel
+                  </span>
+                  @csrf
+                  {{-- Father's Status --}}
+                  <div class="info-row">
+                    <span>Father's Status</span>
+                    <span><b>:</b>
+                      <select name="father_status" class="profile-input" id="">
+                        <option value>- Select One -</option>
+                        <option value="Social Service">Social Service</option>
+                        <option value="Business Man"> Business Man</option>
+                        <option value="Working Private">Working Private</option>
+                        <option value="Working Government">Working Government</option>
+                        <option value="Retired">Retired</option>
+                        <option value="Self Employed">Self Employed</option>
+                        <option value="Expired">Expired</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </span>
+                  </div>
+                  {{-- Mother's Status --}}
+                  <div class="info-row">
+                    <span>Mother's Status</span>
+                    <span><b>:</b>
+                      <select name="mother_status" id="" class="profile-input">
+                        <option value>- Select One -</option>
+                        <option value="House Wife">House Wife</option>
+                        <option value="Social Service">Social Service</option>
+                        <option value="Business Man"> Business Man</option>
+                        <option value="Working Private">Working Private</option>
+                        <option value="Working Government">Working Government</option>
+                        <option value="Retired">Retired</option>
+                        <option value="Self Employed">Self Employed</option>
+                        <option value="Expired">Expired</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </span>
+                  </div>
+                  {{-- Family Values --}}
+                  <div class="info-row">
+                    <span>Family Values</span>
+                    <span><b>:</b>
+                        <select name="family_values" id="" class="profile-input" valu="{{ $user->family_values ?? '' }}" >
+                          <option value>- Select One -</option>
+                          <option value="Conservativ">Conservativ</option>
+                          <option value="Moderate">Moderate</option>
+                          <option value="Modern">Modern</option>
+                          <option value="Other">Other</option>
+                        </select>
+                    </span>
+                  </div>
+                  {{-- Family Type --}}
+                  <div class="info-row">
+                    <span>Family Type</span>
+                    <span><b>:</b>
+                      <select name="family_type" class="profile-input" id="" value="{{ $user->family_type ?? '' }}">
+                        <option value>-Select One-</option>
+                        <option value="Joint Family">Joint Family</option>
+                        <option value="Nuclear Family">Nuclear Family</option>
+                        <option value="Single Parent">Single Parent</option>
+                        <option value="Other">Other</option>
+                     </select>
+                    </span>
+                  </div>
+                  {{-- Family Status --}}
+                  <div class="info-row">
+                    <span>Family Status</span>
+                    <span><b>:</b>
+                      <select name="family_status" id="" class="profile-input" value="{{ $user->family_status ?? '' }}">
+                        <option value>- Select One -</option>
+                        <option value="Lower Middle Class">Lower Middle Class</option>
+                        <option value="Middle Class">Middle Class</option>
+                        <option value="Upper Middle Class">Upper Middle Class</option>
+                        <option value="Upper Class">Upper Class</option>
+                      </select>
+                    </span>
+                  </div>
+                  {{-- No of Brother --}}
+                  <div class="info-row">
+                    <span>No. of Brother</span>
+                    <span><b>:</b>
+                      <input type="number" name="no_of_brother" id="" class="profile-input" value="{{ $user->no_of_brother ?? '' }}">
+                    </span>
+                  </div>
+                  {{-- No of Sister --}}
+                  <div class="info-row">
+                    <span>No. of Sister</span>
+                    <span><b>:</b>
+                      <input type="number" name="no_of_sister" id="" class="profile-input
+                      " value="{{ $user->no_of_sister ?? '' }}">
+                    </span>
+                  </div>
+                  {{-- Native Place --}}
+                  <div class="info-row">
+                    <span>Native Place</span>
+                    <span><b>:</b>
+                      <input type="text" name="native_place" id="" class="profile-input" valu
+                      e="{{ $user->native_place ?? '' }}">
+                    </span>
+                  </div>
+                        
+                  {{-- form submit button --}}
+                  <div class="mt-2">
+                    <button type="submit" class="btn btn-update">Update</button>
+                    <span class="edit-icon  col-md-2 col-4" onclick="toggleDivAndForm('family-info', 'edit-family-info', false)">
+                      <i class="bi bi-x"></i> Cancel
+                    </span>
+                  </div>
+                </form>
+                {{-- Family Details section code end --}}
+
+                {{-- Education & Career section code start --}}
+                 {{-- Default Display --}}
+                 <div id="education-info" class="row mt-5 justify-content-between">
+                  <h5 class="col-md-4 col-8 ">
+                    Education & Career
+                  </h5>
+                  <span class="edit-icon  col-md-2 col-4" onclick="toggleDivAndForm('education-info', 'edit-education-info', true)">
+                    <i class="bi bi-pencil"></i> Edit
+                  </span>
+                  <div class="row mt-2">
+                    <div class="col-md-3 col-6">Education</div>
+                    <div class="col-md-3 col-6"><b>:</b>
+                      {{ $user->education ?? 'Not Specified' }}
+                    </div>
+                    <div class="col-md-3 col-6">Working As</div>
+                    <div class="col-md-3 col-6"><b>:</b>
+                      {{ $user->working_as ?? 'Not Specified' }}
+                    </div>
+                    <div class="col-md-3 col-6">Working with</div>
+                    <div class="col-md-3 col-6"><b>:</b>
+                      {{ $user->working_with ?? 'Not Specified' }}
+                    </div>
+                    <div class="col-md-3 col-6">Annual Income</div>
+                    <div class="col-md-3 col-6"><b>:</b>
+                      {{ $user->income ?? 'Not Specified' }}
+                    </div>
+                  </div>
                 </div>
 
-                {{-- Religious Backgroud section code end --}}
+                 {{-- Education & Career edit form --}}
+                <form action="" method="post" id="edit-education-info">
+                  <h5 class="col-md-4  col-5 mt-5">
+                    Edit Education & Career
+                  </h5>
+                  <span class="edit-icon  col-md-2 col-4" onclick="toggleDivAndForm('education-info', 'edit-education-info', false)">
+                    <i class="bi bi-x"></i> Cancel
+                  </span>
+                  @csrf
+                  {{-- Higher Education --}}
+                  <div class="info-row">
+                    <span> Education </span>
+                    <span><b>:</b>
+                      <input type="text" name="education" class="profile-input" id="" placeholder="Example: BA, B.Com, MBA etc." value="{{ $user->education ?? '' }}" >
+                    </span>
+                  </div>
+                  {{-- Working As --}}
+                  <div class="info-row">
+                    <span> Working As </span>
+                    <span><b>:</b>
+                      <input type="text" name="working_as" class="profile-input" id="" value="{{ $user->working_as ?? '' }}" >
+                    </span>
+                  </div>
+                  {{-- Working with --}}
+                  <div class="info-row">
+                    <span> Working with </span>
+                    <span><b>:</b>
+                      <input type="text" name="working_with" class="profile-input" id="" valu
+                      e="{{ $user->working_with ?? '' }}" >
+                    </span>
+                  </div>
+                  {{-- Annual Income --}}
+                  <div class="info-row">
+                    <span> Annual Income </span>
+                    <span><b>:</b>
+                      <input type="text" name="income" class="profile-input" id="" placeholder="Example : 250K " value="{{ $user->income ?? '' }}" >
+                    </span>
+                  </div>
+                  {{-- form submit button --}}
+                  <div class="mt-2">
+                    <button type="submit" class="btn btn-update">Update</button>
+                    <span class="edit-icon  col-md-2 col-4" onclick="toggleDivAndForm('education-info', 'edit-education-info', false)">
+                      <i class="bi bi-x"></i> Cancel
+                    </span>
+                  </div>
+                </form>
+                {{-- Education & Career Section code end --}}
+
+                 {{-- Location of Groom section code start --}}
+                 {{-- Default Display --}}
+                 <div id="education-info" class="row mt-5 justify-content-between">
+                  <h5 class="col-md-4 col-8 ">
+                    Location of Groom
+                  </h5>
+                  <span class="edit-icon  col-md-2 col-4" onclick="toggleDivAndForm('education-info', 'edit-education-info', true)">
+                    <i class="bi bi-pencil"></i> Edit
+                  </span>
+                  <div class="row mt-2">
+                    <div class="col-md-3 col-6">Country</div>
+                    <div class="col-md-3 col-6"><b>:</b>
+                      {{ $user->education ?? 'Not Specified' }}
+                    </div>
+                    <div class="col-md-3 col-6">State</div>
+                    <div class="col-md-3 col-6"><b>:</b>
+                      {{ $user->working_as ?? 'Not Specified' }}
+                    </div>
+                    <div class="col-md-3 col-6">City</div>
+                    <div class="col-md-3 col-6"><b>:</b>
+                      {{ $user->working_with ?? 'Not Specified' }}
+                    </div>
+                    <div class="col-md-3 col-6">Postal Code</div>
+                    <div class="col-md-3 col-6"><b>:</b>
+                      {{ $user->income ?? 'Not Specified' }}
+                    </div>
+                  </div>
+                </div>
+
+                 {{-- Education & Career edit form --}}
+                <form action="" method="post" id="edit-education-info">
+                  <h5 class="col-md-4  col-5 mt-5">
+                    Edit Education & Career
+                  </h5>
+                  <span class="edit-icon  col-md-2 col-4" onclick="toggleDivAndForm('education-info', 'edit-education-info', false)">
+                    <i class="bi bi-x"></i> Cancel
+                  </span>
+                  @csrf
+                  {{-- Higher Education --}}
+                  <div class="info-row">
+                    <span> Education </span>
+                    <span><b>:</b>
+                      <input type="text" name="education" class="profile-input" id="" placeholder="Example: BA, B.Com, MBA etc." value="{{ $user->education ?? '' }}" >
+                    </span>
+                  </div>
+                  {{-- Working As --}}
+                  <div class="info-row">
+                    <span> Working As </span>
+                    <span><b>:</b>
+                      <input type="text" name="working_as" class="profile-input" id="" value="{{ $user->working_as ?? '' }}" >
+                    </span>
+                  </div>
+                  {{-- Working with --}}
+                  <div class="info-row">
+                    <span> Working with </span>
+                    <span><b>:</b>
+                      <input type="text" name="working_with" class="profile-input" id="" valu
+                      e="{{ $user->working_with ?? '' }}" >
+                    </span>
+                  </div>
+                  {{-- Annual Income --}}
+                  <div class="info-row">
+                    <span> Annual Income </span>
+                    <span><b>:</b>
+                      <input type="text" name="income" class="profile-input" id="" placeholder="Example : 250K " value="{{ $user->income ?? '' }}" >
+                    </span>
+                  </div>
+                  {{-- form submit button --}}
+                  <div class="mt-2">
+                    <button type="submit" class="btn btn-update">Update</button>
+                    <span class="edit-icon  col-md-2 col-4" onclick="toggleDivAndForm('education-info', 'edit-education-info', false)">
+                      <i class="bi bi-x"></i> Cancel
+                    </span>
+                  </div>
+                </form>
+                {{-- Location of Groom Section code end --}}
               </div>
 
         
@@ -499,7 +937,7 @@
     }
 
     /* only about field css  start */
-    #edit-about, #edit-info, #edit-style {
+    #edit-about, #edit-info, #edit-style, #edit-relgious, #edit-family-info , #edit-education-info{
         display: none;
     }
 
