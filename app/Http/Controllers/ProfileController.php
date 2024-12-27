@@ -126,6 +126,7 @@ class ProfileController extends Controller
     
     // Update user profile Religious Details
     public function updateReligious(Request $request, $userId){
+       
          // Validate the incoming request data
          $validatedData = $request->validate([
             'religion' => 'nullable|string|max:255',
@@ -134,7 +135,6 @@ class ProfileController extends Controller
             'mother_tongus' => 'nullable|string|max:255',
             'gothra' => 'nullable|string|max:255',
         ]);
-    
         // Find the user details entry by user_id
         $userDetail = Profile::where('user_id', $userId)->first();
     
@@ -146,7 +146,7 @@ class ProfileController extends Controller
         $userDetail->religion = $validatedData['religion'] ?? $userDetail->religion;
         $userDetail->caste = $validatedData['caste'] ?? $userDetail->caste;
         $userDetail->sub_caste = $validatedData['sub_caste'] ?? $userDetail->sub_caste;
-        $userDetail->mother_tongus = $validatedData['mother_tongus'] ?? $userDetail->mother_tongus;
+        $userDetail->mother_tongue = $validatedData['mother_tongus'] ?? $userDetail->mother_tongue;
         $userDetail->gothra = $validatedData['gothra'] ?? $userDetail->gothra;
         $userDetail->save();
         

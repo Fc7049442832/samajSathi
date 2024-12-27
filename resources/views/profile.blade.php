@@ -450,7 +450,7 @@
                 Mother Tongue
               </div>
               <div class="col-md-3 col-6">
-                <b>:</b> {{ $userDetail->mother_tongus ?? 'Not Available' }}
+                <b>:</b> {{ $userDetail->mother_tongue ?? 'Not Available' }}
               </div>
               <div class="col-md-3 col-6">
                 Sub-caste
