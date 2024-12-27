@@ -40,38 +40,69 @@ class ProfileController extends Controller
     
         return redirect()->route('profile')->with('success', 'About Me updated successfully!');
     }
-       
+    // Udate user profile Basics Details
     public function updateBasicInfo(Request $request, $userId)
     {
-        dd($request);
         // Validate the incoming request data
         $validatedData = $request->validate([
+            'age' => 'nullable|numeric',
             'dob' => 'nullable|date',
             'marital_status' => 'nullable|string|max:255',
             'citizenship' => 'nullable|string|max:255',
             'blood_group' => 'nullable|string|max:255',
             'immigration' => 'nullable|string|max:255',
-            'special_case' => 'nullable|boolean',
+            'special_case' => 'nullable|string',
             'status' => 'nullable|string|max:255',
             'body_type' => 'nullable|string|max:255',
             'height' => 'nullable|string|max:255',
             'weight' => 'nullable|string|max:255',
             'complexion' => 'nullable|string|max:255',
-            'features' => 'nullable|string|max:255',
+            'Features' => 'nullable|string|max:255',
         ]);
-    
+
         // Find the user details entry by user_id
         $userDetail = Profile::where('user_id', $userId)->first();
-    
+
         if (!$userDetail) {
             return response()->json(['error' => 'User details not found.'], 404);
         }
-    
+
+        // Check if the user exists
+        $user = User::where('id', $userId)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found.'], 404);
+        }
+        if($user->age != $validatedData['age']){
+            $user->age =  $validatedData['age']; // Update the age column in the user table
+            $user->save();
+        } 
+
+        // Update the age if it has changed
+        if ($user->age !== $request->age) {
+            $user->age = $request->age;
+            $user->save();
+        }
+
         // Update the user details
-        $userDetail->update($validatedData);
-    
-        return response()->json(['message' => 'Basic information updated successfully.', 'data' => $userDetail]);
+        $userDetail->dob = $validatedData['dob'] ?? $userDetail->dob;
+        $userDetail->marital_status = $validatedData['marital_status'] ?? $userDetail->marital_status;
+        $userDetail->citizenship = $validatedData['citizenship'] ?? $userDetail->citizenship;
+        $userDetail->blood_group = $validatedData['blood_group'] ?? $userDetail->blood_group;
+        $userDetail->immigration = $validatedData['immigration'] ?? $userDetail->immigration;
+        $userDetail->special_case = $validatedData['special_case'] ?? $userDetail->special_case;
+        $userDetail->status = $validatedData['status'] ?? $userDetail->status;
+        $userDetail->body_type = $validatedData['body_type'] ?? $userDetail->body_type;
+        $userDetail->height = $validatedData['height'] ?? $userDetail->height;
+        $userDetail->weight = $validatedData['weight'] ?? $userDetail->weight;
+        $userDetail->complexion = $validatedData['complexion'] ?? $userDetail->complexion;
+        $userDetail->Features = $validatedData['Features'] ?? $userDetail->Features;
+
+        $userDetail->save();
+
+        return redirect()->back()->with('success', 'Basic Details updated successfully!');
     }
+
     // Update user profile Life Style Details 
     public function updateLifeStyle(Request $request, $userId)
     {
@@ -93,14 +124,14 @@ class ProfileController extends Controller
         return redirect()->back()->with('success', 'Life Style updated successfully!');
     }
     
-
+    // Update user profile Religious Details
     public function updateReligious(Request $request, $userId){
          // Validate the incoming request data
          $validatedData = $request->validate([
             'religion' => 'nullable|string|max:255',
             'caste' => 'nullable|string|max:255',
             'sub_caste' => 'nullable|string|max:255',
-            'mother_tongue' => 'nullable|string|max:255',
+            'mother_tongus' => 'nullable|string|max:255',
             'gothra' => 'nullable|string|max:255',
         ]);
     
@@ -112,11 +143,17 @@ class ProfileController extends Controller
         }
     
         // Update the user details
-        $userDetail->update($validatedData);
-    
-        return response()->json(['message' => 'Basic information updated successfully.', 'data' => $userDetail]);
+        $userDetail->religion = $validatedData['religion'] ?? $userDetail->religion;
+        $userDetail->caste = $validatedData['caste'] ?? $userDetail->caste;
+        $userDetail->sub_caste = $validatedData['sub_caste'] ?? $userDetail->sub_caste;
+        $userDetail->mother_tongus = $validatedData['mother_tongus'] ?? $userDetail->mother_tongus;
+        $userDetail->gothra = $validatedData['gothra'] ?? $userDetail->gothra;
+        $userDetail->save();
+        
+        return redirect()->back()->with('success', 'Religious Details updated successfully!');
     }
-
+    
+    
     public function updateFamilyInfo(Request $request, $userId){
          // Validate the incoming request data
          $validatedData = $request->validate([

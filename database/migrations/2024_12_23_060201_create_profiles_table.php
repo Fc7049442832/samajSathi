@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('citizenship')->nullable();
             $table->string('blood_group')->nullable();
             $table->string('immigration')->nullable();
-            $table->boolean('special_case')->default(false);
+            $table->string('special_case')->nullable();
             $table->string('status')->nullable();
             $table->string('body_type')->nullable();
             $table->string('height')->nullable();

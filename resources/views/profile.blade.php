@@ -6,6 +6,16 @@
   
   <hr>
   <div class="col-md-8">
+       {{-- error display --}}
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
       <div class="profile-Container">
           {{-- About Me Section code start --}}
           <!-- Default Display -->
@@ -50,26 +60,25 @@
 
               <div class="info-content">
                   <div class="row justify-content-start">
-                      <div class="col-md-3 col-6">Gender</div> <div class="col-md-3 col-6"><b>:</b> Male</div>
-                      <div class="col-md-3 col-6">Blood Group</div> <div class="col-md-3 col-6"><b>:</b> Not Specified</div>
+                      <div class="col-md-3 col-6">Gender</div> <div class="col-md-3 col-6"><b>:</b> {{ $user->gender }} </div>
+                      <div class="col-md-3 col-6">Blood Group</div> <div class="col-md-3 col-6"><b>:</b> {{ $userDetail->blood_group }} </div>
                  
-                      <div class="col-md-3 col-6">Age</div> <div class="col-md-3 col-6"><b>:</b> 25</div>
-                      <div class="col-md-3 col-6">Special Case</div> <div class="col-md-3 col-6"><b>:</b> Not Specified</div>
+                      <div class="col-md-3 col-6">Age</div> <div class="col-md-3 col-6"><b>:</b> {{ $user->age }} </div>
+                      <div class="col-md-3 col-6">Special Case</div> <div class="col-md-3 col-6"><b>:</b> {{ $userDetail->special_case ??'Not Specified' }} </div>
                                                 
-                      <div class="col-md-3 col-6">Date of Birth</div> <div class="col-md-3 col-6"><b>:</b> 12-Dec-1999</div>
-                      <div class="col-md-3 col-6">Body Type</div> <div class="col-md-3 col-6"><b>:</b> Not Specified</div>
+                      <div class="col-md-3 col-6">Date of Birth</div> <div class="col-md-3 col-6"><b>:</b> {{ $userDetail->dob ? \Carbon\Carbon::parse($userDetail->dob)->format('d-m-Y') : 'dd-mm-yy' }} </div>
+                      <div class="col-md-3 col-6">Body Type</div> <div class="col-md-3 col-6"><b>:</b> {{ $userDetail->body_type ?? 'Not Specified' }} </div>
                   
-                      <div class="col-md-3 col-6">Marital Status</div> <div class="col-md-3 col-6"><b>:</b> Never Married</div>
-                      <div class="col-md-3 col-6">Body Weight</div> <div class="col-md-3 col-6"><b>:</b> Not Specified</div>
+                      <div class="col-md-3 col-6">Marital Status</div> <div class="col-md-3 col-6"><b>:</b> {{ $userDetail->marital_status ?? 'Never Married' }}</div>
+                      <div class="col-md-3 col-6">Body Weight</div> <div class="col-md-3 col-6"><b>:</b> {{ $userDetail->weight ?? 'Not Specified' }} </div>
                  
-                      <div class="col-md-3 col-6">Citizenship</div> <div class="col-md-3 col-6"><b>:</b> Not Specified</div>
-                      <div class="col-md-3 col-6">Immigration Status</div> <div class="col-md-3 col-6"><b>:</b> Not Specified</div>
+                      <div class="col-md-3 col-6">Citizenship</div> <div class="col-md-3 col-6"><b>:</b> {{ $userDetail->citizenship ?? 'Indian' }}</div>
+                      <div class="col-md-3 col-6">Immigration Status</div> <div class="col-md-3 col-6"><b>:</b> {{ $userDetail->immigration ?? 'Not Specified' }}</div>
                   
-                      <div class="col-md-3 col-6">Height</div> <div class="col-md-3 col-6"><b>:</b> 5' 09" (175 cm)</div>
-                      <div class="col-md-3 col-6">Complexion</div> <div class="col-md-3 col-6"><b>:</b> Not Specified</div>
+                      <div class="col-md-3 col-6">Height</div> <div class="col-md-3 col-6"><b>:</b> {{ $userDetail->height ?? 'Not Specified' }}</div>
+                      <div class="col-md-3 col-6">Complexion</div> <div class="col-md-3 col-6"><b>:</b> {{ $userDetail->complexion ?? 'Not Specified' }}</div>
                   
-                      <div class="col-md-3 col-6">Features</div> <div class="col-md-3 col-6"><b>:</b> Not Specified</div>
-                      
+                      <div class="col-md-3 col-6">Features</div> <div class="col-md-3 col-6"><b>:</b> {{ $userDetail->features ?? 'Not Specified' }}</div>  
                   </div>
               </div>
           </div>
@@ -80,7 +89,6 @@
             <div id="basics-info" class="row mt-4 justify-content-between">
                 <h5 class="col-md-4 col-5">Edit Basics Information</h5>
             </div>
-        
             <div class="p-3">
                 <div class="info-content">
                     <!-- Gender -->
@@ -102,24 +110,18 @@
                             <select name="blood_group" class="profile-input">
                                 <option disabled>Not Specified</option>
                                 @foreach(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'] as $bloodGroup)
-                                    <option value="{{ $bloodGroup }}" {{ old('blood_group', $userDetails->blood_group ?? '') == $bloodGroup ? 'selected' : '' }}>
+                                    <option value="{{ $bloodGroup }}" {{ old('blood_group', $userDetail->blood_group ?? '') == $bloodGroup ? 'selected' : '' }}>
                                         {{ $bloodGroup }}
                                     </option>
                                 @endforeach
-                                <option value="" {{ old('blood_group', $userDetails->blood_group ?? '') == '' ? 'selected' : '' }}>Do Not Know</option>
+                                <option value="" {{ old('blood_group', $userDetail->blood_group ?? '') == '' ? 'selected' : '' }}>Do Not Know</option>
                             </select>
                         </span>
                     </div>
         
                     <!-- Age -->
-                    <div class="info-row">
-                        <span>Age</span>
-                        <span><b>:</b>
-                            <input type="text" id="age" name="age" class="profile-input" placeholder="Auto fill DOB base" readonly
-                                   value="{{ old('age', $userDetails->age ?? $user->age ) }}">
-                        </span>
-                    </div>
-        
+                    <input type="hidden"  id="age" name="age" class="profile-input" placeholder="Auto fill DOB base" readonly
+                                   value="{{ old('age', $userDetail->age ) }}">
                     <!-- Special Case -->
                     <div class="info-row">
                         <span>Special Case</span>
@@ -127,7 +129,7 @@
                             <select name="special_case" class="profile-input">
                                 <option disabled>Not Specified</option>
                                 @foreach(['None', 'HIV Positive', 'Mentally Challenged', 'Physically Challenged', 'Other', 'Thalassemia Major'] as $case)
-                                    <option value="{{ $case }}" {{ old('special_case', $userDetails->special_case ?? '') == $case ? 'selected' : '' }}>
+                                    <option value="{{ $case }}" {{ old('special_case', $userDetail->special_case ?? '') == $case ? 'selected' : '' }}>
                                         {{ $case }}
                                     </option>
                                 @endforeach
@@ -139,8 +141,8 @@
                     <div class="info-row">
                         <span>Date of Birth</span><b>:</b>
                         <span>
-                            <input type="date" id="dob" class="profile-input" name="dob" required
-                                   value="{{ old('dob', $userDetails->dob ?? '') }}" onchange="calculateAge()">
+                            <input type="date" id="dob" class="profile-input" name="dob" required style="color: #333"
+                                   value="{{ old('dob', $userDetail->dob ?? '') }}" onchange="calculateAge()">
                         </span>
                     </div>
         
@@ -150,7 +152,7 @@
                         <span><b>:</b>
                             <select name="body_type" class="profile-input">
                                 @foreach(['Athletic', 'Thin', 'Slim', 'Medium', 'Slightly Heavy', 'Heavy', 'Prefer Not to Say'] as $type)
-                                    <option value="{{ $type }}" {{ old('body_type', $userDetails->body_type ?? '') == $type ? 'selected' : '' }}>
+                                    <option value="{{ $type }}" {{ old('body_type', $userDetail->body_type ?? '') == $type ? 'selected' : '' }}>
                                         {{ $type }}
                                     </option>
                                 @endforeach
@@ -165,15 +167,115 @@
                             <select name="marital_status" class="profile-input">
                                 <option disabled>Select Marital Status</option>
                                 @foreach(['Never Married', 'Divorced', 'Widowed', 'Awaiting Divorced', 'Annulled'] as $status)
-                                    <option value="{{ $status }}" {{ old('marital_status', $userDetails->marital_status ?? '') == $status ? 'selected' : '' }}>
+                                    <option value="{{ $status }}" {{ old('marital_status', $userDetail->marital_status ?? '') == $status ? 'selected' : '' }}>
                                         {{ $status }}
                                     </option>
                                 @endforeach
                             </select>
                         </span>
                     </div>
-        
-                    <!-- Repeat for fields like Body Weight, Citizenship, Immigration Status, etc. -->
+
+                    <!-- Body Weight -->
+                    <div class="info-row">
+                      <span>Body Weight</span>
+                      <span><b>:</b>
+                          <select name="weight" class="profile-input">
+                              @foreach(['Underweight', 'Normal', 'Overweight', 'Obese', 'Prefer Not to Say'] as $weight)
+                                  <option value="{{ $weight }}" {{ old('body_weight', $userDetails->body_weight ?? '') == $weight ? 'selected' : '' }}>
+                                      {{ $weight }}
+                                  </option>
+                              @endforeach
+                          </select>
+                      </span>
+                    </div>
+
+                    <!-- Citizenship -->
+                    <div class="info-row">
+                      <span>Citizenship</span>
+                      <span><b>:</b>
+                          <select name="citizenship" class="profile-input">
+                              @foreach(['Citizen', 'Permanent Resident', 'Work Permit', 'Student Visa', 'Other'] as $citizen)
+                                  <option value="{{ $citizen }}" {{ old('citizenship', $userDetails->citizenship ?? '') == $citizen ? 'selected' : '' }}>
+                                      {{ $citizen }}
+                                  </option>
+                              @endforeach
+                          </select>
+                      </span>
+                    </div>
+
+                    {{-- Height --}}
+                    <div class="info-row">
+                      <span>Height</span>
+                      <span><b>:</b>
+                          <select name="height" class="profile-input">
+                              @foreach([
+                                "Below 4' 9\"(145 cm)"=> 145, 
+                                  "4' 10\" (147 cm)" => 147,
+                                  "4' 11\" (150 cm)" => 150,
+                                  "5' 0\" (152 cm)" => 152,
+                                  "5' 1\" (155 cm)" => 155,
+                                  "5' 2\" (157 cm)" => 157,
+                                  "5' 3\" (160 cm)" => 160,
+                                  "5' 4\" (163 cm)" => 163,
+                                  "5' 5\" (165 cm)" => 165,
+                                  "5' 6\" (168 cm)" => 168,
+                                  "5' 7\" (170 cm)" => 170,
+                                  "5' 8\" (173 cm)" => 173,
+                                  "5' 9\" (175 cm)" => 175,
+                                  "5' 10\" (178 cm)" => 178,
+                                  "5' 11\" (180 cm)" => 180,
+                                  "6' 0\" (183 cm)" => 183,
+                                   "Above 6 ' (183 cm)"=>185,
+                              ] as $text => $cm)
+                                  <option value="{{ $text }}" {{ old('height', $userDetail->height ?? '') == $text ? 'selected' : '' }}>
+                                      {{ $text }}
+                                  </option>
+                              @endforeach
+                          </select>
+                      </span>
+                    </div>
+              
+                    <!-- Complexion -->
+                    <div class="info-row">
+                      <span>Complexion</span>
+                      <span><b>:</b>
+                          <select name="complexion" class="profile-input">
+                              @foreach(['Fair', 'Wheatish', 'Dark', 'Prefer Not to Say'] as $complexion)
+                                  <option value="{{ $complexion }}" {{ old('complexion', $userDetail->complexion ?? '') == $complexion ? 'selected' : '' }}>
+                                      {{ $complexion }}
+                                  </option>
+                              @endforeach
+                          </select>
+                      </span>
+                    </div>
+
+                    <!-- Features -->
+                    <div class="info-row">
+                      <span>Features</span>
+                      <span><b>:</b>
+                          <select name="Features" class="profile-input">
+                              @foreach(['Sharp', 'Average', 'Unique', 'Prefer Not to Say'] as $features)
+                                  <option value="{{ $features }}" {{ old('features', $userDetail->features ?? '') == $features ? 'selected' : '' }}>
+                                      {{ $features }}
+                                  </option>
+                              @endforeach
+                          </select>
+                      </span>
+                    </div>
+
+                    <!-- Immigration Status -->
+                    <div class="info-row">
+                      <span>Immigration Status</span>
+                      <span><b>:</b>
+                          <select name="immigration" class="profile-input">
+                              @foreach(['Citizen', 'Permanent Resident', 'Work Permit', 'Student Visa', 'Other'] as $immigration)
+                                  <option value="{{ $immigration }}" {{ old('immigration_status', $userDetail->immigration_status ?? '') == $immigration ? 'selected' : '' }}>
+                                      {{ $immigration }}
+                                  </option>
+                              @endforeach
+                          </select>
+                      </span>
+                    </div>
                 </div>
             </div>
             <!-- Submit and Cancel -->
@@ -330,36 +432,37 @@
                 Religion
               </div>
               <div class="col-md-3 col-6">
-                <b>:</b> {{ $user->religion ?? 'Not Available' }}
+                <b>:</b> {{ $userDetail->religion ?? 'Not Available' }}
               </div>
               <div class="col-md-3 col-6">
                 Gothra / Gothrom
               </div>
               <div class="col-md-3 col-6">
-                <b>:</b> {{ $user->religion ?? 'Not Available' }}
+                <b>:</b> {{ $userDetail->gothra ?? 'Not Available' }}
               </div>
               <div class="col-md-3 col-6">
                 Caste
               </div>
               <div class="col-md-3 col-6">
-                <b>:</b> {{ $user->caste ?? 'Not Available' }}
+                <b>:</b> {{ $userDetail->caste ?? 'Not Available' }}
               </div>
               <div class="col-md-3 col-6">
                 Mother Tongue
               </div>
               <div class="col-md-3 col-6">
-                <b>:</b> {{ $user->motherTongue ?? 'Not Available' }}
+                <b>:</b> {{ $userDetail->mother_tongus ?? 'Not Available' }}
               </div>
               <div class="col-md-3 col-6">
                 Sub-caste
               </div>
               <div class="col-md-3 col-6">
-                <b>:</b> {{ $user->subCaste ?? 'Not Available' }}
+                <b>:</b> {{ $userDetail->sub_caste ?? 'Not Available' }}
               </div>
             </div>
           </div>
           {{-- Religious Background edit form --}}
-          <form action="" method="post" id="edit-relgious">
+          <form action="{{ route('update-religious-bg', $userDetail->user_id) }} " method="post" id="edit-relgious">
+            @csrf
             <h5 class="col-md-4 mt-5 col-6">
               Edit Religion Background
             </h5>
@@ -387,21 +490,21 @@
             <div class="info-row">
               <span>Caste</span>
               <span><b>:</b>
-                <input type="text" name="caste" class="profile-input" id="" value="{{ $user->caste ?? 'Caste Name' }}">
+                <input type="text" name="caste" class="profile-input" id="" value="{{ $userDetail->caste ?? 'Caste Name' }}">
               </span>
             </div>
             {{-- Sub Community --}}
             <div class="info-row">
-              <span>Sub Community</span>
+              <span>Sub Coste</span>
               <span><b>:</b>
-                <input type="text" name="subCommunity" class="profile-input" id="" value="{{ $user->subCommunity ?? 'Sub Community' }}">
+                <input type="text" name="sub_caste" class="profile-input" id="" value="{{ $userDetail->subCommunity ?? 'Sub Community' }}">
               </span>
             </div>
             {{-- Mother Tongue --}}
             <div class="info-row">
               <span>Mother Tongue</span>
               <span><b>:</b>
-                <select name="motherTongue" class="profile-input" id="" value="{{ $user->motherTongue ?? 'Mother Tongue' }}">
+                <select name="mother_tongus" class="profile-input" id="" value="{{ $userDetail->mother_tongus ?? 'Mother Tongue' }}">
                   <option value="Prefer not to Say">Prefer not to Say</option>
                   <option value="Hindi">Hindi</option>
                   <option value="English">English</option>
@@ -423,7 +526,7 @@
             <div class="info-row">
               <span>Gothra / Gothram</span>
               <span><b>:</b>
-                <input type="text" name="gorthra" id="" class="profile-input" value="{{ $user->gorthra ?? 'Gothra / Gothram' }}" \>
+                <input type="text" name="gorthra" id="" class="profile-input" value="{{ $userDetail->gorthra ?? 'Gothra / Gothram' }}" \>
               </span>
             </div>
             {{-- form submit button --}}
@@ -1052,6 +1155,7 @@
       font-size: 14px;
       background: #f7f7f7;
       border-radius:5px;
+      color:black;
     }
     .profile-input option{
       background: #f3f2f2;

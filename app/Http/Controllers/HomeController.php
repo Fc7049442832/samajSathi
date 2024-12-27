@@ -19,7 +19,7 @@ class HomeController extends Controller
             'gender' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'phone' => 'required|numeric',
-            'password' => 'required|min:8',
+            'password' => 'required|min:5',
         ]);
     
         // Encrypt the password
@@ -37,9 +37,9 @@ class HomeController extends Controller
         Auth::login($user);
     
         // Redirect with success message
-        return route('home')
-            ->with('success', 'User created and logged in successfully')
-            ->with('user', $user);
+            return redirect()->route('home')
+        ->with('success', 'User created and logged in successfully')
+        ->with('user', $user);
     }
     
     public function login(Request $request)
