@@ -153,8 +153,9 @@ class ProfileController extends Controller
         return redirect()->back()->with('success', 'Religious Details updated successfully!');
     }
     
-    
+    // update user profile Family Details successfully
     public function updateFamilyInfo(Request $request, $userId){
+       
          // Validate the incoming request data
          $validatedData = $request->validate([
             'father_status' => 'nullable|string|max:255',
@@ -176,8 +177,8 @@ class ProfileController extends Controller
     
         // Update the user details
         $userDetail->update($validatedData);
-    
-        return response()->json(['message' => 'Basic information updated successfully.', 'data' => $userDetail]);
+        return redirect()->back()->with('success', 'Family Details updated successfully!');
+        //return response()->json(['message' => 'Basic information updated successfully.', 'data' => $userDetail]);
     }
 
     public function updateEducation(Request $request, $userId){

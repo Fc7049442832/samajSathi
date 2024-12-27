@@ -553,54 +553,54 @@
                 Father's Status :
               </div>
               <div class="col-md-3 col-6">
-                <b>:</b> {{ $user->father_status ?? 'Not Specified' }}
+                <b>:</b> {{ $userDetail->father_status ?? 'Not Specified' }}
               </div>
               <div class="col-md-3 col-6">
                 Mother's Status
               </div>
               <div class="col-md-3 col-6">
-                <b>:</b> {{ $user->mother_status ?? 'Not Specified' }}
+                <b>:</b> {{ $userDetail->mother_status ?? 'Not Specified' }}
               </div>
               <div class="col-md-3 col-6">
                 Family Values
               </div>
               <div class="col-md-3 col-6">
-                <b>:</b> {{ $user->family_values ?? 'Not Specified' }}
+                <b>:</b> {{ $userDetail->family_values ?? 'Not Specified' }}
               </div>
               <div class="col-md-3 col-6">
                 Family Type
               </div>
               <div class="col-md-3 col-6">
-                <b>:</b> {{ $user->family_type ?? 'Not Specified' }}
+                <b>:</b> {{ $userDetail->family_type ?? 'Not Specified' }}
               </div>
               <div class="col-md-3 col-6">
                 No. of Brothers
               </div>
               <div class="col-md-3 col-6">
-                <b>:</b> {{ $user->brothersNo ?? 'Not Specified' }}
+                <b>:</b> {{ $userDetail->total_brother?? 'Not Specified' }}
               </div>
               <div class="col-md-3 col-6">
                 No. of Sisters
               </div>
               <div class="col-md-3 col-6">
-                <b>:</b> {{ $user->sistersNo ?? 'Not Specified' }}
+                <b>:</b> {{ $userDetail->total_sister ?? 'Not Specified' }}
               </div>
               <div class="col-md-3 col-6">
                 Family Status
               </div>
               <div class="col-md-3 col-6">
-                <b>:</b> {{ $user->family_status ?? 'Not Specified' }}
+                <b>:</b> {{ $userDetail->family_status ?? 'Not Specified' }}
               </div>
               <div class="col-md-3 col-6">
                 Native Place
               </div>
               <div class="col-md-3 col-6">
-                <b>:</b> {{ $user->native_place ?? 'Not Specified' }}
+                <b>:</b> {{ $userDetail->native_place ?? 'Not Specified' }}
               </div>
             </div>
           </div>
           {{-- Religious Background edit form --}}
-          <form action="" method="post" id="edit-family-info">
+          <form action="{{ route('update-family-info',$userDetail->user_id)}}" method="post" id="edit-family-info">
             <h5 class="col-md-4 mt-5 col-6">
               Edit Family Details
             </h5>
@@ -686,15 +686,15 @@
             <div class="info-row">
               <span>No. of Brother</span>
               <span><b>:</b>
-                <input type="number" name="no_of_brother" id="" class="profile-input" value="{{ $user->no_of_brother ?? '' }}">
+                <input type="number" name="total_brother" id="" class="profile-input" value="{{ $userDetail->no_of_brother ?? '' }}">
               </span>
             </div>
             {{-- No of Sister --}}
             <div class="info-row">
               <span>No. of Sister</span>
               <span><b>:</b>
-                <input type="number" name="no_of_sister" id="" class="profile-input
-                " value="{{ $user->no_of_sister ?? '' }}">
+                <input type="number" name="total_sister" id="" class="profile-input
+                " value="{{ $userDetail->total_sister ?? '' }}">
               </span>
             </div>
             {{-- Native Place --}}
