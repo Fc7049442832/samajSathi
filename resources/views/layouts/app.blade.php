@@ -47,6 +47,7 @@
             @yield('content')
             
             <br><hr>
+            
             @if(Auth::check())
             <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                 @csrf

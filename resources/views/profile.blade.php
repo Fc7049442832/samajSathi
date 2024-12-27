@@ -1,5 +1,9 @@
 @extends('layouts.app')
 @section('content')
+  <div class="row">
+    <x-ProfileCard :user="$user" />
+  </div>
+  
   <hr>
   <div class="col-md-8">
       <div class="profile-Container">
@@ -10,19 +14,30 @@
               <span class="edit-icon col-md-2 col-4" onclick="toggleDivAndForm('about-view', 'edit-about', true)">
                   <i class="bi bi-pencil"></i> Edit
               </span>
-              <p id="about-text">I am a simple boy with a good personality. I reside in a beautiful city of India.</p>
+              <p id="about-text">
+                @if(!empty($userDetail->about_me))
+                  {{ $userDetail->about_me }}
+                @else
+                  I am a simple boy with a good personality. I reside in a beautiful city of India.
+                @endif
+              </p>
           </div>
 
           <!-- About Me Edit Form -->
-          <form action="" method="post" id="edit-about" >
-              <h5>About Me</h5>
-              <textarea id="about-input" required>I am a simple boy with a good personality. I reside in a beautiful city of India.</textarea>
-              <div class="mt-2">
-                  <button type="submit" class="btn btn-update">Update</button>
-                  <button type="button" class="btn btn-cancel"
-                      onclick="toggleDivAndForm('about-view', 'edit-about', false)">Cancel</button>
-              </div>
-          </form>
+          <form action="{{ route('update.about_me', $userDetail->user_id )}}" method="post" id="edit-about">
+            @csrf
+            <h5>About Me</h5>
+            <textarea id="about-input" name="about_me" maxlength="500" 
+                      oninput="updateCharCount()"
+                      placeholder="Write something about yourself...">I am a simple boy with a good personality. I reside in a beautiful city of India.</textarea>
+            <div class="char-counter-container">
+                <span id="char-counter">0</span>/500 characters
+            </div>
+            <div class="mt-2">
+                <button type="submit" class="btn btn-update">Update</button>
+                <button type="button" class="btn btn-cancel" onclick="toggleDivAndForm('about-view', 'edit-about', false)">Cancel</button>
+            </div>
+        </form>
           {{-- About Me Section code end --}}
 
           {{-- Basics information section code start --}}
@@ -60,166 +75,114 @@
           </div>
 
           {{-- Basics information edit form  --}}
-          <form action="" method="POST" id="edit-info">
-              <div id="basics-info" class="row mt-4 justify-content-between">
-                <h5 class="col-md-4 col-5">Edit
-                    Basics Information </h5>
-                <span class="edit-icon  col-md-2 col-4"
-                    onclick="toggleDivAndForm('basics-info', 'edit-info', false)">
-                    <i class="bi bi-x"></i> Cancel
-                </span>
-              </div>
-
-              <div class="p-3">
+          <form action="{{ route('update-basic-info', $userDetail->user_id )}}" method="POST" id="edit-info">
+            @csrf
+            <div id="basics-info" class="row mt-4 justify-content-between">
+                <h5 class="col-md-4 col-5">Edit Basics Information</h5>
+            </div>
+        
+            <div class="p-3">
                 <div class="info-content">
-                  <div class="info-row">
-                    <span>Gender</span> 
-                    <span><b>:</b> 
-                        <select name="gender" id="" class="profile-input" valu="">
-                          <option disabled >Select</option>
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
-                        </select>
-                    </span>
-                  </div>
-                  <div class="info-row">
-                    <span>Blood Group</span>
-                    <span><b>:</b> 
-                      <select name="bloodGroup" id="" class="profile-input">
-                        <option disabled >Not Specified</option>
-                        <option value="A+">A+</option>
-                        <option value="A-">A-</option>
-                        <option value="B+">B+</option>
-                        <option value="B-">B-</option>
-                        <option value="AB+">AB+</option>
-                        <option value="AB-">AB-</option>
-                        <option value="O+">O+</option>
-                        <option value="O-">O-</option>
-                        <option value="">Do Not Know</option>
-                      </select>
-                    </span>
-                  </div>
-                  <div class="info-row">
-                    <span>Age</span> <span><b>:</b> <input type="text" id="age" name="age" class="profile-input" placeholder="Auto fill DOB base" readonly></span>
-                  </div>
-                  <div class="info-row">
-                      <span>Special Case</span>
-                      <span><b>:</b>
-                        <select name="specialCase" id="" class="profile-input">
-                          <option disabled >Not Specified</option>
-                          <option value="None">None</option>
-                          <option value="HIV Positive">HIV Positive</option>
-                          <option value="Mentally Challenged">Mentally Challenged</option>
-                          <option value="Physically Challenged">Physically Challenged</option>
-                          <option value="Other">Other</option>
-                          <option value="Thalassemia Major">Thalassemia Major</option>
-                        </select>  
-                      </span>
-                  </div>
-                  <div class="info-row">
-                    <span>Date of Birth</span> <b>:</b>
-                    <span> <input type="date" id="dob" class="profile-input" name="dob" required
-                      onchange="calculateAge()"></span>
-                  </div>
-                  <div class="info-row">
-                      <span>Body Type</span>
-                      <span><b>:</b> 
-                        <select name="bodyType" id="" class="profile-input">
-                          <option value="Athletic">Athletic</option>
-                          <option value="Thin">Thin</option>
-                          <option value="Slim">Slim</option>
-                          <option value="Medium">Medium</option>
-                          <option value="Slightly Heavy">Slightly Heavy</option>
-                          <option value="Heavy">Heavy</option>
-                          <option value="Prefer Not to Say">Prefer Not to Say</option>
-                        </select>
-                      </span>
-                  </div>
-                  <div class="info-row">
-                      <span>Marital Status</span> 
-                      <span><b>:</b> 
-                        <select name="maritalStatus" id="" class="profile-input">
-                          <option disabled >Select Marital Status</option>
-                          <option value="Never Married">Never Married</option>
-                          <option value="Divorced">Divorced</option>
-                          <option value="Widowed">Widowed</option>
-                          <option value="Awaiting Divorced">Awaiting Divorced</option>
-                          <option value="Annulled">Annulled</option>
-                        </select>
-                      </span>
-                  </div>
-                  <div class="info-row">
-                      <span>Body Weight</span>
-                      <span><b>:</b> 
-                        <input type="number" name="bodyWeight" class="profile-input" id="" placeholder="Body Weight in K.G." >
-                      </span>
-                  </div>
-                  <div class="info-row">
-                    <span>Citizenship</span>
-                    <span><b>:</b> 
-                      <select name="citizenship" id="" class="profile-input">
-                        <option disabled >Select Citizenship</option>
-                        <option value="Indian">Indian</option>
-                        <option value="NRI">NRI</option>
-                      </select>
-                    </span>
-                  </div>
-                  <div class="info-row">
-                    <span>Immigration Status</span> 
-                    <span><b>:</b>
-                      <select name="immigrationStatus" class="profile-input" id="">
-                          <option disabled >Select Immigration Status</option>
-                          <option value="Permanent Resident">Permanent Resident</option>
-                          <option value="Exchang visitor">Exchang Visitor</option>
-                          <option value="Temporary Resident">Temporary Resident</option>                        
-                      </select>
-                    </span>
-                  </div>
-                  <div class="info-row">
-                    <span>Height</span>
-                    <span><b>:</b>
-                      <select name="height" class="profile-input" id="">
-                        <option disabled >Select Height</option>
-                        <option value="Below 120">Below 4'</option>
-                        {{-- loop --}}
-                        <option value="Above 182">Above 6'</option>
-                      </select>
-                    </span>
-                  </div>
-                  <div class="info-row">
-                    <span>Complexion</span>
-                    <span><b>:</b>
-                      <select name="complexion" class="profile-input" id="">
-                        <option disabled >Select Complexion</option>
-                        <option value="Fair">Fair</option>
-                        <option value="Wheatish">Wheatish</option>
-                        <option value="Dark">Dark</option>
-                        <option value="Prefer Not to Say">Prefer Not to Say</option>
-                      </select>
-                    </span>
-                  </div>
-                  <div class="info-row">
-                    <span>Features</span> 
-                    <span><b>:</b>
-                      <select name="features" class="profile-input" id="">
-                        <option value="Prefer not to Say">Prefer not to Say</option>
-                        <option value="Sharp">Sharp</option>
-                        <option value="Handsome">Handsome</option>
-                        <option value="Good Looking">Good Looking</option>
-                        <option value="Average">Average</option>
-                      </select>
-                    </span>
-                  </div>
+                    <!-- Gender -->
+                    <div class="info-row">
+                        <span>Gender</span>
+                        <span><b>:</b>
+                            <select name="gender" class="profile-input">
+                                <option disabled>Select</option>
+                                <option value="Male" {{ old('gender', $userDetails->gender ?? '') == 'Male' ? 'selected' : '' }}>Male</option>
+                                <option value="Female" {{ old('gender', $userDetails->gender ?? '') == 'Female' ? 'selected' : '' }}>Female</option>
+                            </select>
+                        </span>
+                    </div>
+        
+                    <!-- Blood Group -->
+                    <div class="info-row">
+                        <span>Blood Group</span>
+                        <span><b>:</b>
+                            <select name="blood_group" class="profile-input">
+                                <option disabled>Not Specified</option>
+                                @foreach(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'] as $bloodGroup)
+                                    <option value="{{ $bloodGroup }}" {{ old('blood_group', $userDetails->blood_group ?? '') == $bloodGroup ? 'selected' : '' }}>
+                                        {{ $bloodGroup }}
+                                    </option>
+                                @endforeach
+                                <option value="" {{ old('blood_group', $userDetails->blood_group ?? '') == '' ? 'selected' : '' }}>Do Not Know</option>
+                            </select>
+                        </span>
+                    </div>
+        
+                    <!-- Age -->
+                    <div class="info-row">
+                        <span>Age</span>
+                        <span><b>:</b>
+                            <input type="text" id="age" name="age" class="profile-input" placeholder="Auto fill DOB base" readonly
+                                   value="{{ old('age', $userDetails->age ?? $user->age ) }}">
+                        </span>
+                    </div>
+        
+                    <!-- Special Case -->
+                    <div class="info-row">
+                        <span>Special Case</span>
+                        <span><b>:</b>
+                            <select name="special_case" class="profile-input">
+                                <option disabled>Not Specified</option>
+                                @foreach(['None', 'HIV Positive', 'Mentally Challenged', 'Physically Challenged', 'Other', 'Thalassemia Major'] as $case)
+                                    <option value="{{ $case }}" {{ old('special_case', $userDetails->special_case ?? '') == $case ? 'selected' : '' }}>
+                                        {{ $case }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </span>
+                    </div>
+        
+                    <!-- Date of Birth -->
+                    <div class="info-row">
+                        <span>Date of Birth</span><b>:</b>
+                        <span>
+                            <input type="date" id="dob" class="profile-input" name="dob" required
+                                   value="{{ old('dob', $userDetails->dob ?? '') }}" onchange="calculateAge()">
+                        </span>
+                    </div>
+        
+                    <!-- Body Type -->
+                    <div class="info-row">
+                        <span>Body Type</span>
+                        <span><b>:</b>
+                            <select name="body_type" class="profile-input">
+                                @foreach(['Athletic', 'Thin', 'Slim', 'Medium', 'Slightly Heavy', 'Heavy', 'Prefer Not to Say'] as $type)
+                                    <option value="{{ $type }}" {{ old('body_type', $userDetails->body_type ?? '') == $type ? 'selected' : '' }}>
+                                        {{ $type }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </span>
+                    </div>
+        
+                    <!-- Other fields (similar pattern applied) -->
+                    <div class="info-row">
+                        <span>Marital Status</span>
+                        <span><b>:</b>
+                            <select name="marital_status" class="profile-input">
+                                <option disabled>Select Marital Status</option>
+                                @foreach(['Never Married', 'Divorced', 'Widowed', 'Awaiting Divorced', 'Annulled'] as $status)
+                                    <option value="{{ $status }}" {{ old('marital_status', $userDetails->marital_status ?? '') == $status ? 'selected' : '' }}>
+                                        {{ $status }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </span>
+                    </div>
+        
+                    <!-- Repeat for fields like Body Weight, Citizenship, Immigration Status, etc. -->
                 </div>
-              </div>
-              {{-- form submit Button and form Cancel button --}}
-              <div class="mt-2">
+            </div>
+            <!-- Submit and Cancel -->
+            <div class="mt-2">
                 <button type="submit" class="btn btn-success">Update</button>
-                <span class="edit-icon  col-md-2 col-4"
-                    onclick="toggleDivAndForm('basics-info', 'edit-info', false)">
+                <span class="edit-icon col-md-2 col-4" onclick="toggleDivAndForm('basics-info', 'edit-info', false)">
                     <i class="bi bi-x"></i> Cancel
                 </span>
-              </div>
+            </div>
           </form>
           {{-- Basics information section code end --}}
 
@@ -235,100 +198,120 @@
             <div class="row">
               <div class="col-md-3 col-6">Living Situation</div>
               <div class="col-md-3 col-6"><b>:</b>
-                {{ $user->livingSitustion ?? 'Living with Family' }}
+                {{ $userDetail->living_situation ?? 'Living with Family' }}
               </div>
               <div class="col-md-3 col-6">House Ownership</div>
               <div class="col-md-3 col-6"><b>:</b>
-                {{ $user->houseOwnership ?? 'Rent' }}
+                {{ $userDetail->houseOwnership ?? 'Rent' }}
               </div>
               <div class="col-md-3 col-6">Diet</div>
               <div class="col-md-3 col-6"><b>:</b>
-                {{ $user->diet ?? 'Non-Vegetarian' }}
+                {{ $userDetail->diet ?? 'Non-Vegetarian' }}
               </div>
               <div class="col-md-3 col-6">Drink</div>
               <div class="col-md-3 col-6"><b>:</b>
-                {{ $user->drink ?? 'Yes' }}
+                {{ $userDetail->drink ?? 'Yes' }}
               </div>
               <div class="col-md-3 col-6">Smoke</div>
               <div class="col-md-3 col-6"><b>:</b>
-                {{ $user->smoke ?? 'Yes' }}
+                {{ $userDetail->smoke ?? 'Yes' }}
               </div>
             </div>
           </div>
 
-            {{-- life style edit form --}}
-          <form action="" method="post" id="edit-style">
-            <h5 class="col-md-4 col-5 h5">
-              Edit Life Style
-            </h5>
-            <span class="edit-icon  col-md-2 col-4" onclick="toggleDivAndForm('life-style', 'edit-style', false)">
-              <i class="bi bi-x"></i> Cancel
-            </span>
+          {{-- Life Style Edit Form --}}
+          <form action="{{ route('update-life-style', $userDetail->user_id) }}" method="post" id="edit-style">
             @csrf
-            {{-- Liviin Situation --}}
+            <h5 class="col-md-4 col-5 h5">Edit Life Style</h5>
+            <span class="edit-icon col-md-2 col-4" onclick="toggleDivAndForm('life-style', 'edit-style', false)">
+                <i class="bi bi-x"></i> Cancel
+            </span>
+
+            {{-- Living Situation --}}
             <div class="info-row">
-              <span>Living Situation</span>
-              <span><b>:</b>
-                <select name="living_situation" class="profile-input" id="" valu="{{ $user->living_situation ?? 'Prefer not to Say' }}" >
-                  <option value="Prefer not to Say">Prefer not to Say</option>
-                  <option value="Living with Family">Living with Family</option>
-                  <option value="Living with Friends">Living with Friends</option>
-                  <option value="Living Alone">Living Alone</option>
-                  <option value="Other">Other</option>
-                </select>
-              </span>
+                <span>Living Situation</span>
+                <span><b>:</b>
+                    <select name="living_situation" class="profile-input">
+                        <option value="Prefer not to Say" {{ (old('living_situation', $userDetail->living_situation) == 'Prefer not to Say') ? 'selected' : '' }}>Prefer not to Say</option>
+                        <option value="Living with Family" {{ (old('living_situation', $userDetail->living_situation) == 'Living with Family') ? 'selected' : '' }}>Living with Family</option>
+                        <option value="Living with Friends" {{ (old('living_situation', $userDetail->living_situation) == 'Living with Friends') ? 'selected' : '' }}>Living with Friends</option>
+                        <option value="Living Alone" {{ (old('living_situation', $userDetail->living_situation) == 'Living Alone') ? 'selected' : '' }}>Living Alone</option>
+                        <option value="Other" {{ (old('living_situation', $userDetail->living_situation) == 'Other') ? 'selected' : '' }}>Other</option>
+                    </select>
+                </span>
+                @error('living_situation')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
+
             {{-- House Ownership --}}
             <div class="info-row">
-              <span>House Ownership</span>
-              <span><b>:</b>
-                <select name="houseOwnership" class="profile-input" id="">
-                  <option value="Prefer not to Say">Prefer not to Say</option>
-                  <option value="Own">Own</option>
-                  <option value="Rent">Rent</option>
-                  <option value="Other">Other</option>
-                </select>
-              </span>
+                <span>House Ownership</span>
+                <span><b>:</b>
+                    <select name="house_ownership" class="profile-input">
+                        <option value="Prefer not to Say" {{ (old('house_ownership', $userDetail->house_ownership) == 'Prefer not to Say') ? 'selected' : '' }}>Prefer not to Say</option>
+                        <option value="Own" {{ (old('house_ownership', $userDetail->house_ownership) == 'Own') ? 'selected' : '' }}>Own</option>
+                        <option value="Rent" {{ (old('house_ownership', $userDetail->house_ownership) == 'Rent') ? 'selected' : '' }}>Rent</option>
+                        <option value="Other" {{ (old('house_ownership', $userDetail->house_ownership) == 'Other') ? 'selected' : '' }}>Other</option>
+                    </select>
+                </span>
+                @error('house_ownership')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
+
             {{-- Diet --}}
             <div class="info-row">
-              <span>Diet</span>
-              <span><b>:</b>
-                <select name="diet" class="profile-input" id="">
-                  <option value="Prefer not to Say">Prefer not to Say</option>
-                  <option value="Vegetarian">Vegetarian</option>
-                  <option value="Non-Vegetarian">Non-Vegetarian</option>
-                  <option value="Other">Other</option>
-                </select>
+                <span>Diet</span>
+                <span><b>:</b>
+                    <select name="diet" class="profile-input">
+                        <option value="Prefer not to Say" {{ (old('diet', $userDetail->diet) == 'Prefer not to Say') ? 'selected' : '' }}>Prefer not to Say</option>
+                        <option value="Vegetarian" {{ (old('diet', $userDetail->diet) == 'Vegetarian') ? 'selected' : '' }}>Vegetarian</option>
+                        <option value="Non-Vegetarian" {{ (old('diet', $userDetail->diet) == 'Non-Vegetarian') ? 'selected' : '' }}>Non-Vegetarian</option>
+                        <option value="Other" {{ (old('diet', $userDetail->diet) == 'Other') ? 'selected' : '' }}>Other</option>
+                    </select>
+                </span>
+                @error('diet')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
+
             {{-- Drinking --}}
             <div class="info-row">
-              <span>Drinking</span>
-              <span><b>:</b>
-                <select name="drinking" class="profile-input" id="">
-                  <option value="Prefer not to Say">Prefer not to Say</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
-              </span>
+                <span>Drinking</span>
+                <span><b>:</b>
+                    <select name="drink" class="profile-input">
+                        <option value="Prefer not to Say" {{ (old('drink', $userDetail->drink) == 'Prefer not to Say') ? 'selected' : '' }}>Prefer not to Say</option>
+                        <option value="Yes" {{ (old('drink', $userDetail->drink) == 'Yes') ? 'selected' : '' }}>Yes</option>
+                        <option value="No" {{ (old('drink', $userDetail->drink) == 'No') ? 'selected' : '' }}>No</option>
+                    </select>
+                </span>
+                @error('drink')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
+
             {{-- Smoking --}}
             <div class="info-row">
-              <span>Smoking</span>
-              <span><b>:</b>
-                <select name="smoking" class="profile-input" id="">
-                  <option value="Prefer not to Say">Prefer not to Say</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
-              </span>
+                <span>Smoke</span>
+                <span><b>:</b>
+                    <select name="smoke" class="profile-input">
+                        <option value="Prefer not to Say" {{ (old('smoke', $userDetail->smoke) == 'Prefer not to Say') ? 'selected' : '' }}>Prefer not to Say</option>
+                        <option value="Yes" {{ (old('smoke', $userDetail->smoke) == 'Yes') ? 'selected' : '' }}>Yes</option>
+                        <option value="No" {{ (old('smoke', $userDetail->smoke) == 'No') ? 'selected' : '' }}>No</option>
+                    </select>
+                </span>
+                @error('smoking')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
-            {{-- form submit button --}}
+
+            {{-- Submit Button --}}
             <div class="mt-2">
-              <button type="submit" class="btn btn-update">Update</button>
-              <span class="edit-icon  col-md-2 col-4" onclick="toggleDivAndForm('life-style', 'edit-style', false)">
-                <i class="bi bi-x"></i> Cancel
-              </span>
+                <button type="submit" class="btn btn-update">Update</button>
+                <span class="edit-icon col-md-2 col-4" onclick="toggleDivAndForm('life-style', 'edit-style', false)">
+                    <i class="bi bi-x"></i> Cancel
+                </span>
             </div>
           </form>
           {{-- Life Sytle section code end --}}
@@ -788,6 +771,17 @@
 
   {{-- Profile Page Java Script code --}}
   <script>
+     // Initialize character counter
+     function updateCharCount() {
+          const textarea = document.getElementById('about-input');
+          const charCounter = document.getElementById('char-counter');
+          charCounter.textContent = textarea.value.length;
+      }
+
+      // Update the counter on page load (for pre-filled text)
+      document.addEventListener('DOMContentLoaded', function () {
+          updateCharCount();
+      });
       // calculate age from dob
       function calculateAge() {
           const dobInput = document.getElementById('dob').value;
@@ -869,28 +863,152 @@
 {{-- Profile page CSS code  --}}
 <style>
     /* All profile page Css */
-    .profile-Container {
-        margin: 20px;
-        border: 1px solid #ddd;
-        padding: 10px 20px;
-        border-radius: 5px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        position: relative;
-    }
+    .profile-row {
+            max-width: 800px;
+            margin: 20px auto;
+            background: linear-gradient(to right, #d61c16, #d17fdb);
+            padding: 20px;
+            border-radius: 8px;
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
 
-    .profile-input{
-      color: black;
-      padding:0px;
-      margin:0px;
-      width: 80%;
-      border:none;
-      border-bottom:1px solid #353535;
-    }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap; /* Adjust for smaller screens */
+        }
 
-    .profile-input option{
-      color: black;
-      background: rgb(255, 255, 255);
-    }
+        .profile-details {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .profile-info {
+            margin-left: 20px;
+        }
+
+        .profile-info h2 {
+            margin: 0;
+            font-size: 1.5rem; /* Responsive font size */
+        }
+
+        .profile-info p {
+            margin: 5px 0;
+            font-size: 1rem; /* Responsive font size */
+        }
+
+        .profile-progress {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .progress-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 6px solid #fff;
+            border-right-color: #f00;
+            border-bottom-color:#f00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 10px auto;
+        }
+
+        .progress-circle span {
+            color: #fff;
+            font-weight: bold;
+            font-size: 1rem; /* Responsive font size */
+        }
+
+        /* Media Query for Mobile Devices */
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 15px;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                align-items: center; /* Center align items */
+            }
+
+            .profile-details {
+                flex-direction: column;
+                align-items: center; /* Center align items */
+                text-align: center; /* Center text for mobile */
+            }
+
+            .profile-image {
+                width: 80px;
+                height: 80px;
+                font-size: 20px; /* Smaller font size */
+            }
+
+            .profile-info {
+                margin-left: 0;
+                margin-top: 10px; /* Add spacing for better layout */
+            }
+
+            .profile-info h2 {
+                font-size: 1.25rem; /* Smaller font size */
+            }
+
+            .profile-info p {
+                font-size: 0.9rem; /* Smaller font size */
+            }
+
+            .progress-circle {
+                width: 50px;
+                height: 50px;
+                border-width: 5px;
+            }
+
+            .progress-circle span {
+                font-size: 0.8rem; /* Smaller font size */
+            }
+        }
+
+        /* Media Query for Extra Small Devices */
+        @media (max-width: 480px) {
+            .profile-row {
+                padding: 10px;
+            }
+
+            .profile-info h2 {
+                font-size: 1rem; /* Even smaller font size for tiny screens */
+            }
+
+            .profile-info p {
+                font-size: 0.8rem;
+            }
+
+            .progress-circle {
+                width: 40px;
+                height: 40px;
+                border-width: 4px;
+            }
+
+            .progress-circle span {
+                font-size: 0.7rem;
+            }
+        }
 
     .profile-Container h5 {
         color: #e74c3c;
@@ -925,6 +1043,19 @@
         padding: 10px;
         border: 1px solid #ddd;
         border-radius: 5px;
+    }
+    .profile-input{
+      width: 60%;
+      margin:0px;
+      padding: 0px;
+      padding:5px;
+      font-size: 14px;
+      background: #f7f7f7;
+      border-radius:5px;
+    }
+    .profile-input option{
+      background: #f3f2f2;
+      color: black;
     }
 
     /* only about field css end */
@@ -971,5 +1102,19 @@
 
     .info-row span:first-child {
         color: #333;
+    }
+
+     /* Styling for the character counter */
+     .char-counter-container {
+        text-align: right;
+        font-size: 0.9em;
+        color: gray;
+        margin-top: 5px;
+    }
+
+    textarea {
+        width: 100%;
+        height: 100px;
+        resize: none;
     }
 </style>

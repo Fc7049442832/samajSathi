@@ -1,6 +1,6 @@
 <div class="header-container">
     <div class="logo">
-        <a href="/">
+        <a href="{{ route('home')}}" class="logo-link">
             <img src="{{ asset('images/logo.png') }}" alt="Logo">
         </a>
     </div>
@@ -18,7 +18,7 @@
     <nav class="nav-links" id="nav-links">
         <a href="#browse-profiles">Browse Profiles</a>
         @if(Auth::check())
-        <a href="#My-profiles">My Profiles</a>
+        <a href="{{ route('profile')}}">My Profiles</a>
         @else
             <a href="#" data-bs-toggle="modal" data-bs-target="#LoginModal">
                 Member Login <i class="fas fa-user"></i>

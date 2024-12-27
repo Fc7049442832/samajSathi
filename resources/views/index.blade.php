@@ -5,6 +5,12 @@
     <x-searchPartner  />  
     <x-showPartner />
     <x-registration-step />
+   
     <x-ImageCard />
     <x-QuestionsBox />
+
+    
+
+    
 @endsection
+
