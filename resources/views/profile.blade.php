@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
   <div class="row">
-    <x-ProfileCard :user="$user" />
+    <x-ProfileCard :user="$user"  :profile="$userDetail" />
   </div>
-  
+
   <hr>
   <div class="col-md-8">
        {{-- error display --}}
@@ -49,6 +49,7 @@
             </div>
         </form>
           {{-- About Me Section code end --}}
+         
 
           {{-- Basics information section code start --}}
           {{-- Default Display --}}
@@ -629,7 +630,7 @@
             <div class="info-row">
               <span>Mother's Status</span>
               <span><b>:</b>
-                <select name="mother_status" id="" class="profile-input">
+                <select name="mother_status" id="" class="profile-input" value="{{ old($userDetail->mother_status ?? '') }}" >
                   <option value>- Select One -</option>
                   <option value="House Wife">House Wife</option>
                   <option value="Social Service">Social Service</option>
@@ -718,7 +719,7 @@
 
           {{-- Education & Career section code start --}}
             {{-- Default Display --}}
-            <div id="education-info" class="row mt-5 justify-content-between">
+          <div id="education-info" class="row mt-5 justify-content-between">
             <h5 class="col-md-4 col-8 ">
               Education & Career
             </h5>
@@ -728,25 +729,26 @@
             <div class="row mt-2">
               <div class="col-md-3 col-6">Education</div>
               <div class="col-md-3 col-6"><b>:</b>
-                {{ $user->education ?? 'Not Specified' }}
+                {{ $userDetail->education ?? 'Not Specified' }}
               </div>
               <div class="col-md-3 col-6">Working As</div>
               <div class="col-md-3 col-6"><b>:</b>
-                {{ $user->working_as ?? 'Not Specified' }}
+                {{ $userDetail->working_as ?? 'Not Specified' }}
               </div>
               <div class="col-md-3 col-6">Working with</div>
               <div class="col-md-3 col-6"><b>:</b>
-                {{ $user->working_with ?? 'Not Specified' }}
+                {{ $userDetail->working_with ?? 'Not Specified' }}
               </div>
               <div class="col-md-3 col-6">Annual Income</div>
               <div class="col-md-3 col-6"><b>:</b>
-                {{ $user->income ?? 'Not Specified' }}
+                {{ $userDetail->income ?? 'Not Specified' }}
               </div>
             </div>
           </div>
 
             {{-- Education & Career edit form --}}
-          <form action="" method="post" id="edit-education-info">
+          <form action="{{route('update-education', $userDetail->user_id)}}" method="post" id="edit-education-info">
+            @csrf
             <h5 class="col-md-4  col-5 mt-5">
               Edit Education & Career
             </h5>
@@ -758,29 +760,59 @@
             <div class="info-row">
               <span> Education </span>
               <span><b>:</b>
-                <input type="text" name="education" class="profile-input" id="" placeholder="Example: BA, B.Com, MBA etc." value="{{ $user->education ?? '' }}" >
-              </span>
+                <select name="education" class="profile-input" id="">
+                    @php
+                        $educationOptions = ['BA', 'B.Com', 'MBA', 'MCA', 'B.Tech', 'M.Tech'];
+                    @endphp
+                      <option value="" disabled {{ old('education', $userDetail->education ?? '') === '' ? 'selected' : '' }}>Select Education</option>
+                    @foreach ($educationOptions as $option)
+                    <option value="{{ $option }}" {{ old('education', $userDetail->education ?? '') == $option ? 'selected' : '' }}>{{ $option }}</option>
+                    @endforeach
+                </select>
             </div>
             {{-- Working As --}}
             <div class="info-row">
-              <span> Working As </span>
-              <span><b>:</b>
-                <input type="text" name="working_as" class="profile-input" id="" value="{{ $user->working_as ?? '' }}" >
-              </span>
+                <span> Working As </span>
+                <span><b>:</b>
+                    <select name="working_as" class="profile-input" id="">
+                        @php
+                            $workingAsOptions = ['Govt Job', 'Business Man', 'Private Job', 'Developer', 'Manager','HR', 'Team Leader', 'Teacher', 'Engineer', 'Designer','Docter', 'Lawyer', 'Other','Self Emplyeer' ];
+                        @endphp
+                          <option value="" disabled {{ old('working_as', $userDetail->working_as ?? '') === '' ? 'selected' : '' }}>Select Job Role</option>
+                        @foreach ($workingAsOptions as $option)
+                          <option value="{{ $option }}" {{ old('working_as', $userDetail->working_as ?? '') == $option ? 'selected' : '' }}>{{ $option }}</option>
+                        @endforeach
+                    </select>
+                </span>
             </div>
             {{-- Working with --}}
             <div class="info-row">
               <span> Working with </span>
               <span><b>:</b>
-                <input type="text" name="working_with" class="profile-input" id="" valu
-                e="{{ $user->working_with ?? '' }}" >
+                <select name="working_with" class="profile-input" id="">
+                    @php
+                        $workingWithOptions = ['Startup', 'Business','Local Private Company' ,'MNC', 'Government', 'Freelance', 'Self-Employed','other'];
+                    @endphp
+                    <option value="" disabled {{ old('working_with', $userDetail->working_with ?? '') === '' ? 'selected' : '' }}>Select Organization Type</option>
+                    @foreach ($workingWithOptions as $option)
+                        <option value="{{ $option }}" {{ old('working_with', $userDetail->working_with ?? '') == $option ? 'selected' : '' }}>{{ $option }}</option>
+                    @endforeach
+                </select>
               </span>
             </div>
             {{-- Annual Income --}}
             <div class="info-row">
               <span> Annual Income </span>
               <span><b>:</b>
-                <input type="text" name="income" class="profile-input" id="" placeholder="Example : 250K " value="{{ $user->income ?? '' }}" >
+                <select name="income" class="profile-input" id="">
+                    @php
+                        $incomeOptions = ['Below 250K', '250K - 350K', '350K-500K', '500K - 1M', 'Above 1M'];
+                    @endphp
+                      <option value="" disabled {{ old('income', $userDetail->income ?? '') === '' ? 'selected' : '' }}>Select Income Range</option>
+                    @foreach ($incomeOptions as $option)
+                    <option value="{{ $option }}" {{ old('income', $userDetail->income ?? '') == $option ? 'selected' : '' }}>{{ $option }}</option>
+                    @endforeach
+                </select>
               </span>
             </div>
             {{-- form submit button --}}

@@ -6,6 +6,7 @@ use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -21,6 +22,46 @@ class ProfileController extends Controller
             return redirect()->route('home');
         }
     }
+    // user profile image update function
+    public function userImageStore(Request $request )
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+    
+        // Check if a file is uploaded
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+    
+            // Save the file in the 'storage/app/public/images' directory
+            $path = $image->store('images', 'public');
+    
+            // Get the authenticated user
+            $user = Auth::user();
+    
+            // Update the profile_image field in the Profile table
+            $userProfile = \App\Models\Profile::where('user_id', $user->id)->first();
+            if ($userProfile) {
+                // Delete the old image if necessary (optional)
+                if ($userProfile->profile_image && \Storage::disk('public')->exists($userProfile->profile_image)) {
+                    \Storage::disk('public')->delete($userProfile->profile_image);
+                }
+    
+                $userProfile->update([
+                    'profile_image' => $path,
+                ]);
+            } else {
+                // Optionally, handle cases where the user's profile doesn't exist
+                return response()->json(['success' => false, 'message' => 'User profile not found'], 404);
+            }
+    
+            return response()->json(['success' => true, 'path' => $path]);
+        }
+    
+        return response()->json(['success' => false, 'message' => 'File not uploaded'], 400);
+    }
+    
+
     // User Profile about- content Update
     public function updateAboutMe(Request $request, $userId)
     {
@@ -200,7 +241,7 @@ class ProfileController extends Controller
         // Update the user details
         $userDetail->update($validatedData);
     
-        return response()->json(['message' => 'Basic information updated successfully.', 'data' => $userDetail]);
+        return redirect()->back()->with('success', 'Education Details updated successfully!');
     }
 
     public function updateAddress(Request $request, $userId){

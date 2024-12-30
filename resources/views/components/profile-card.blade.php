@@ -2,10 +2,15 @@
 <div class="profile-row">
     <div class="profile-header">
         <div class="profile-details">
-            <div class="profile-image">{{substr($user->name, 0, 1)}} </div>
+            <div class="profile-image">
+                {{-- image model --}}
+                <button type="button" class="text-center" data-bs-toggle="modal" data-bs-target="#userImageModal">
+                    <img src="{{ asset($profile->profile_image ? 'storage/' . $profile->profile_image : 'images/set_partner_per.jpg')}}" alt="" class="profile-image" >
+                </button>
+            </div>
             <div class="profile-info">
                 <h2>{{ $user->name}} </h2>
-                <p>{{ $user->age }} Yrs, 5' 09" (175 cm)</p>
+                <p>{{ $user->age }} Yrs,  {{ $profile->height }}</p>
                 <p>India, Chhattisgarh, Raipur</p>
                 <p><strong>+91- {{ $user->phone }} </strong></p>
             </div>
@@ -17,6 +22,29 @@
             <p>Profile Completion</p>
             <p>Last Edited on {{ \Carbon\Carbon::parse($user->created_at)->format('jS M Y') }}</p>
         </div>
+    </div>
+</div>
+
+<!-- Image view and upload Modal -->
+<div class="modal fade" id="userImageModal" tabindex="-1" aria-labelledby="userImageModal" aria-hidden="true">
+    <div class="modal-dialog text-center">
+      <div class="modal-content">
+        <form action="{{ route('profile.update')}}" method="post" enctype="multipart/form-data" >
+            @csrf
+            <div class="modal-body">
+                <img src="{{ asset($profile->profile_image ? 'storage/' . $profile->profile_image : 'images/set_partner_per.jpg')}}" 
+                alt="" style="border-radius:10px;" width="400px" height="auto">
+                <input type="file" name="image" class="form-control">
+            </div>
+            <div class="modal-footer">
+                <form action="" method="post">
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Delete</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+      </div>
     </div>
 </div>
 

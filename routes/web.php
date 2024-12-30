@@ -26,6 +26,8 @@ Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
 
 
 Route::get('/profile',[ProfileController::class, 'index'])->name('profile');
+Route::post('/profile',[ProfileController::class, 'userImageStore'])->name('profile.update');
+// Route::post('/upload-image', [ProfileController::class, 'userImageStore'])->name('upload-image');
 Route::post('/update/about_me/{userId}',[ProfileController::class, 'updateAboutMe'])->name('update.about_me');
 
 Route::post('/user-details/{userId}/update-basic-info', [ProfileController::class, 'updateBasicInfo'])->name('update-basic-info');

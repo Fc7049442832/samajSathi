@@ -6,19 +6,19 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class ProfileCard extends Component
+class EditImageInput extends Component
 {
+    public $placeholder;
+    public $inputName;
+
     /**
      * Create a new component instance.
      */
-    public $user;
-    public $profile;
-
-    public function __construct($user, $profile)
+    public function __construct($placeholder = 'placeholder.png', $inputName = 'image')
     {
         //
-        $this->user = $user;
-        $this->profile = $profile;
+        $this->placeholder = $placeholder;
+        $this->inputName = $inputName;
     }
 
     /**
@@ -26,6 +26,6 @@ class ProfileCard extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.profile-card');
+        return view('components.edit-image-input');
     }
 }
