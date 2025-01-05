@@ -55,13 +55,12 @@ class ProfileController extends Controller
                 return response()->json(['success' => false, 'message' => 'User profile not found'], 404);
             }
     
-            return response()->json(['success' => true, 'path' => $path]);
+            return redirect()->route('profile')->with('success', 'Upload image successfully!');
         }
     
         return response()->json(['success' => false, 'message' => 'File not uploaded'], 400);
     }
     
-
     // User Profile about- content Update
     public function updateAboutMe(Request $request, $userId)
     {
@@ -117,7 +116,7 @@ class ProfileController extends Controller
         if($user->age != $validatedData['age']){
             $user->age =  $validatedData['age']; // Update the age column in the user table
             $user->save();
-        } 
+        }
 
         // Update the age if it has changed
         if ($user->age !== $request->age) {

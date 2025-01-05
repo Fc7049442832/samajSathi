@@ -922,7 +922,7 @@
           const dobInput = document.getElementById('dob').value;
 
           if (!dobInput) {
-              document.getElementById('age').value = '';
+              document.getElementById('age').value = ${{ $user->age }};
               return;
           }
 

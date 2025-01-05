@@ -25,7 +25,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/helper.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -62,9 +65,7 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true,
-
-    "files": [
-    "app/Helpers/helpers.php"
-    ]
+    "prefer-stable": true
 }
+
+

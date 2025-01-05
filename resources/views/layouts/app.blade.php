@@ -31,8 +31,6 @@
                 transition: opacity 0.5s ease-out;
             }
         </style>
-
-      
     </head>
     <body>
         <div class="container-xxl" style="">
@@ -46,14 +44,24 @@
             
             @yield('content')
             
-            <br><hr>
-            
-            @if(Auth::check())
-            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                @csrf
-                <button type="submit" class="btn btn-danger">Logout</button>
-            </form>
-            @endif
+            <br>
+            <div class="row text-center justify-content-center">
+                <div class="col-md-2 col-4">
+                    @if(Auth::check())
+                    <hr>
+                    <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                    @endif
+                </div>
+            </div> 
+            <hr>
+            {{-- footer section code  --}}
+            <div class="row bg-secondary text-center p-3">
+                <p class="text-light">Power By <a href="" style="text-decoration: none; color:rgb(209, 212, 247);">Tech Radar</a> @ 2024</p>
+            </div>
+
         </div>
 
         <!-- Option 1: Bootstrap Bundle with Popper -->

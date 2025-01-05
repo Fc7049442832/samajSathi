@@ -16,12 +16,13 @@
         <i class="fas fa-bars"> </i>
     </div>
     <nav class="nav-links" id="nav-links">
-        <a href="#browse-profiles">Browse Profiles</a>
+        <a href="{{route('home')}}">Home</a>
+        <a href="{{route('Browse_Partner')}}">Browse Profiles</a>
         @if(Auth::check())
         <a href="{{ route('profile')}}">My Profiles</a>
         @else
             <a href="#" data-bs-toggle="modal" data-bs-target="#LoginModal">
-                Member Login <i class="fas fa-user"></i>
+                Login <i class="fas fa-user"></i>
             </a>
         @endif
         <a href="#help">Help <i class="fas fa-caret-down"></i></a>
@@ -190,8 +191,7 @@
     }
     option{
         background: #000;
-    }
-  
+    } 
 
     /* For mobile screens */
     @media screen and (max-width: 768px) {
@@ -206,16 +206,17 @@
             display: none;
             flex-direction: column;
             position: absolute;
+            z-index: 1;
             top: 60px;
             right: 20px;
             background-color: white;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
-            padding: 8px;
+            padding: 4px;
             width: 200px;
         }
         .nav-links a {
-            padding: 10px;
+            padding: 5px;
             font-size: 13px;
             text-align: left;
             border-bottom: 1px solid #ddd;
@@ -224,7 +225,6 @@
         .nav-links a:last-child {
             border-bottom: none;
         }
-
         .register-button {
             display: block;
             width :20vw;

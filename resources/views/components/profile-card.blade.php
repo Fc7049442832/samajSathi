@@ -16,8 +16,8 @@
             </div>
         </div>
         <div class="profile-progress">
-            <div class="progress-circle">
-                <span>90%</span>
+            <div  class="progress-circle {{ profileCompletion($profile->toArray()) <= 30 ? 'red' : (profileCompletion($profile->toArray()) <= 65 ? 'orange' : 'green') }}">
+                <span>{{ profileCompletion($profile->toArray()) }}%</span>
             </div>
             <p>Profile Completion</p>
             <p>Last Edited on {{ \Carbon\Carbon::parse($user->created_at)->format('jS M Y') }}</p>
@@ -110,8 +110,8 @@
         height: 60px;
         border-radius: 50%;
         border: 6px solid #fff;
-        border-right-color: #f00;
-        border-bottom-color:#f00;
+        /* border-right-color: #f00;
+        border-bottom-color:#f00; */
         display: flex;
         justify-content: center;
         align-items: center;
