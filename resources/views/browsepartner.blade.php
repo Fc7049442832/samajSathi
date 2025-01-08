@@ -1,14 +1,20 @@
 @extends('layouts.app')
 @section('content')
 <div class="color-section"></div>
-<div class="content">
+<div class="content main-container">
     {{-- User Details Display Card code  --}}
-    <x-PartnerCard />
+    <div class="partner_box">
+        @for($i=0 ;$i<10;$i++)
+        <div class="card">
+            <x-PartnerCard />
+        </div>
+        @endfor
+    </div>
 </div>
 <style>
     .color-section {
         width: 100%; /* Puri width */
-        height: 30vh; /* Viewport height ka 40% */
+        height: 35vh; /* Viewport height ka 40% */
         background-color: #eeb843; /* Aapka desired color */
         position: fixed; /* Position fix, taki scroll ka effect na ho */
         top: 10; /* Top par fix karna */
@@ -18,6 +24,18 @@
         position: relative;
         margin-top: 40vh; /* 40% height ke baad content start hoga */
         margin-top: 0vh;     
+    }
+    .partner_box{
+        height: 62vh;
+        width: 100%;
+        overflow-y: scroll;
+        padding-bottom:210px;
+        /* position:absolute; */
+       
+        
+    }
+    .partner_box::-webkit-scrollbar {
+      display: none;
     }
 </style>
 @endsection

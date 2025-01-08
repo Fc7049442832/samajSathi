@@ -37,9 +37,7 @@
                 <input type="file" name="image" class="form-control">
             </div>
             <div class="modal-footer">
-                <form action="" method="post">
-                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Delete</button>
-                </form>
+                <button id="deleteProfileImage" class="btn btn-danger">Delete Profile Image</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
@@ -50,7 +48,6 @@
 
 <style>
   .profile-row {
-        
         margin: 0px;
         background: linear-gradient(to right, #d61c16, #d17fdb);
         padding: 10px;
@@ -196,3 +193,28 @@
         }
     }
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#deleteProfileImage').on('click', function (e) {
+            e.preventDefault();
+
+            if (confirm('Are you sure you want to delete your profile image?')) {
+                $.ajax({
+                    url: "{{ route('delete-image') }}", // Laravel route for image delete
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}" // Add CSRF token for security
+                    },
+                    success: function (response) {
+                        alert(response.message);
+                        location.reload(); // Reload the page to reflect changes
+                    },
+                    error: function (xhr) {
+                        alert(xhr.responseJSON.message || 'Something went wrong. Please try again.');
+                    }
+                });
+            }
+        });
+    });
+</script>

@@ -35,5 +35,7 @@ Route::post('/user-details/{userId}/update-family-info', [ProfileController::cla
 Route::post('/user-details/{userId}/update-education', [ProfileController::class, 'updateEducation'])->name('update-education');
 Route::post('/user-details/{userId}/update-address', [ProfileController::class, 'updateAddress'])->name('update-address');
 
+Route::post('/image-delete/delete',[ProfileController::class, 'userImageDelete'])->name('delete-image');
+
 Route::view('demo','browsepartner')->name('Browse_Partner');
 Route::view('demo2','Demo')->name('demo');

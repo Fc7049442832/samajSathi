@@ -23,7 +23,7 @@ class ProfileController extends Controller
         }
     }
     // user profile image update function
-    public function userImageStore(Request $request )
+    public function userImageStore(Request $request)
     {
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -33,8 +33,12 @@ class ProfileController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
     
+            // Generate a unique name in the format SSM-XXXXXX
+            $uniqueId = str_pad(rand(1, 999999), 6, '0', STR_PAD_LEFT); // Generate a 6-digit random number
+            $fileName = 'SSM-' . $uniqueId . '.' . $image->getClientOriginalExtension(); // Combine with extension
+    
             // Save the file in the 'storage/app/public/images' directory
-            $path = $image->store('images', 'public');
+            $path = $image->storeAs('images', $fileName, 'public');
     
             // Get the authenticated user
             $user = Auth::user();
@@ -60,6 +64,7 @@ class ProfileController extends Controller
     
         return response()->json(['success' => false, 'message' => 'File not uploaded'], 400);
     }
+    
     
     // User Profile about- content Update
     public function updateAboutMe(Request $request, $userId)
@@ -193,7 +198,7 @@ class ProfileController extends Controller
         return redirect()->back()->with('success', 'Religious Details updated successfully!');
     }
     
-    // update user profile Family Details successfully
+    // update user profile Family Details 
     public function updateFamilyInfo(Request $request, $userId){
        
          // Validate the incoming request data
@@ -220,7 +225,7 @@ class ProfileController extends Controller
         return redirect()->back()->with('success', 'Family Details updated successfully!');
         //return response()->json(['message' => 'Basic information updated successfully.', 'data' => $userDetail]);
     }
-
+    // update user profile Education Details 
     public function updateEducation(Request $request, $userId){
          // Validate the incoming request data
          $validatedData = $request->validate([
@@ -265,5 +270,31 @@ class ProfileController extends Controller
         return response()->json(['message' => 'Basic information updated successfully.', 'data' => $userDetail]); 
     }
 
+    // profile image Delete function 
+    public function userImageDelete()
+    {
+        // Get the authenticated user
+        $user = Auth::user();
+        return "success";
+        // Retrieve the user's profile
+        $userProfile = Profile::where('user_id', $user->id)->first();
+
+        if ($userProfile) {
+            // Check if the profile has an existing image
+            if ($userProfile->profile_image && \Storage::disk('public')->exists($userProfile->profile_image)) {
+                // Delete the image from storage
+                \Storage::disk('public')->delete($userProfile->profile_image);
+
+                // Remove the image path from the database
+                $userProfile->update(['profile_image' => null]);
+
+                return redirect()->route('profile')->with('success', 'Profile image deleted successfully!');
+            } else {
+                return redirect()->route('profile')->with('error', 'No profile image found to delete.');
+            }
+        } else {
+            return response()->json(['success' => false, 'message' => 'User profile not found'], 404);
+        }
+    }
 
 }
