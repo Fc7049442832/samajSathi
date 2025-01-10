@@ -1,10 +1,12 @@
 @extends('layouts.app')
 @section('content')
+  
+  {{-- profile card call --}}
   <div class="row">
     <x-ProfileCard :user="$user"  :profile="$userDetail" />
   </div>
-
   <hr>
+  {{-- main Page content --}}
   <div class="col-md-8">
        {{-- error display --}}
         @if ($errors->any())
@@ -48,8 +50,7 @@
                 <button type="button" class="btn btn-cancel" onclick="toggleDivAndForm('about-view', 'edit-about', false)">Cancel</button>
             </div>
         </form>
-          {{-- About Me Section code end --}}
-         
+          {{-- About Me Section code end --}} 
 
           {{-- Basics information section code start --}}
           {{-- Default Display --}}
@@ -755,7 +756,6 @@
             <span class="edit-icon  col-md-2 col-4" onclick="toggleDivAndForm('education-info', 'edit-education-info', false)">
               <i class="bi bi-x"></i> Cancel
             </span>
-            @csrf
             {{-- Higher Education --}}
             <div class="info-row">
               <span> Education </span>
@@ -837,59 +837,82 @@
             <div class="row mt-2">
               <div class="col-md-3 col-6">Country</div>
               <div class="col-md-3 col-6"><b>:</b>
-                {{ $user->education ?? 'Not Specified' }}
+                {{ $userDetail->country ?? 'Not Specified' }}
               </div>
               <div class="col-md-3 col-6">State</div>
               <div class="col-md-3 col-6"><b>:</b>
-                {{ $user->working_as ?? 'Not Specified' }}
+                {{ $userDetail->state ?? 'Not Specified' }}
               </div>
               <div class="col-md-3 col-6">City</div>
               <div class="col-md-3 col-6"><b>:</b>
-                {{ $user->working_with ?? 'Not Specified' }}
+                {{ $userDetail->city ?? 'Not Specified' }}
               </div>
-              <div class="col-md-3 col-6">Postal Code</div>
+              <div class="col-md-3 col-6">Pin Code</div>
               <div class="col-md-3 col-6"><b>:</b>
-                {{ $user->income ?? 'Not Specified' }}
+                {{ $userDetail->postal_code ?? 'Not Specified' }}
               </div>
             </div>
           </div>
 
-          {{-- Education & Career edit form --}}
-          <form action="" method="post" id="edit-location">
+          {{-- Location edit form --}}
+          <form action="{{route('update-address', $userDetail->user_id)}}" method="post" id="edit-location">
+            @csrf
             <h5 class="col-md-4  col-5 mt-5">
               Edit Location
             </h5>
             <span class="edit-icon  col-md-2 col-4" onclick="toggleDivAndForm('location', 'edit_location', false)">
               <i class="bi bi-x"></i> Cancel
             </span>
-            @csrf
-            {{-- Higher Education --}}
+            {{-- Country selection --}}
             <div class="info-row">
               <span> Country </span>
               <span><b>:</b>
-                <input type="text" name="education" class="profile-input" id="" placeholder="Example: BA, B.Com, MBA etc." value="{{ $user->education ?? '' }}" >
+                <select name="country" class="profile-input" id="country">
+                  <option value=" disabled {{ old('country', $userDetail->country ?? '') === '' ? 'selected' : '' }}">- Select Country -</option>
+                  <option value="India">India</option>
+                  <option value="Other">Other</option>
+                </select>
               </span>
             </div>
-            {{-- Working As --}}
+
+            {{-- state input --}}
             <div class="info-row">
               <span> State </span>
               <span><b>:</b>
-                <input type="text" name="working_as" class="profile-input" id="" value="{{ $user->working_as ?? '' }}" >
+                <select name="state" class="profile-input" id="state">
+                  @php
+                      $states = [
+                          'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 
+                          'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 
+                          'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 
+                          'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 
+                          'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 
+                          'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Andaman and Nicobar Islands', 
+                          'Chandigarh', 'Dadra and Nagar Haveli and Daman and Diu', 'Delhi', 
+                          'Jammu and Kashmir', 'Ladakh', 'Lakshadweep', 'Puducherry', 'Other'
+                      ];
+                  @endphp
+                  <option value="" disabled {{ old('state', $userDetail->state ?? '') === '' ? 'selected' : '' }}>Select State</option>
+                 
+                  @foreach ($states as $state)
+                      <option id="state-selection" value="{{ $state }}" {{ old('state', $userDetail->state ?? '') == $state ? 'selected' : '' }}>{{ $state }}</option>
+                  @endforeach    
+                </select>
               </span>
             </div>
-            {{-- Working with --}}
+
+            {{-- City --}}
             <div class="info-row">
               <span> City </span>
               <span><b>:</b>
-                <input type="text" name="working_with" class="profile-input" id="" valu
-                e="{{ $user->working_with ?? '' }}" >
+                <input type="text" name="city" class="profile-input" id="" value="{{ old('city', $userDetail->city ?? '') }}" >
               </span>
             </div>
-            {{-- Annual Income --}}
+            {{-- Pin Code or Postal code --}}
             <div class="info-row">
-              <span> Postal Code </span>
+              <span> Pin Code </span>
               <span><b>:</b>
-                <input type="text" name="income" class="profile-input" id=" " value="{{ $user->income ?? '' }}" >
+                <input type="text" name="postal_code" class="profile-input" id=" " value="{{ old('postal_code', $userDetail->postal_code ?? '') }}" >
               </span>
             </div>
             {{-- form submit button --}}
@@ -901,7 +924,29 @@
             </div>
           </form>
           {{-- Location of Groom Section code end --}}
+          
+          {{-- Reffer Code Section start --}}
+          <div id="" class="row mt-5 justify-content-between">
+            <h5 class="col-md-4 col-8 ">
+              Referal Code :
+            </h5>
+            <span class="edit-icon  col-md-2 col-4">
+              
+            </span>
+            <div class="row mt-2">
+              <div class="col">
+                <h6>
+                Invite Your Friends 
+                <a href="" class="btn btn-success">
+                  <i class="bi bi-share"></i> Share
+                </a>
+              </h6>
+              </div>
+            </div>
+          </div>
+
         </div>
+
   </div>
 
   {{-- Profile Page Java Script code --}}
@@ -993,6 +1038,21 @@
 
         // Call the function to set the date range
         setDateRange();
+
+
+    // Get the State name and other state
+    const countrySelect = document.getElementById('country');
+      const stateSelect = document.getElementById('state'); // Ensure the state dropdown has an ID "state"
+
+      countrySelect.addEventListener('change', function () {
+        if (this.value === 'Other') {
+          stateSelect.value = 'Other'; // Set state dropdown to "Other"
+          stateSelect.disabled = true; // Disable the dropdown
+        } else {
+          stateSelect.value = ''; // Reset state dropdown
+          stateSelect.disabled = false; // Enable the dropdown
+        }
+    });
   </script>
 @endsection
 {{-- Profile page CSS code  --}}

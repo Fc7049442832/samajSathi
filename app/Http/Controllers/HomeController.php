@@ -30,7 +30,7 @@ class HomeController extends Controller
     
         // Create a profile for the user
         Profile::create([
-            'user_id' => $user->id,
+            'user_id' => $user->custom_id,
         ]);
     
         // Automatically log in the user

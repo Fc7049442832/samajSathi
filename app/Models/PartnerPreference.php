@@ -10,11 +10,19 @@ class PartnerPreference extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
-        'age_range', 'height_range',
-        'marital_status', 'religion',
-        'education', 'profession', 'income_range',
-        'city', 'state', 'country',
-        'hobbies', 'languages',
+        
+        'min_age', 'max_age',
+        'min_height', 'max_height',
+
+        'marital_status', 'special_case',
+        'body_type', 'weight', 'citizenship', 'complexion', 'Features',
+        'education', 'working_as','income_range',
+
+        'diet', 'drink', 'smoke',
+
+        'religion', 'cast', 'mother_tongus',
+        'family_type', 'family_status',
+        'city', 'state', 'country', 
     ];
 
     public function user()

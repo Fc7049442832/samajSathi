@@ -11,7 +11,7 @@
             <div class="profile-info">
                 <h2>{{ $user->name}} </h2>
                 <p>{{ $user->age }} Yrs,  {{ $profile->height }}</p>
-                <p>India, Chhattisgarh, Raipur</p>
+                <p>{{ $profile->country .',' ?? '' }} {{ $profile->state .', ' ?? '' }}{{ $profile->city ?? '' }} <br> {{ $profile->postal_code ?? '' }}</p>
                 <p><strong>+91- {{ $user->phone }} </strong></p>
             </div>
         </div>

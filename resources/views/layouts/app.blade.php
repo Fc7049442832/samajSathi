@@ -30,10 +30,22 @@
                 color: white;
                 transition: opacity 0.5s ease-out;
             }
+            /* #pageHeader{  
+                background-image: radial-gradient(circle, rgba(20, 65, 107, 0.849), rgba(241, 64, 168, 0.7));
+            } */
+            .page-header{
+                position: relative;
+                background-image: radial-gradient(circle, rgba(212, 55, 27, 0.849), rgba(241, 64, 168, 0.7));
+                border-radius:8px;
+            }
+            .page-header a {
+                text-decoration: none;
+                font-weight: 600;
+            }
         </style>
     </head>
     <body>
-        <div class="container-xxl" style="">
+        <div class="container-xxl">
             @if (session('success'))
                 <div id="alert-box" class="alert alert-success">
                     {{ session('success') }}
@@ -41,6 +53,20 @@
             @endif
 
             <x-header />
+            @if (request()->is('profile') || request()->is('partner_matching') || request()->is('partner_query'))
+                {{-- page header code  --}}
+                <div class="row page-header text-center p-2 mb-2 justify-content-around" id="pageHeader" >
+                    <div class="col-md-3 col-3 btn ">
+                    <a href="{{ route('profile')}}" class="text-white ">My Profile</a>
+                    </div>
+                    <div class="col-md-4 col-5 btn ">
+                    <a href="{{ route('partner_query')}}" class="text-white">Partner Requirement</a>
+                    </div>
+                    <div class="col-md-3 col-3 btn ">
+                    <a href="{{ route('matching')}}" class="text-white">Matching</a>
+                    </div>
+                </div>
+            @endif
             
             @yield('content')
             
@@ -51,14 +77,14 @@
                     
                     <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                         @csrf
-                        <button type="submit" class="btn btn-danger">Logout</button>
+                        <button type="submit" class="btn btn-danger m-5">Logout</button>
                     </form>
                     @endif
                 </div>
             </div> 
             
             {{-- footer section code  --}}
-            <div class="row bg-secondary text-center p-3">
+            <div class="bg-secondary text-center p-3" style="height: 45px;">
                 <p class="text-light">Power By <a href="" style="text-decoration: none; color:rgb(209, 212, 247);">Tech Radar</a> @ 2024</p>
             </div>
 
@@ -76,6 +102,16 @@
                                 alertBox.remove(); // Remove element
                             }, 500); // Wait for fade-out transition
                         }, 5000); // Display for 5 seconds
+                    }
+                });
+
+                window.addEventListener('scroll', function() {
+                    const pageHeader = document.getElementByClass('page-header');
+
+                    if (window.scrollY > 10) {
+                        pageHeader.classList.add('active');
+                    } else {
+                        pageHeader.classList.add('deactive');
                     }
                 });
         </script>

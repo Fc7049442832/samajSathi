@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->string('custom_id')->primary();
             $table->string('name');
             $table->enum('gender', ['male', 'female', 'other'])->nullable();
             $table->integer('age')->nullable();

@@ -14,8 +14,8 @@ class ProfileController extends Controller
     public function index()
     {   
         if(Auth::check()){
-            $userDetail = Profile::where('user_id', Auth::user()->id)->first();
-            $user = User::where('id', Auth::user()->id)->first();
+            $userDetail = Profile::where('user_id', Auth::user()->custom_id)->first();
+            $user = User::where('custom_id', Auth::user()->custom_id)->first();
             return view('profile', compact('user', 'userDetail'));
 
         }else{
@@ -44,7 +44,7 @@ class ProfileController extends Controller
             $user = Auth::user();
     
             // Update the profile_image field in the Profile table
-            $userProfile = \App\Models\Profile::where('user_id', $user->id)->first();
+            $userProfile = \App\Models\Profile::where('user_id', $user->custom_id)->first();
             if ($userProfile) {
                 // Delete the old image if necessary (optional)
                 if ($userProfile->profile_image && \Storage::disk('public')->exists($userProfile->profile_image)) {
@@ -64,7 +64,6 @@ class ProfileController extends Controller
     
         return response()->json(['success' => false, 'message' => 'File not uploaded'], 400);
     }
-    
     
     // User Profile about- content Update
     public function updateAboutMe(Request $request, $userId)
@@ -267,7 +266,7 @@ class ProfileController extends Controller
         // Update the user details
         $userDetail->update($validatedData);
     
-        return response()->json(['message' => 'Basic information updated successfully.', 'data' => $userDetail]); 
+        return redirect()->route('profile')->with('success', 'Address updated successfully!'); 
     }
 
     // profile image Delete function 
@@ -277,7 +276,7 @@ class ProfileController extends Controller
         $user = Auth::user();
         return "success";
         // Retrieve the user's profile
-        $userProfile = Profile::where('user_id', $user->id)->first();
+        $userProfile = Profile::where('user_id', $user->custom_id)->first();
 
         if ($userProfile) {
             // Check if the profile has an existing image
