@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PartnerQueryController;
 use App\Http\Controllers\MatchingController;
+use App\Http\Controllers\DataSearchingController;
 use App\Http\Controllers\SettingController;
 
 /*
@@ -18,10 +19,15 @@ use App\Http\Controllers\SettingController;
 |
 */
 
-
+// Base Data Routes 
 Route::get('/',[HomeController::class, 'index'])->name('home');
 Route::get('/browse-partner',[HomeController::class, 'browsePartner'])->name('Browse_Partner');
 
+// Data searching Routes
+Route::post('/search-partner',[DataSearchingController::class, 'searchPartner'])->name('searchPartner');
+
+
+// user Auth Routes
 Route::post('/register',[HomeController::class, 'ContactStore'])->name('Basic_Contact');
 Route::post('/Userlogin', [HomeController::class, 'login'])->name('login.submit');
 Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
@@ -48,6 +54,4 @@ Route::post('/partner_query/{userId}/social_requeriment',[PartnerQueryController
 // Partner Matching Routes
 Route::get('/partner_matching',[MatchingController::class, 'index'])->name('matching');
 
-
-
-Route::view('demo2','Demo')->name('demo');
+// Route::view('demo2','Demo')->name('demo');

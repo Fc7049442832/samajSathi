@@ -2,7 +2,7 @@
     <div class="overlay" id="targetDiv">
         <h3 class="mb-4">Someone Somewhere is Dreaming of You</h3>
         {{-- Before scrolling  form --}}
-        <form class="search-form">
+        <form action="{{route('searchPartner')}}" method="POST" class="search-form" >
             @csrf
             {{-- Gender Selection field code Before Scrolling --}}
             <div class="form-group">
@@ -56,7 +56,7 @@
     
     <div id="formContainer">
         {{-- Afer Scrolling form --}}
-        <form class="search-form">
+        <form action="{{route('searchPartner')}}" method="POST" class="search-form">
             @csrf
             {{-- Gender Selection field code After Scrolling --}}
             <div class="form-group">

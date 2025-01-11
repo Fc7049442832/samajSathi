@@ -10,11 +10,28 @@
     <x-PartnerCard :users="$users" />
 
     <div class="row text-center">
-        <a href="{{ route('Browse_Partner')}}">
-            <div class="col-6 btn btn-danger">
-             More..
+        @if(request()->is('profile'))
+            <a href="{{ route('Browse_Partner')}}">
+                <div class="col-6 btn btn-danger">
+                More..
+                </div>
+            </a>
+        @elseif(request()->is('search-partner'))
+            <div class="col">
+                <button onclick="goBack()" class="col-6 btn btn-danger">
+                    Back
+                </button>
             </div>
-        </a>
+        @endif
     </div>
   
 </div>
+<script>
+    function goBack() {
+    if (window.history.length > 1) {
+        window.history.back();
+    } else {
+        window.location.href = '/';
+    }
+}
+</script>
