@@ -33,7 +33,7 @@
             @csrf
             <div class="modal-body">
                 <img src="{{ asset($profile->profile_image ? 'storage/' . $profile->profile_image : 'images/set_partner_per.jpg')}}" 
-                alt="" style="border-radius:10px;" width="400px" height="auto">
+                alt="" style="border-radius:10px;" width="400px" height="400px">
                 <input type="file" name="image" class="form-control">
             </div>
             <div class="modal-footer">

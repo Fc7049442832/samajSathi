@@ -3,7 +3,9 @@
 
     <x-carousel />
     <x-searchPartner  />  
-    <x-showPartner />
+    <x-show-partner :users="$combinedUsers" />
+
+    
     <x-registration-step />
    
     <x-QuestionsBox />

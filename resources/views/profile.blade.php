@@ -30,7 +30,7 @@
                 @if(!empty($userDetail->about_me))
                   {{ $userDetail->about_me }}
                 @else
-                  I am a simple boy with a good personality. I reside in a beautiful city of India.
+                  I am a simple boy/girl with a good personality. I reside in a beautiful city of India.
                 @endif
               </p>
           </div>

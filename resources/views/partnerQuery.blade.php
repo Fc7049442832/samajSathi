@@ -34,7 +34,7 @@
                                   {{ $i }}
                               </option>
                           @endfor
-                      </select>
+                        </select>
                      </span>
                      <span>
                         <label for="age">Max</label>
@@ -265,11 +265,20 @@
          <div class="info-row">
              <span>Drinking</span>
              <span><b>:</b>
-                 <select name="drink" class="profile-input">
-                     <option value="Doesn't Matter" {{ (old('drink', $partner_Query->drink) == "Doesn't Matter") ? 'selected' : '' }}>Doesn't Matter</option>
-                     <option value="Yes" {{ (old('drink', $partner_Query->drink) == 'Yes') ? 'selected' : '' }}>Yes</option>
-                     <option value="No" {{ (old('drink', $partner_Query->drink) == 'No') ? 'selected' : '' }}>No</option>
-                 </select>
+                <select name="drink" class="profile-input">
+                    <option value="Doesn't Matter" 
+                        {{ old('drink', $partner_Query->drink ?? "Doesn't Matter") == "Doesn't Matter" ? 'selected' : '' }}>
+                        Doesn't Matter
+                    </option>
+                    <option value="Yes" 
+                        {{ old('drink', $partner_Query->drink ?? '') == 'Yes' ? 'selected' : '' }}>
+                        Yes
+                    </option>
+                    <option value="No" 
+                        {{ old('drink', $partner_Query->drink ?? '') == 'No' ? 'selected' : '' }}>
+                        No
+                    </option>
+                </select>                
              </span>
              @error('drink')
              <div class="text-danger">{{ $message }}</div>
@@ -281,9 +290,9 @@
              <span>Smoke</span>
              <span><b>:</b>
                  <select name="smoke" class="profile-input">
-                     <option value="Doesn't Matter" {{ (old('smoke', $partner_Query->smoke) == "Doesn't Matter") ? 'selected' : '' }}>Doesn't Matter</option>
-                     <option value="Yes" {{ (old('smoke', $partner_Query->smoke) == 'Yes') ? 'selected' : '' }}>Yes</option>
-                     <option value="No" {{ (old('smoke', $partner_Query->smoke) == 'No') ? 'selected' : '' }}>No</option>
+                     <option value="Doesn't Matter" {{ (old('smoke', $partner_Query->smoke ?? '') == "Doesn't Matter") ? 'selected' : '' }}>Doesn't Matter</option>
+                     <option value="Yes" {{ (old('smoke', $partner_Query->smoke ?? '') == 'Yes') ? 'selected' : '' }}>Yes</option>
+                     <option value="No" {{ (old('smoke', $partner_Query->smoke ?? '') == 'No') ? 'selected' : '' }}>No</option>
                  </select>
              </span>
              @error('smoking')
@@ -318,7 +327,7 @@
              @endphp
              <select name="religion" class="profile-input" id="">
                @foreach($religions as $religion)
-                <option value="{{ $religion }}" {{ old('education', $userDetail->religion?? '') == $religion ? 'selected' : '' }}>{{ $religion }}</option>
+                <option value="{{ $religion }}" {{ old('religion', $userDetail->religion?? '') == $religion ? 'selected' : '' }}>{{ $religion }}</option>
                @endforeach
              </select>
            </span>

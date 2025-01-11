@@ -18,9 +18,9 @@ use App\Http\Controllers\SettingController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-})->name('home');
+
+Route::get('/',[HomeController::class, 'index'])->name('home');
+Route::get('/browse-partner',[HomeController::class, 'browsePartner'])->name('Browse_Partner');
 
 Route::post('/register',[HomeController::class, 'ContactStore'])->name('Basic_Contact');
 Route::post('/Userlogin', [HomeController::class, 'login'])->name('login.submit');
@@ -49,5 +49,5 @@ Route::post('/partner_query/{userId}/social_requeriment',[PartnerQueryController
 Route::get('/partner_matching',[MatchingController::class, 'index'])->name('matching');
 
 
-Route::view('demo','browsepartner')->name('Browse_Partner');
+
 Route::view('demo2','Demo')->name('demo');

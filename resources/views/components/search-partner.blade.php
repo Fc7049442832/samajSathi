@@ -1,8 +1,10 @@
 <div class="search-section">
     <div class="overlay" id="targetDiv">
         <h3 class="mb-4">Someone Somewhere is Dreaming of You</h3>
-
+        {{-- Before scrolling  form --}}
         <form class="search-form">
+            @csrf
+            {{-- Gender Selection field code Before Scrolling --}}
             <div class="form-group">
                 <label for="looking-for">Looking for</label>
                 <select id="looking-for" name="looking-for">
@@ -10,40 +12,53 @@
                     <option value="male">Male</option>
                 </select>
             </div>
-
+            {{-- Min Age field code Before Scrolling --}}
             <div class="form-group">
-                <label for="age">Mini Age</label>
-                <select name="" id="">
+                <label for="age">Min Age</label>
+                <select name="min_age" id="min_age" class="profile-input" onchange="updateMaxAge()">
                     @for ($i = 18; $i <= 45; $i++)
-                        <option value="{{ $i }}">{{ $i }}</option>
+                        <option value="{{ $i }}" {{ (old('min_age', $partner_Query->min_age ?? '') == $i) ? 'selected' : '' }}>
+                            {{ $i }}
+                        </option>
                     @endfor
                 </select>
             </div>
             <span>To</span>
+
+            {{--  Max Age field code Before Scrolling --}}
             <div class="form-group">
                 <label for="age">Max Age</label>
-                <select name="" id="">
-                    @for ($i = 21; $i <= 50; $i++)
-                        <option value="{{ $i }}">{{ $i }}</option>
+                <select name="max_age" id="max_age" class="profile-input">
+                    <option value="">- Max Age -</option>
+                    @for ($i = 18; $i <= 45; $i++)
+                        <option value="{{ $i }}" {{ (old('max_age', $partner_Query->max_age ?? '') == $i) ? 'selected' : '' }}>
+                            {{ $i }}
+                        </option>
                     @endfor
                 </select>
             </div>
 
+            {{-- Religion field code Before Scrolling --}}
             <div class="form-group">
                 <label for="religion">Religion</label>
-                <select id="religion" name="religion">
-                    <option value="any">Any</option>
-                    <option value="hindu">Hindu</option>
-                    <option value="muslim">Muslim</option>
-                    <option value="christian">Christian</option>
+                @php 
+                    $religions = ['All','Hindu', 'Muslim', 'Christian', 'Buddhist', 'Jain', 'Sikh', 'Other'];
+                @endphp
+                <select name="religion" class="profile-input" id="" >
+                    @foreach($religions as $religion)
+                        <option value="{{ $religion }}" {{ old('religion', $userDetail->religion?? '') == $religion ? 'selected' : '' }}>{{ $religion }}</option>
+                    @endforeach
                 </select>
             </div>
-
             <button type="submit" class="search-button ">Search Partner</button>
         </form>
     </div>
+    
     <div id="formContainer">
+        {{-- Afer Scrolling form --}}
         <form class="search-form">
+            @csrf
+            {{-- Gender Selection field code After Scrolling --}}
             <div class="form-group">
                 <label for="looking-for">Looking for</label>
                 <select id="looking-for" name="looking-for">
@@ -52,40 +67,44 @@
                 </select>
             </div>
 
+             {{-- Min Age field code After Scrolling --}}
             <div class="form-group">
                 <label for="age">Mini Age</label>
-                <select name="" id="">
+                <select name="min_age" id="min_age" class="profile-input" onchange="updateMaxAge()">
                     @for ($i = 18; $i <= 45; $i++)
-                        <option value="{{ $i }}">{{ $i }}</option>
+                        <option value="{{ $i }}" {{ (old('min_age', $partner_Query->min_age ?? '') == $i) ? 'selected' : '' }}>
+                            {{ $i }}
+                        </option>
                     @endfor
                 </select>
             </div>
             <span>To</span>
+
+             {{-- Max Age field code After Scrolling --}}
             <div class="form-group">
                 <label for="age">Max Age</label>
-                <select name="" id="">
-                    @for ($i = 21; $i <= 50; $i++)
-                        <option value="{{ $i }}">{{ $i }}</option>
+                <select name="max_age" id="max_age" class="profile-input">
+                    <option value="">- Select Max Age -</option>
+                    @for ($i = 18; $i <= 45; $i++)
+                        <option value="{{ $i }}" {{ (old('max_age', $partner_Query->max_age ?? '') == $i) ? 'selected' : '' }}>
+                            {{ $i }}
+                        </option>
                     @endfor
                 </select>
             </div>
-
+             {{-- Religion field code After Scrolling --}}
             <div class="form-group">
                 <label for="religion">Religion</label>
-                <select id="religion" name="religion">
-                    <option value="any">Any</option>
-                    <option value="hindu">Hindu</option>
-                    <option value="muslim">Muslim</option>
-                    <option value="christian">Christian</option>
+                <select name="religion" class="profile-input" id="" >
+                    @foreach($religions as $religion)
+                        <option value="{{ $religion }}" {{ old('religion', $userDetail->religion?? '') == $religion ? 'selected' : '' }}>{{ $religion }}</option>
+                    @endforeach
                 </select>
             </div>
-
             <button type="submit" class="search-button ">Search Partner</button>
         </form>
     </div>
 </div>
-
-
 <style>
     /* top form ih header which show on scrolling */
     #formContainer {
@@ -101,9 +120,6 @@
         backdrop-filter: blur(15px);
         background: linear-gradient(45deg, rgba(71, 206, 117, 0.4), rgba(106, 240, 177, 0.2));
     }
-
-
-
     #targetDiv.hidden {
         /* Make the selector more specific */
         visibility: hidden !important;
@@ -127,7 +143,6 @@
         box-sizing: border-box;
         font-family: Arial, sans-serif;
     }
-
     .overlay {
         background-color: rgb(0 0 0 / 80%);
         padding: 20px;
@@ -159,14 +174,12 @@
         font-size: 20px;
         /* Reduced font size */
     }
-
     h3 {
         font-size: 2rem;
         /* Reduced font size */
         margin-bottom: 15px;
         /* Reduced margin */
     }
-
     .search-form {
         display: flex;
         flex-wrap: wrap;
@@ -175,28 +188,30 @@
         gap: 10px;
         /* Reduced gap between form elements */
     }
-
     .form-group {
         display: flex;
         flex-direction: column;
         align-items: center;
     }
-
     select {
         padding: 8px;
         /* Reduced padding */
+        background: #e7e0e0;
+        color: black;
         border: 1px solid #ddd;
         border-radius: 5px;
         font-size: 18px;
         /* Reduced font size */
     }
-
+    option{
+        background: #e7e0e0;
+        color: black;
+    }
     input[type="number"] {
         width: 60px;
         /* Reduced width */
         text-align: center;
     }
-
     .search-button {
         margin: 10px 5px 5px 30px;
         /* Reduced margins */
@@ -210,7 +225,6 @@
         /* Reduced font size */
         cursor: pointer;
     }
-
     .search-button:hover {
         background-color: #c0392b;
     }
@@ -261,14 +275,12 @@
             font-size: 12px;
             /* Further reduced font size */
         }
-
         span {
             font-size: 12px;
             /* Further reduced font size */
         }
     }
 </style>
-
 <script>
     const targetDiv = document.getElementById('targetDiv');
     const formContainer = document.getElementById('formContainer');
@@ -300,4 +312,27 @@
         // Update last scroll position
         lastScrollPosition = currentScrollPosition;
     });
+
+    // age for function
+    function updateMaxAge() {
+        const minAge = document.getElementById('min_age').value;
+        const maxAgeSelect = document.getElementById('max_age');
+        
+        // Clear previous selections
+        for (let i = 0; i < maxAgeSelect.options.length; i++) {
+            maxAgeSelect.options[i].disabled = false;
+        }
+
+        // Disable options less than selected min_age
+        for (let i = 0; i < maxAgeSelect.options.length; i++) {
+            if (parseInt(maxAgeSelect.options[i].value) < parseInt(minAge)) {
+                maxAgeSelect.options[i].disabled = true;
+            }
+        }
+
+        // Reset max_age value if the selected value is less than min_age
+        if (parseInt(maxAgeSelect.value) < parseInt(minAge)) {
+            maxAgeSelect.value = '';
+        }
+    }
 </script>

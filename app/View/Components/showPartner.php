@@ -11,9 +11,13 @@ class showPartner extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public $users;
+
+    public function __construct($users)
     {
         //
+        $this->users = $users;
+       
     }
 
     /**

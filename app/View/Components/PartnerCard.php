@@ -12,10 +12,12 @@ class PartnerCard extends Component
      * Create a new component instance.
      */
     // public $userDetails;
-
-    public function __construct()
+    public $users;
+    public function __construct($users)
     {
-        // $this->userDetails = $userDetails;
+        //
+        $this->users = $users;
+      
     }
 
     /**

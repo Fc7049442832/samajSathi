@@ -9,7 +9,29 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    // User Registration Data
+    // Index or Home page for data fetch from database
+    public function index()
+    {
+        $combinedUsers = $this->getFilteredUsers(); // Use private function
+
+        if (!Auth::check()) {
+        $combinedUsers = $this->getRandomUsersByGender($combinedUsers, 3); // Data sorting and randomuserBy Gender for use private function 
+        }else{
+            $combinedUsers = array_map(fn($key) =>  $combinedUsers[$key], array_rand( $combinedUsers, min(6, count( $combinedUsers))));
+        }
+
+        // Pass combined data to the view
+         return view('index', compact('combinedUsers'));
+    }
+    // Browse Partner Page for data fetch from database
+    public function browsePartner()
+    {
+        $combinedUsers = $this->getFilteredUsers(); // Use private function
+        // Pass combined data to the view
+        return view('browsepartner', compact('combinedUsers'));
+    }
+    
+    // User Registration Data store in database
     public function ContactStore(Request $request)
     {
         // Validate the input fields
@@ -41,7 +63,7 @@ class HomeController extends Controller
         ->with('success', 'User created and logged in successfully')
         ->with('user', $user);
     }
-    
+    // User Login Function 
     public function login(Request $request)
     {
         // Validate the input fields
@@ -64,7 +86,7 @@ class HomeController extends Controller
         // Authentication failed, redirect back with an error message
         return redirect()->back()->withErrors(['email' => 'Invalid email or password.'])->withInput();
     }
-
+    // User Logout Function
     public function logout(Request $request)
     {
         // Log out the user
@@ -77,4 +99,64 @@ class HomeController extends Controller
         // Redirect to the login page with a success message
         return redirect('/')->with('success', 'Logged out successfully!');
     }
+
+    // Private function to handle data processing
+    private function getFilteredUsers()
+    {
+        // Fetch all users and profiles
+        $users = User::get()->toArray(); // Convert to array for merging
+        $userDetails = Profile::get()->toArray(); // Convert to array for merging
+
+        // Combine $users and $userDetails based on 'id'
+        $combinedUsers = [];
+        foreach ($users as $u) {
+            $profileData = collect($userDetails)->firstWhere('user_id', $u['custom_id']); // Assuming 'user_id' in Profile table
+            $combinedUsers[] = array_merge($u, $profileData ?? []); // Merge user data with profile data
+        }
+
+        // Filter data based on authenticated user's gender
+        if (Auth::check()) {
+            $authUser = Auth::user(); // Get the authenticated user
+
+            // Filter opposite gender
+            if ($authUser->gender === 'male') {
+                $combinedUsers = array_filter($combinedUsers, function ($user) {
+                    return $user['gender'] === 'female'; // Fetch only female users
+                });
+            } elseif ($authUser->gender === 'female') {
+                $combinedUsers = array_filter($combinedUsers, function ($user) {
+                    return $user['gender'] === 'male'; // Fetch only male users
+                });
+            }
+        }
+
+        return $combinedUsers;
+    }
+    // Private function to handle data processing
+    private function getRandomUsersByGender(array $users, $no ): array
+    {
+        $no ;
+
+        // Separate users by gender
+        $males = array_filter($users, fn($user) => $user['gender'] === 'male');
+        $females = array_filter($users, fn($user) => $user['gender'] === 'female');
+
+        // Randomly select up to 3 males and 3 females
+        $randomMales = array_map(
+            fn($key) => $males[$key],
+            array_rand($males, min($no, count($males))) // Get up to 3 males
+        );
+
+        $randomFemales = array_map(
+            fn($key) => $females[$key],
+            array_rand($females, min($no, count($females))) // Get up to 3 females
+        );
+
+        // Combine males and females and shuffle for random order
+        $combinedUsers = array_merge($randomMales, $randomFemales);
+        shuffle($combinedUsers); // Shuffle if needed
+
+        return $combinedUsers;
+    }
+
 }

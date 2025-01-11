@@ -4,11 +4,9 @@
 <div class="content main-container">
     {{-- User Details Display Card code  --}}
     <div class="partner_box">
-        @for($i=0 ;$i<10;$i++)
         <div class="card">
-            <x-PartnerCard />
+            <x-PartnerCard :users="$combinedUsers" />
         </div>
-        @endfor
     </div>
 </div>
 <style>

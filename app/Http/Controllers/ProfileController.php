@@ -112,7 +112,7 @@ class ProfileController extends Controller
         }
 
         // Check if the user exists
-        $user = User::where('id', $userId)->first();
+        $user = User::where('custom_id', $userId)->first();
 
         if (!$user) {
             return response()->json(['error' => 'User not found.'], 404);
