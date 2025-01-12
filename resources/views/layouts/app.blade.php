@@ -21,6 +21,9 @@
             .btn-danger{
                 background-image: radial-gradient(circle, rgba(231, 63, 34, 0.849), rgba(247, 54, 166, 0.7));
             }
+            .btn-success{
+                background-image: radial-gradient(circle, rgba(46, 139, 67, 0.911), rgba(247, 54, 166, 0.7));
+            }
             #alert-box {
                 position: fixed;
                 top: 20px;

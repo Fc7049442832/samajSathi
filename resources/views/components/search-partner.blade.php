@@ -7,7 +7,8 @@
             {{-- Gender Selection field code Before Scrolling --}}
             <div class="form-group">
                 <label for="looking-for">Looking for</label>
-                <select id="looking-for" name="looking-for">
+                <select id="looking-for" name="looking_for">
+                    <option value="" >- Select -</option>
                     <option value="female">Female</option>
                     <option value="male">Male</option>
                 </select>
@@ -16,6 +17,7 @@
             <div class="form-group">
                 <label for="age">Min Age</label>
                 <select name="min_age" id="min_age" class="profile-input" onchange="updateMaxAge()">
+                        <option value="" > - select - </option>
                     @for ($i = 18; $i <= 45; $i++)
                         <option value="{{ $i }}" {{ (old('min_age', $partner_Query->min_age ?? '') == $i) ? 'selected' : '' }}>
                             {{ $i }}
@@ -45,6 +47,7 @@
                     $religions = ['All','Hindu', 'Muslim', 'Christian', 'Buddhist', 'Jain', 'Sikh', 'Other'];
                 @endphp
                 <select name="religion" class="profile-input" id="" >
+                        <option value="" >- Select -</option>
                     @foreach($religions as $religion)
                         <option value="{{ $religion }}" {{ old('religion', $userDetail->religion?? '') == $religion ? 'selected' : '' }}>{{ $religion }}</option>
                     @endforeach
@@ -61,7 +64,8 @@
             {{-- Gender Selection field code After Scrolling --}}
             <div class="form-group">
                 <label for="looking-for">Looking for</label>
-                <select id="looking-for" name="looking-for">
+                <select id="looking-for" name="looking_for">
+                    <option value="" >- Select -</option>
                     <option value="female">Female</option>
                     <option value="male">Male</option>
                 </select>
@@ -71,6 +75,7 @@
             <div class="form-group">
                 <label for="age">Mini Age</label>
                 <select name="min_age" id="min_age" class="profile-input" onchange="updateMaxAge()">
+                        <option value="" > - select - </option>
                     @for ($i = 18; $i <= 45; $i++)
                         <option value="{{ $i }}" {{ (old('min_age', $partner_Query->min_age ?? '') == $i) ? 'selected' : '' }}>
                             {{ $i }}
@@ -84,7 +89,7 @@
             <div class="form-group">
                 <label for="age">Max Age</label>
                 <select name="max_age" id="max_age" class="profile-input">
-                    <option value="">- Select Max Age -</option>
+                    <option value="">- Max Age -</option>
                     @for ($i = 18; $i <= 45; $i++)
                         <option value="{{ $i }}" {{ (old('max_age', $partner_Query->max_age ?? '') == $i) ? 'selected' : '' }}>
                             {{ $i }}
@@ -96,6 +101,7 @@
             <div class="form-group">
                 <label for="religion">Religion</label>
                 <select name="religion" class="profile-input" id="" >
+                        <option value="" >- Select -</option>
                     @foreach($religions as $religion)
                         <option value="{{ $religion }}" {{ old('religion', $userDetail->religion?? '') == $religion ? 'selected' : '' }}>{{ $religion }}</option>
                     @endforeach

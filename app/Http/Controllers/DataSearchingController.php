@@ -6,45 +6,55 @@ use Illuminate\Http\Request;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Arr;
 
 class DataSearchingController extends Controller
 {
     //
     public function searchPartner(Request $request){
-        
+    
         $gender = $request->looking_for;
         $minAge = $request->min_age; 
         $maxAge = $request->max_age; 
         $religion =$request->religion;
 
-
-        $combinedUsers = $this->getProfiles($gender, $minAge, $maxAge, $religion);
+        $combinedUsers = $this->searchDataProcess($gender, $minAge, $maxAge, $religion); // call the Private searchDataProcess function
         
         return view('index', compact('combinedUsers'));
     }
-
-    // searching  Query Process Data Private function
-    private function getProfiles($gender, $minAge, $maxAge, $religion)
-{
-    // Query the User model and join with the Profile model
-    $profiles = User::query()
-        ->join('profiles', 'users.custom_id', '=', 'profiles.user_id') // Join with Profile model using custom_id and user_id
-        ->when($gender, function ($query) use ($gender) {
-            $query->where('users.gender', $gender); // Apply gender condition from the User model
-        })
-        ->when($minAge, function ($query) use ($minAge) {
-            $query->where('users.age', '>=', $minAge); // Apply age condition from the User model
-        })
-        ->when($maxAge, function ($query) use ($maxAge) {
-            $query->where('users.age', '<=', $maxAge); // Apply age condition from the User model
-        })
-        ->when($religion !== 'any', function ($query) use ($religion) {
-            $query->where('profiles.religion', $religion); // Apply religion condition from the Profile model
-        })
-        ->select('users.*', 'profiles.religion') // Select fields from both tables
-        ->get();
-
-    return $profiles;
-}
+    // Data Searching Private Function
+    private function searchDataProcess($gender, $minAge, $maxAge, $religion)
+    {
+            // Query the User model and join with the Profile model
+            $searchResults = User::query()
+                ->join('profiles', 'users.custom_id', '=', 'profiles.user_id')
+                ->select('users.*', 'profiles.*') // Include specific fields from the joined tables
+                ->get()
+                ->toArray();
+        
+            // Filter by gender
+            if (!empty($gender)) {
+                $searchResults = array_filter($searchResults, function ($value) use ($gender) {
+                    return $value['gender'] === $gender;
+                });
+            }
+        
+            // Filter by age range
+            if (!empty($minAge) && !empty($maxAge)) {
+                $searchResults = Arr::where($searchResults, function ($value) use ($minAge, $maxAge) {
+                    return isset($value['age']) && $value['age'] >= $minAge && $value['age'] <= $maxAge;
+                });
+            }
+        
+            // Filter by religion
+            if (!empty($religion)) {
+                $searchResults = array_filter($searchResults, function ($value) use ($religion) {
+                    return isset($value['religion']) && $value['religion'] === $religion;
+                });
+            }
+        
+            return $searchResults;
+    }
 
 }

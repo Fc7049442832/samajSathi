@@ -116,7 +116,7 @@
     }
 
     .logo img {
-        height: 120px;
+        height: 80px;
     }
 
     .menu-toggle {
