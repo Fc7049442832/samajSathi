@@ -77,17 +77,7 @@
             @yield('content')
             
             <br>
-            <div class="row text-center justify-content-center">
-                <div class="col-md-2 col-4">
-                    @if(Auth::check())
-                    
-                    <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                        @csrf
-                        <button type="submit" class="btn btn-danger m-5">Logout</button>
-                    </form>
-                    @endif
-                </div>
-            </div> 
+           
             
             {{-- footer section code  --}}
             <div class="bg-secondary text-center p-3" style="height: 45px;">
@@ -99,6 +89,15 @@
         <!-- Option 1: Bootstrap Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <script>
+            // back Button function 
+            function goBack() {
+                if (window.history.length > 1) {
+                    window.history.back();
+                } else {
+                    window.location.href = '/';
+                }
+            }
+
              document.addEventListener('DOMContentLoaded', () => {
                     const alertBox = document.getElementById('alert-box');
                     if (alertBox) {

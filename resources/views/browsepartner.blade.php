@@ -24,7 +24,7 @@
         margin-top: 0vh;     
     }
     .partner_box{
-        height: 62vh;
+        height: 72vh;
         width: 100%;
         overflow-y: scroll;
         padding-bottom:210px;

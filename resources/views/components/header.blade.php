@@ -17,15 +17,32 @@
     </div>
     <nav class="nav-links" id="nav-links">
         <a href="{{route('home')}}">Home</a>
-        <a href="{{route('Browse_Partner')}}">Browse Profiles</a>
+        <a href="{{route('Browse_Partner')}}">Browse Partner</a>
         @if(Auth::check())
-        <a href="{{ route('profile')}}">My Profiles</a>
+        <a href="{{ route('profile')}}">Profiles</a>
         @else
             <a href="#" data-bs-toggle="modal" data-bs-target="#LoginModal">
                 Login <i class="fas fa-user"></i>
             </a>
         @endif
-        <a href="#help">Help <i class="fas fa-caret-down"></i></a>
+
+        <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="#help">Other</a>
+            </button>
+            <ul class="dropdown-menu text-center " aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item " href="#">Setting</a></li>
+              <li><a class="dropdown-item" href="#">Help</a></li>
+                @if(Auth::check())
+                    <li><a class="dropdown-item" href="#">
+                        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Logout</button>
+                        </form>
+                    </a></li>
+                @endif
+            </ul>
+        </div>
     </nav>
     
 </div>
@@ -114,7 +131,9 @@
         background-color: #f8f9fa;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
-
+    .headerDropdownLi{
+        width: 60px;
+    }
     .logo img {
         height: 80px;
     }

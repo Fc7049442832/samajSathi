@@ -11,7 +11,7 @@
     <x-PartnerCard :users="$lastFourUsers" />
 
     <div class="row text-center">
-        @if(request()->is('profile'))
+        @if(request()->is('/'))
             <a href="{{ route('Browse_Partner')}}">
                 <div class="col-6 btn btn-danger">
                 More..
