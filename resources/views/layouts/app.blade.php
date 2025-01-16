@@ -15,7 +15,8 @@
 
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+        {{-- JQuery cdn Path --}}
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> 
         <!-- Styles -->
         <style>
             .btn-danger{
@@ -48,6 +49,18 @@
                 text-decoration: none;
                 font-weight: 600;
             }
+
+            /* icon for sytles */
+            .icon {
+            margin: 0 10px;
+            cursor: pointer;
+            transition: transform 0.2s, color 0.2s;
+        }
+        .icon:hover {
+            transform: scale(1.2); /* Slightly enlarge on hover */
+        }
+
+       
         </style>
     </head>
     <body>

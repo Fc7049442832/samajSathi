@@ -7,7 +7,7 @@ use App\Http\Controllers\PartnerQueryController;
 use App\Http\Controllers\MatchingController;
 use App\Http\Controllers\DataSearchingController;
 use App\Http\Controllers\SettingController;
-
+use App\Http\Controllers\PdfController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +32,7 @@ Route::post('/register',[HomeController::class, 'ContactStore'])->name('Basic_Co
 Route::post('/Userlogin', [HomeController::class, 'login'])->name('login.submit');
 Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
 
+
 // Profile page routes
 Route::get('/profile',[ProfileController::class, 'index'])->name('profile');
 Route::post('/profile',[ProfileController::class, 'userImageStore'])->name('profile.update');
@@ -47,11 +48,19 @@ Route::post('/image-delete/delete',[ProfileController::class, 'userImageDelete']
 
 // Partner_Query routes
 Route::get('/partner_query',[PartnerQueryController::class, 'index'])->name('partner_query');
+Route::get('/show_profile/{profileId}', [PartnerQueryController::class, 'showProfile'])->name('show-profile');
 Route::post('/partner_query/{userId}/basic_requeriment',[PartnerQueryController::class,'updateBasicRequeriment'])->name('basic-requeriment');
 Route::post('/partner_query/{userId}/style_requeriment',[PartnerQueryController::class,'updateLifeStyleRequeriment'])->name('life-style-requeriment');
 Route::post('/partner_query/{userId}/social_requeriment',[PartnerQueryController::class,'updateSocialRequeriment'])->name('social-requeriment');
+// User Activity
+Route::get('/profile/{id}', [ArticleController::class, 'view'])->name('profile.view');
+Route::post('/profile/{id}/like', [ArticleController::class, 'like'])->name('profile.like');
+Route::post('/profile/{id}/share', [ArticleController::class, 'share'])->name('profile.share');
+
 
 // Partner Matching Routes
 Route::get('/partner_matching',[MatchingController::class, 'index'])->name('matching');
+Route::post('/partner_matching',[MatchingController::class,'index']);
 
-// Route::view('demo2','Demo')->name('demo');
+ Route::view('demo2','demo')->name('demo');
+ Route::get('/send-data', [PdfController::class, 'generatePdf'])->name('pdf');

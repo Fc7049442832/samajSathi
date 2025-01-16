@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Events\UserRegisteredEvent;
 use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 
 class HomeController extends Controller
 {
@@ -26,7 +28,9 @@ class HomeController extends Controller
     // Browse Partner Page for data fetch from database
     public function browsePartner()
     {
+        
         $combinedUsers = $this->getFilteredUsers(); // Use private function
+        $combinedUsers = $this->getRandomizedData($combinedUsers); // Data sorting and
         // Pass combined data to the view
         return view('browsepartner', compact('combinedUsers'));
     }
@@ -54,7 +58,10 @@ class HomeController extends Controller
         Profile::create([
             'user_id' => $user->custom_id,
         ]);
-    
+        
+        // Trigger the event
+        event(new UserRegisteredEvent($user));
+        
         // Automatically log in the user
         Auth::login($user);
     
@@ -159,4 +166,14 @@ class HomeController extends Controller
         return $combinedUsers;
     }
 
+    private function getRandomizedData(array $data, int $limit = null)
+    {
+        shuffle($data); // Shuffle the array
+        
+        if ($limit) {
+            $data = array_slice($data, 0, $limit); // Limit the results if specified
+        }
+        
+        return $data;
+    }
 }

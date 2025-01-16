@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Profile;
 use App\Models\PartnerPreference;
 use App\Models\User;
+use App\Models\User_Activity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,6 +24,23 @@ class PartnerQueryController extends Controller
         }else{
             return redirect()->route('home');
         }
+    }
+
+    // Show Single user Data function
+    public function showProfile($Id){
+       
+        $user = User::where('custom_id', $Id)->first();
+        $userDetails = Profile::where('user_id', $Id)->first();
+
+    
+        // // Increment views
+        // $sessionKey = 'article_view_' . $id;
+        // if (!session()->has($sessionKey)) {
+        //     $user->increment('views');
+        //     session()->put($sessionKey, true);
+        // }
+        // dd($user);
+        return view('show_profile',compact('user','userDetails'));
     }
 
     public function updateBasicRequeriment(Request $request, $userId){

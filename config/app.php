@@ -44,6 +44,8 @@ return [
 
     'debug' => (bool) env('APP_DEBUG', false),
 
+    'PDF' => Barryvdh\DomPDF\Facade::class,
+
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -58,6 +60,8 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL'),
+
+
 
     /*
     |--------------------------------------------------------------------------

@@ -5,6 +5,7 @@
             <div class="profile-image">
                 {{-- image model --}}
                 <button type="button" class="text-center" data-bs-toggle="modal" data-bs-target="#userImageModal">
+                    
                     <img src="{{ asset($profile->profile_image ? 'storage/' . $profile->profile_image : 'images/set_partner_per.jpg')}}" alt="" class="profile-image" >
                 </button>
             </div>

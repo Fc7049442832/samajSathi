@@ -14,7 +14,7 @@
                     Hindu, Prajapati, Hindi, Bhopal, Madhya Pradesh, India
                 </div>
                 <div class="actions action-btn row p-md-2 justify-content-around">
-                    <button class="view-profile col-5">View Profile</button>
+                    <a href="{{route('show-profile', $data['custom_id'])}}" class="view-profile btn text-white col-5">View Profile</a>
                     <button class="contact-now col-5">Contact Now</button>
                 </div>
             </div>
