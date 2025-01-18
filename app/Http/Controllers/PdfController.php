@@ -15,7 +15,7 @@ class PdfController extends Controller
         $data = $request->all();
 
          // Get the full URL path of the image
-        $imagePath = public_path('storage/' . $data['profile_image']);
+        $imagePath = public_path('storage/' . $data['profile_profile_image']);
         // If the profile image does not exist, use a default image
         if (!file_exists($imagePath)) {
             $imagePath = public_path('images/set_partner_per.jpg');

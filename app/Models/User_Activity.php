@@ -14,12 +14,13 @@ class User_Activity extends Model
         'views',
         'likes',
         'shares',
+        'download',
     ];
 
     /**
      * Get the user that owns the post stats.
      */
-    public function user()
+    public function porfile()
     {
         return $this->belongsTo(User::class);
     }

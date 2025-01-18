@@ -49,19 +49,21 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function user_activity()
-    {
-        return $this->hasMany(Activity::class);
-    }
+    
 
     public function profile()
     {
-        return $this->hasOne(Profile::class);
+        return $this->hasOne(Profile::class, 'user_id', 'custom_id');
     }
 
     public function partnerPreference()
     {
         return $this->hasOne(PartnerPreference::class);
+    }
+
+    public function user_activity()
+    {
+        return $this->hasOne(User_Activity::class, 'user_id', 'custom_id');
     }
 
     /**

@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('user__activities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('custom_id');
+            $table->string('user_id');
             $table->unsignedBigInteger('views')->default(0);
             $table->unsignedBigInteger('likes')->default(0);
             $table->unsignedBigInteger('shares')->default(0);
+            $table->unsignedBigInteger('download')->default(0);
             $table->timestamps();
         });
     }

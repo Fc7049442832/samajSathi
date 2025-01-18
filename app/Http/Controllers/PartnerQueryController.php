@@ -27,20 +27,31 @@ class PartnerQueryController extends Controller
     }
 
     // Show Single user Data function
-    public function showProfile($Id){
-       
-        $user = User::where('custom_id', $Id)->first();
-        $userDetails = Profile::where('user_id', $Id)->first();
+    public function showProfile($id){
 
-    
-        // // Increment views
-        // $sessionKey = 'article_view_' . $id;
-        // if (!session()->has($sessionKey)) {
-        //     $user->increment('views');
-        //     session()->put($sessionKey, true);
-        // }
-        // dd($user);
-        return view('show_profile',compact('user','userDetails'));
+        // Fetch or create a User_Activity record for the given user
+        $userActivity = User_Activity::where('user_id', $id)->first();
+        if (empty($userActivity)) {
+            $userActivity = new User_Activity();
+            $userActivity->user_id = $id;
+            $userActivity->views = 0; // Initialize views to 0
+            $userActivity->save();
+        }
+
+        // Define a session key to track profile views for this specific user
+        $sessionKey = 'profile_view_' . $id;
+
+        if (!session()->has($sessionKey)) {
+            // Increment the views count for the User_Activity model
+            $userActivity->views = $userActivity->views + 1;
+            $userActivity->save();
+            session()->put($sessionKey, true);
+        }
+
+        // Fetch the user with related profile and user_activity
+        $user = User::with('profile', 'user_activity')->where('custom_id', $id)->first();
+
+        return view('show_profile',compact('user'));
     }
 
     public function updateBasicRequeriment(Request $request, $userId){

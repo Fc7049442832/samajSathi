@@ -5,52 +5,73 @@
             {{--multipal image show --}}
         <div class="col-md-5 p-3 show_images text-center">
             {{-- <x-Carousel /> --}}
-            <img src="{{ asset($userDetails['profile_image'] ? 'storage/' . $userDetails['profile_image'] : 'images/set_partner_per.jpg')}}" 
+            <img src="{{ asset($user->profile->profile_image ? 'storage/' . $user->profile->profile_image : 'images/set_partner_per.jpg')}}" 
             alt="User Image" style="height: 350px;">
         </div>
        
         <div class="col-md-6 p-3 show-h4">
-            <h4 class="">Matrimony Profile ID : {{$userDetails->user_id}}</h4>
-            <p class="mt-3">
-              <strong>Name : {{strtoupper($user->name)}}</strong> <br>
-              <strong>Age : {{$user->age}} Yrs.</strong> 
-            </p>
-           <div class="row">
-            <div class="col-6">Gender : {{ strtoupper($user->gender)}}</div>
-            <div class="col-6">DOB : {{$userDetails->dob}}</div>
+            <div class="row">
+                <div class="col-9">
+                    <h4 class="">Matrimony Profile ID : {{$user->custom_id}}</h4>
+                </div>
+                <div class="col-2">
+                 <a href="" class="btn btn-primary"  id="send-data-link"><i class="bi bi-download"></i></a>
+                </div>
+            </div>
            
-                <div class="col-6">Caste : {{$userDetails->caste ?? 'Not Available'}}</div>
-                <div class="col-12 mt-2">Marital Status : {{$userDetails->marital_status ?? 'Never Married'}}</div>
-                <div class="col-6">Religion : {{$userDetails->religion ?? 'Not Available'}}</div>
+            <div class="row p-2">
+                <div class="col-8">
+                    <strong>Name : {{strtoupper($user->name)}} </strong> 
+                    @if($user->is_verified == 1)
+                        <small  style="background: rgb(10, 90, 10); color:antiquewhite; font-size:12px; padding:5px; border-radius:5px;">
+                             Verified <i class="bi bi-check" style="font-size: 16px;"></i>
+                        </small>
+                    @endif
+                </div>
+               
+                <div class="col-8">
+                    <strong>Age : {{$user->age}} Yrs.</strong> 
+                </div>
+            </div>
+            
+           <div class="row">
+            <div class="col-6">Gender : {{ strtoupper($user->profile->gender)}}</div>
+            <div class="col-6">DOB : {{$user->profile->dob}}</div>
+           
+                <div class="col-6">Caste : {{$user->profile->caste ?? 'Not Available'}}</div>
+                <div class="col-12 mt-2">Marital Status : {{$user->profile->marital_status ?? 'Never Married'}}</div>
+                <div class="col-6">Religion : {{$user->profile->religion ?? 'Not Available'}}</div>
             </div> 
 
             <div class="row mt-3">
-              <div class="col-6">Height : {{$userDetails->height ?? 'Not Available'}}</div>
-              <div class="col-6">weight : {{$userDetails->weight ?? 'Not Available'}}</div>
-              <div class="col-12">Body type : {{$userDetails->body_type ?? 'Not Available'}}</div>
+              <div class="col-6">Height : {{$user->profile->height ?? 'Not Available'}}</div>
+              <div class="col-6">weight : {{$user->profile->weight ?? 'Not Available'}}</div>
+              <div class="col-12">Body type : {{$user->profile->body_type ?? 'Not Available'}}</div>
               
-              <div class="col-12 mt-3">Living Situation : {{$userDetails->living_situation ?? 'Not Available'}}</div>
-              <div class="col-6">Language : {{$userDetails->mother_tongue ?? 'Not Available'}}</div>
-              <div class="col-6">Diets : {{$userDetails->diet ?? 'Not Available'}}</div>
-              <div class="col-6">Drink : {{$userDetails->drink ?? 'Not Available'}}</div>
-              <div class="col-6">Smoke : {{$userDetails->smoke ?? 'Not Available'}}</div>
+              <div class="col-12 mt-3">Living Situation : {{$user->profile->living_situation ?? 'Not Available'}}</div>
+              <div class="col-6">Language : {{$user->profile->mother_tongue ?? 'Not Available'}}</div>
+              <div class="col-6">Diets : {{$user->profile->diet ?? 'Not Available'}}</div>
+              <div class="col-6">Drink : {{$user->profile->drink ?? 'Not Available'}}</div>
+              <div class="col-6">Smoke : {{$user->profile->smoke ?? 'Not Available'}}</div>
             </div>
             
             <div class="row mt-3">
-              <div class="col-6">Country : {{$userDetails->country}}</div>
-              <div class="col-6">City : {{$userDetails->city ?? 'Not Available'}}</div>
-              <div class="col-6">State : {{$userDetails->state}}</div>   
+              <div class="col-6">Country : {{$user->profile->country}}</div>
+              <div class="col-6">City : {{$user->profile->city ?? 'Not Available'}}</div>
+              <div class="col-6">State : {{$user->profile->state}}</div>   
             </div>
 
             <div class="row justify-content-end">
                 <div class="col-8 text-end pt-3">
-                    <small><i class="bi bi-eye icon" title="View"></i>23 <i class="bi bi-heart icon" title="Like"></i>12</small>
+                    <small><i class="bi bi-eye icon" title="View"></i>{{$user->user_activity->views ?? 0 }} | 
+                        <i class="bi bi-heart icon" title="Like"></i>{{$user->user_activity->likes ?? 0 }} | 
+                        <i class="bi bi-download"></i> {{$user->user_activity->download ?? 0 }} </small>
                 </div>
             </div>
 
             <div class="row mt-4">
                 <div class="col-6">
-                    @if($userDetails->is_active == 1)
+                    @if($user->is_active == 1)
                     <button class="btn btn-primary" disabled><small>Profile is Active</small> </button>
                     @else
                     <button class="btn btn-waiting" disabled>Profile is Inactive</button>
@@ -68,25 +89,40 @@
                 <button class="btn btn-info col-5 mt-3 "> <i class="bi bi-chat icon" title="Chat"></i>Chat </button>
             </div>
            
-            <a href="{{route('pdf',$user)}}" id="send-data-link">print</a>
+          
         </div>
     </div>
 
     <script>
-       document.getElementById('send-data-link').addEventListener('click', function(e) {
-            e.preventDefault(); // Prevent the default behavior of the <a> tag
+        document.getElementById('send-data-link').addEventListener('click', function (e) {
+            e.preventDefault();
 
-            // Pass the Laravel data to JavaScript using
-            let json1 = @json($user);
-            let json2 = @json($userDetails);
+            // Laravel Blade will output JSON here
+            let data1 = @json($user); 
 
-            // Combine both JSON objects using Object.assign()
-            let data = Object.assign({}, json1, json2);
+            // Flatten function for the JSON object
+            function flattenArray(obj, parent = '', result = {}) {
+                for (let key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        let newKey = parent ? `${parent}_${key}` : key;
 
-            // Convert the combined object to a query string
-            const queryString = new URLSearchParams(data).toString();
+                        if (typeof obj[key] === 'object' && obj[key] !== null && !Array.isArray(obj[key])) {
+                            flattenArray(obj[key], newKey, result);
+                        } else {
+                            result[newKey] = obj[key];
+                        }
+                    }
+                }
+                return result;
+            }
 
-            // Redirect to the route with the query string
+            // Flatten the Laravel data
+            let flattenedData = flattenArray(data1);
+
+            console.log(flattenedData);
+
+            // Redirect with the flattened data
+            const queryString = new URLSearchParams(flattenedData).toString();
             window.location.href = `/send-data?${queryString}`;
         });
 
