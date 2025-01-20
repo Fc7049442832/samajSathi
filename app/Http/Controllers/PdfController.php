@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User_Activity;
 use PDF;
 
 class PdfController extends Controller
@@ -24,6 +25,19 @@ class PdfController extends Controller
         // Pass the image path to the view
         $pdf = PDF::loadView('demo', ['data' => $data, 'imagePath' => $imagePath]);
 
+        // Update user_activity table
+        $user = User_Activity::where('user_id',$data['custom_id'])->first();
+
+        if(!empty($user)){
+            $sessionKey = 'download_' . $user->id;
+
+            if (!session()->has($sessionKey)) {
+                // Increment the views count for the User_Activity model
+                $user->download = $user->download + 1;
+                $user->save();
+                session()->put($sessionKey, true);
+            }
+        }
         // Download the PDF file
         return $pdf->download('demo.pdf');
     }

@@ -61,6 +61,14 @@ class User extends Authenticatable
         return $this->hasOne(PartnerPreference::class);
     }
 
+    public function like(){
+        return $this->hasMany(Like::class, 'user_id', 'custom_id');
+    }
+
+    public function save_profile(){
+        return $this->hasMany(Like::class, 'user_id', 'custom_id');
+    }
+
     public function user_activity()
     {
         return $this->hasOne(User_Activity::class, 'user_id', 'custom_id');

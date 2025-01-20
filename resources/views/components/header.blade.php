@@ -218,7 +218,7 @@
             display: block;
         }
         .logo img {
-            height: 70px;
+            height: 52px;
          }
 
         .nav-links {

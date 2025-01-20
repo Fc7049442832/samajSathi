@@ -499,7 +499,7 @@
             <div class="info-row">
               <span>Sub Coste</span>
               <span><b>:</b>
-                <input type="text" name="sub_caste" class="profile-input" id="" value="{{ $userDetail->subCommunity ?? 'Sub Community' }}">
+                <input type="text" name="sub_caste" class="profile-input" id="" placeholder="Sub Community" value="{{ $userDetail->subCommunity ?? '' }}">
               </span>
             </div>
             {{-- Mother Tongue --}}
@@ -528,7 +528,7 @@
             <div class="info-row">
               <span>Gothra / Gothram</span>
               <span><b>:</b>
-                <input type="text" name="gorthra" id="" class="profile-input" value="{{ $userDetail->gorthra ?? 'Gothra / Gothram' }}" \>
+                <input type="text" name="gorthra" id="" class="profile-input" placeholder="Gothra / Gothram" value="{{ $userDetail->gorthra ?? '' }}" \>
               </span>
             </div>
             {{-- form submit button --}}
@@ -601,7 +601,7 @@
               </div>
             </div>
           </div>
-          {{-- Religious Background edit form --}}
+          {{-- Family Details edit form --}}
           <form action="{{ route('update-family-info',$userDetail->user_id)}}" method="post" id="edit-family-info">
             <h5 class="col-md-4 mt-5 col-6">
               Edit Family Details

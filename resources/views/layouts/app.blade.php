@@ -19,12 +19,7 @@
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> 
         <!-- Styles -->
         <style>
-            .btn-danger{
-                background-image: radial-gradient(circle, rgba(231, 63, 34, 0.849), rgba(247, 54, 166, 0.7));
-            }
-            .btn-success{
-                background-image: radial-gradient(circle, rgba(46, 139, 67, 0.911), rgba(247, 54, 166, 0.7));
-            }
+           
             #alert-box {
                 position: fixed;
                 top: 20px;
@@ -59,79 +54,126 @@
         .icon:hover {
             transform: scale(1.2); /* Slightly enlarge on hover */
         }
+        .main-content-container{
+            height: 75%;
+            width: 75%;
+            position: absolute;
+            top: 150px;
+            overflow: hidden;
+            overflow-y: scroll;
+            padding-bottom: 50px;
+        }
 
-       
-        </style>
-    </head>
-    <body>
-        <div class="container-xxl">
-            @if (session('success'))
-                <div id="alert-box" class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+        .main-content-container::-webkit-scrollbar {
+    display: none; /* WebKit-based browsers (Chrome, Safari) ke liye scrollbar hide kare */
+}
+        .footer{
+            width: 78%;
+            position: absolute;
+            bottom: 0;
+            justify-content: center;
+            align-items: center;
+        }
 
-            <x-header />
-            @if (request()->is('profile') || request()->is('partner_matching') || request()->is('partner_query'))
-                {{-- page header code  --}}
-                <div class="row page-header text-center p-2 mb-2 justify-content-around" id="pageHeader" >
-                    <div class="col-md-3 col-3 btn ">
-                    <a href="{{ route('profile')}}" class="text-white ">My Profile</a>
-                    </div>
-                    <div class="col-md-4 col-5 btn ">
-                    <a href="{{ route('partner_query')}}" class="text-white">Partner Requirement</a>
-                    </div>
-                    <div class="col-md-3 col-3 btn ">
-                    <a href="{{ route('matching')}}" class="text-white">Matching</a>
-                    </div>
-                </div>
-            @endif
-            
-            @yield('content')
-            
-            <br>
-           
-            
-            {{-- footer section code  --}}
-            <div class="bg-secondary text-center p-3" style="height: 45px;">
-                <p class="text-light">Power By <a href="" style="text-decoration: none; color:rgb(209, 212, 247);">Tech Radar</a> @ 2024</p>
-            </div>
-
-        </div>
-
-        <!-- Option 1: Bootstrap Bundle with Popper -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-        <script>
-            // back Button function 
-            function goBack() {
-                if (window.history.length > 1) {
-                    window.history.back();
-                } else {
-                    window.location.href = '/';
-                }
+        @media (max-width: 768px) {
+            *{
+                font-size: 13px;
+            }
+            .page-header a {
+                position: relative;
+                font-size: 12px;
+            }
+            .main-content-container{
+            height: 75%;
+            width: 94%;
+            position: absolute;
+            top: 113px;
+            overflow: hidden;
+            overflow-y: scroll;
+            padding-bottom: 50px;
             }
 
-             document.addEventListener('DOMContentLoaded', () => {
-                    const alertBox = document.getElementById('alert-box');
-                    if (alertBox) {
+            .footer{
+             width: 95%;
+            }
+
+        }
+        </style>
+    </head>
+<body>
+    <div class="container-xxl">
+        @if (session('success'))
+            <div id="alert-box" class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session('error'))
+        <div id="alert-box" class="alert alert-danger ">
+            {{ session('error') }}
+        </div>
+    @endif
+
+        <x-header />
+        @if (Auth::check())
+            {{-- page header code  --}}
+            <div class="row page-header text-center p-1 mb-1 justify-content-around" id="pageHeader" >
+                <div class="col-md-3 col-3 btn ">
+                <a href="{{ route('profile')}}" class="text-white ">Profile</a>
+                </div>
+                <div class="col-md-3 col-3 btn ">
+                <a href="{{ route('partner_query')}}" class="text-white">Requirement</a>
+                </div>
+                <div class="col-md-3 col-3 btn ">
+                <a href="{{ route('matching')}}" class="text-white">Matching</a>
+                </div>
+                <div class="col-md-3 col-3 btn ">
+                    <a href="{{ route('saved.profile')}}" class="text-white">Save</a>
+                </div>
+            </div>
+        @endif
+        <div class="main-content-container">
+            @yield('content')
+        </div>        
+         {{-- footer section code  --}}    
+        <div class="bg-secondary text-center p-1 footer" style="height: 30px;">
+            <p class="text-light" style="font-size:15px;">Power By <a href="" style="text-decoration: none; color:rgb(209, 212, 247); width:100%;">Tech Radar</a> @ 2024</p>
+        </div>
+
+    </div>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        // back Button function 
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = '/';
+            }
+        }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const alertBox = document.getElementById('alert-box');
+                if (alertBox) {
+                    setTimeout(() => {
+                        alertBox.style.opacity = '0'; // Fade out
                         setTimeout(() => {
-                            alertBox.style.opacity = '0'; // Fade out
-                            setTimeout(() => {
-                                alertBox.remove(); // Remove element
-                            }, 500); // Wait for fade-out transition
-                        }, 5000); // Display for 5 seconds
-                    }
-                });
+                            alertBox.remove(); // Remove element
+                        }, 500); // Wait for fade-out transition
+                    }, 5000); // Display for 5 seconds
+                }
+            });
 
-                window.addEventListener('scroll', function() {
-                    const pageHeader = document.getElementByClass('page-header');
+            window.addEventListener('scroll', function() {
+                const pageHeader = document.getElementByClass('page-header');
 
-                    if (window.scrollY > 10) {
-                        pageHeader.classList.add('active');
-                    } else {
-                        pageHeader.classList.add('deactive');
-                    }
-                });
-        </script>
-    </body>
+                if (window.scrollY > 10) {
+                    pageHeader.classList.add('active');
+                } else {
+                    pageHeader.classList.add('deactive');
+                }
+            });
+    </script>
+</body>
 </html>

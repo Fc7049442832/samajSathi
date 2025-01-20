@@ -15,7 +15,7 @@
                 </div>
                 <div class="actions action-btn row p-md-2 justify-content-around">
                     <a href="{{route('show-profile', $data['custom_id'])}}" class="view-profile btn text-white col-5">View Profile</a>
-                    <button class="contact-now col-5">Contact Now</button>
+                    <a href="{{route('partner-contact', $data['custom_id'])}}" class="contact-now view-profile btn text-white col-5">Contact Now</a>
                 </div>
             </div>
         </div>

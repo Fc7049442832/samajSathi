@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Events\UserRegisteredEvent;
 use App\Models\User;
 use App\Models\Profile;
+use App\Models\Save_Profile;
+use App\Models\User_Activity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
 
@@ -21,10 +23,10 @@ class HomeController extends Controller
         }else{
             $combinedUsers = array_map(fn($key) =>  $combinedUsers[$key], array_rand( $combinedUsers, min(6, count( $combinedUsers))));
         }
-
         // Pass combined data to the view
          return view('index', compact('combinedUsers'));
     }
+
     // Browse Partner Page for data fetch from database
     public function browsePartner()
     {
@@ -59,6 +61,7 @@ class HomeController extends Controller
             'user_id' => $user->custom_id,
         ]);
         
+        // return view('sosForm');
         // Trigger the event
         event(new UserRegisteredEvent($user));
         
@@ -70,6 +73,7 @@ class HomeController extends Controller
         ->with('success', 'User created and logged in successfully')
         ->with('user', $user);
     }
+
     // User Login Function 
     public function login(Request $request)
     {
@@ -105,6 +109,60 @@ class HomeController extends Controller
 
         // Redirect to the login page with a success message
         return redirect('/')->with('success', 'Logged out successfully!');
+    }
+
+    // profile save function
+    public function save($profileId){
+
+        $user = Auth::user();
+        if(empty($user)){
+            return redirect()->back()->with('error', 'You are not logged in.');
+        }
+
+        $data = Save_Profile::where('save_profile_id', $profileId)->first();
+        if(empty($data)){
+
+        $data = new Save_Profile();
+        $data->user_id = $user->custom_id;
+        $data->save_profile_id = $profileId ;
+        $data->save();
+       
+       return redirect()->back()->with('success', 'Profile saved successfully!');
+       }else{
+        return redirect()->back()->with('error', 'Profile already saved.');
+        }
+    }
+
+    // Saved profile Index page return function 
+    public function savedProfile(){
+        $user_Id =Auth::user()->custom_id;
+
+        $datas = Save_Profile::where('user_id', $user_Id)->get();        
+        $profile = []; 
+        // Loop through each record in $datas
+        foreach ($datas as $data) {
+            // Check if save_profile_id exists and retrieve related user data
+            $Profiles = User::with('profile')->where('custom_id', $data->save_profile_id)->get();
+            
+            // Merge the retrieved user profiles into the $profile array
+            $profile = array_merge($profile, $Profiles->toArray());
+        }
+        // Return the profile data to the view
+        return view('save_profile', compact('profile')); 
+    }
+
+    // Saved profile delete function
+    public function savedProfileDelete($delete){
+        $user_Id =Auth::user()->custom_id;
+        $data = Save_Profile::where('save_profile_id',$delete);
+
+        if(!empty($data)){
+            $data->delete();
+            return redirect()->back()->with('success', 'Profile deleted successfully!');
+        }else{
+            return redirect()->back()->with('error', 'Profile not found.');
+        }
+        
     }
 
     // Private function to handle data processing

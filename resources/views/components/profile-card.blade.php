@@ -51,8 +51,8 @@
   .profile-row {
         margin: 0px;
         background: linear-gradient(to right, #d61c16, #d17fdb);
-        padding: 10px;
-        border-radius: 8px;
+        padding: 10px 30px;
+        border-radius: 10px;
         color: #fff;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }

@@ -54,6 +54,14 @@ class PartnerQueryController extends Controller
         return view('show_profile',compact('user'));
     }
 
+    // partner contact function
+    public function partnerContact($id){
+        if(!Auth::check()){
+            return back()->with('error','Please Login');
+        }
+        return view('chat', compact('id'));
+    }
+
     public function updateBasicRequeriment(Request $request, $userId){
         $requeriment = PartnerPreference::where('user_id', $userId)->first();
         if (empty($requeriment)) {

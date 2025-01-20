@@ -9,13 +9,13 @@
             alt="User Image" style="height: 350px;">
         </div>
        
-        <div class="col-md-6 p-3 show-h4">
+        <div class="col-md-6 p-2 show-h4">
             <div class="row">
-                <div class="col-9">
+                <div class="col-8">
                     <h4 class="">Matrimony Profile ID : {{$user->custom_id}}</h4>
                 </div>
-                <div class="col-2">
-                 <a href="" class="btn btn-primary"  id="send-data-link"><i class="bi bi-download"></i></a>
+                <div class="col-4">
+                 <a href="" class="btn btn-primary"  id="send-data-link"><i class="bi bi-download"></i> Download</a>
                 </div>
             </div>
            
@@ -71,21 +71,24 @@
 
             <div class="row mt-4">
                 <div class="col-6">
-                    @if($user->is_active == 1)
-                    <button class="btn btn-primary" disabled><small>Profile is Active</small> </button>
+                    @if($user->profile->is_active === 1)
+                    <button class="btn btn-success" disabled><small>Profile is Active</small> </button>
                     @else
                     <button class="btn btn-waiting" disabled>Profile is Inactive</button>
                     @endif
                 </div>
                 <div class="col-6 text-end">
-                    <button><i class="bi bi-heart icon icon-like" title="Like"></i> Like</button>
-                    <button><i class="bi bi-bookmark icon" title="Save"></i> Save</button>
-                    <button><i class="bi bi-share icon" title="Share"></i> Share</button>
+                    <a href="{{route('profile.save', $user->custom_id)}}">
+                        <i class="bi bi-heart icon " title="Like"  style="margin-right:2px;"></i> Like</a>
+                    <a href="{{route('profile.save', $user->custom_id)}}">
+                        <i class="bi bi-bookmark icon" title="Save" style="margin-right:3px;"></i>Save</a>
+                    <a href="{{route('profile.save', $user->custom_id)}}">
+                        <i class="bi bi-share icon" title="Share" style="margin-right:2px;"></i> Share</a>
                 </div>
             </div>
            
             <div class="row justify-content-around">
-                <button class="btn btn-danger col-5 mt-3" onclick=" goBack()" > Back </button>
+                <button class="btn btn-danger col-5 mt-3" onclick=" goBack()" >Back </button>
                 <button class="btn btn-info col-5 mt-3 "> <i class="bi bi-chat icon" title="Chat"></i>Chat </button>
             </div>
            
@@ -96,10 +99,8 @@
     <script>
         document.getElementById('send-data-link').addEventListener('click', function (e) {
             e.preventDefault();
-
             // Laravel Blade will output JSON here
             let data1 = @json($user); 
-
             // Flatten function for the JSON object
             function flattenArray(obj, parent = '', result = {}) {
                 for (let key in obj) {
@@ -118,34 +119,36 @@
 
             // Flatten the Laravel data
             let flattenedData = flattenArray(data1);
-
-            console.log(flattenedData);
-
             // Redirect with the flattened data
             const queryString = new URLSearchParams(flattenedData).toString();
             window.location.href = `/send-data?${queryString}`;
         });
-
     </script>
-@endsection
-<style>
-    .show_images{
-        border-radius: 20px;
-       overflow: hidden;
-
-    }
-    .show-h4{
-        margin: 30px auto auto auto;
-        color: #313030;
-        font-weight: 500;
-        font-size: 18px;
-    }
-    @media(max-width:740px){
+    <style>
+        
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        .show_images{
+            border-radius: 20px;
+           overflow: hidden;
+    
+        }
         .show-h4{
-        margin: 30px auto auto auto;
-        color: #313030;
-        font-weight: 500;
-        font-size: 14px;
-    }
-    }
-</style>
+            margin: 30px auto auto auto;
+            color: #313030;
+            font-weight: 500;
+            font-size: 18px;
+        }
+        @media(max-width:740px){
+            .show-h4{
+            margin: 30px auto auto auto;
+            color: #313030;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        }
+    </style>
+@endsection
+
