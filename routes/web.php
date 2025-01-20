@@ -22,6 +22,9 @@ use App\Http\Controllers\PdfController;
 // Base Data Routes 
 Route::get('/',[HomeController::class, 'index'])->name('home');
 Route::get('/browse-partner',[HomeController::class, 'browsePartner'])->name('Browse_Partner');
+Route::view('/about', 'about')->name('about');
+Route::post('/feedback-submit', [HomeController::class, 'feedbackStore'])->name('feedback.submit');
+
 
 // Data searching Routes
 Route::post('/search-partner',[DataSearchingController::class, 'searchPartner'])->name('searchPartner');
@@ -55,10 +58,9 @@ Route::post('/partner_query/{userId}/social_requeriment',[PartnerQueryController
 
 // User Activity
 Route::get('/send-data', [PdfController::class, 'generatePdf'])->name('pdf');
-Route::get('/profile/like', [HomeController::class, 'like'])->name('profile.like');
+Route::post('/profile/like/{post}', [HomeController::class, 'toggleLike'])->name('like.toggle');
 Route::get('/profile/{id}/share', [HomeController::class, 'share'])->name('profile.share');
 Route::get('/profile/{profileId}/save',[HomeController::class, 'save'])->name('profile.save');
-Route::get('/saved/Profile',[HomeController::class, 'savedProfile'])->name('saved.profile');
 Route::get('/saved/Profile',[HomeController::class, 'savedProfile'])->name('saved.profile');
 Route::post('/saved/Profile/{delete}',[HomeController::class, 'savedProfileDelete'])->name('saved.profile.delete');
 

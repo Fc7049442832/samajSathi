@@ -5,7 +5,9 @@
     <div class="row">
         <h3>Save Profiles</h3>
     </div>
+    
     @foreach($profile as $data)
+        
         <div class="profile-card">
             <div class="image-box">
                 <img src="{{ asset($data['profile']['profile_image'] ? 'storage/' . $data['profile']['profile_image'] : 'images/set_partner_per.jpg')}}" alt="" width="100%">
@@ -29,13 +31,17 @@
                     X
                 </button>
             </form>
-        
-
         </div>
     @endforeach
-
+    <div class="row">
+        <div class="col-12 text-center pt-5">
+            @if($profile == null)
+                    <button class="btn btn-primary mt-5">No Data Found.</button> <br>
+            @endif
+            <button class="btn btn-danger mt-2" onclick=" goBack()" >Back </button>
+        </div>
+    </div>
 <style>
-   
     .profile-card {
         display: flex;
         width: 100%;

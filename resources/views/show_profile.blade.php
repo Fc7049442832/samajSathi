@@ -9,7 +9,7 @@
             alt="User Image" style="height: 350px;">
         </div>
        
-        <div class="col-md-6 p-2 show-h4">
+        <div class="col-md-6 p-4 show-h4">
             <div class="row">
                 <div class="col-8">
                     <h4 class="">Matrimony Profile ID : {{$user->custom_id}}</h4>
@@ -63,8 +63,7 @@
 
             <div class="row justify-content-end">
                 <div class="col-8 text-end pt-3">
-                    <small><i class="bi bi-eye icon" title="View"></i>{{$user->user_activity->views ?? 0 }} | 
-                        <i class="bi bi-heart icon" title="Like"></i>{{$user->user_activity->likes ?? 0 }} | 
+                    <small><i class="bi bi-eye icon" title="View"></i>{{$user->user_activity->views ?? 0 }} |  
                         <i class="bi bi-download"></i> {{$user->user_activity->download ?? 0 }} </small>
                 </div>
             </div>
@@ -78,12 +77,41 @@
                     @endif
                 </div>
                 <div class="col-6 text-end">
+                    
+                    {{-- <a href="{{route('profile.save', $user->custom_id)}}">
+                        <i class="bi bi-heart icon " title="Like"  style="margin-right:2px;"></i> Like</a> --}}
                     <a href="{{route('profile.save', $user->custom_id)}}">
-                        <i class="bi bi-heart icon " title="Like"  style="margin-right:2px;"></i> Like</a>
-                    <a href="{{route('profile.save', $user->custom_id)}}">
-                        <i class="bi bi-bookmark icon" title="Save" style="margin-right:3px;"></i>Save</a>
-                    <a href="{{route('profile.save', $user->custom_id)}}">
-                        <i class="bi bi-share icon" title="Share" style="margin-right:2px;"></i> Share</a>
+                        <i class="bi bi-bookmark-heart-fill"></i></i>Save
+                    </a>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle" id="shareDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-share icon" title="Share" style="margin-right:2px;"></i> Share
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="shareDropdown">
+                            <li>
+                                <a class="dropdown-item" href="https://api.whatsapp.com/send?text={{ urlencode(route('profile.share', $user->custom_id)) }}" target="_blank">
+                                    <i class="bi bi-whatsapp"></i> Share on WhatsApp
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('profile', $user->custom_id)) }}" target="_blank">
+                                    <i class="bi bi-facebook"></i> Share on Facebook
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="mailto:?subject=Check this out&body={{ route('profile', $user->custom_id) }}">
+                                    <i class="bi bi-envelope"></i> Share via Email
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item copy-link" href="#" data-link="{{ route('profile', $user->custom_id) }}">
+                                    <i class="bi bi-clipboard"></i> Copy Link
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                        
                 </div>
             </div>
            
@@ -91,8 +119,6 @@
                 <button class="btn btn-danger col-5 mt-3" onclick=" goBack()" >Back </button>
                 <button class="btn btn-info col-5 mt-3 "> <i class="bi bi-chat icon" title="Chat"></i>Chat </button>
             </div>
-           
-          
         </div>
     </div>
 
@@ -123,9 +149,10 @@
             const queryString = new URLSearchParams(flattenedData).toString();
             window.location.href = `/send-data?${queryString}`;
         });
+
+
     </script>
-    <style>
-        
+    <style>    
         a{
             text-decoration: none;
             color: black;
@@ -147,7 +174,7 @@
             color: #313030;
             font-weight: 500;
             font-size: 14px;
-        }
+            }
         }
     </style>
 @endsection

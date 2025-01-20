@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Events\UserRegisteredEvent;
 use App\Models\User;
+use App\Models\Feedback;
 use App\Models\Profile;
 use App\Models\Save_Profile;
 use App\Models\User_Activity;
@@ -35,6 +36,20 @@ class HomeController extends Controller
         $combinedUsers = $this->getRandomizedData($combinedUsers); // Data sorting and
         // Pass combined data to the view
         return view('browsepartner', compact('combinedUsers'));
+    }
+    // Feedback form submit
+    public function feedbackStore(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'rating' => 'required|integer|min:1|max:5',
+            'feedback' => 'required|string|min:5|max:1000',
+        ]);
+
+        Feedback::create($validated);
+
+        return redirect()->back()->with('success', 'Thank you for your feedback!');
     }
     
     // User Registration Data store in database
@@ -137,7 +152,7 @@ class HomeController extends Controller
     public function savedProfile(){
         $user_Id =Auth::user()->custom_id;
 
-        $datas = Save_Profile::where('user_id', $user_Id)->get();        
+        $datas = Save_Profile::where('user_id', $user_Id)->get();      
         $profile = []; 
         // Loop through each record in $datas
         foreach ($datas as $data) {
@@ -150,6 +165,8 @@ class HomeController extends Controller
         // Return the profile data to the view
         return view('save_profile', compact('profile')); 
     }
+
+   
 
     // Saved profile delete function
     public function savedProfileDelete($delete){

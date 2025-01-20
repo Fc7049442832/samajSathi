@@ -10,6 +10,8 @@
    
     <x-QuestionsBox />
 
+    <x-FeedbackForm />
+
     
 @endsection
 
