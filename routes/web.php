@@ -25,7 +25,6 @@ Route::get('/browse-partner',[HomeController::class, 'browsePartner'])->name('Br
 Route::view('/about', 'about')->name('about');
 Route::post('/feedback-submit', [HomeController::class, 'feedbackStore'])->name('feedback.submit');
 
-
 // Data searching Routes
 Route::post('/search-partner',[DataSearchingController::class, 'searchPartner'])->name('searchPartner');
 
@@ -65,7 +64,6 @@ Route::get('/saved/Profile',[HomeController::class, 'savedProfile'])->name('save
 Route::post('/saved/Profile/{delete}',[HomeController::class, 'savedProfileDelete'])->name('saved.profile.delete');
 
 
-
 // Partner Matching Routes
 Route::get('/partner_matching',[MatchingController::class, 'index'])->name('matching');
 Route::post('/partner_matching',[MatchingController::class,'index']);
@@ -73,3 +71,12 @@ Route::post('/partner_matching',[MatchingController::class,'index']);
 
 // Chating Routes
 Route::get('/partner/chate/{id}',[ChatController::class, 'index'])->name('chate');
+
+
+// Admin page Routes 
+Route::view('/admin', 'layouts/dashboard');
+Route::get('/admin/setting', [SettingController::class, 'settingPage'])->name('admin.setting');
+Route::post('/carousel/store', [SettingController::class, 'storeImages'])->name('carousel.store');
+Route::put('/carousel/update/{id}', [SettingController::class, 'update'])->name('carousel.update');
+Route::delete('/carousel/destroy/{id}', [SettingController::class, 'destroy'])->name('carousel.destroy');
+

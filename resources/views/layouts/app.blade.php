@@ -56,7 +56,7 @@
         }
         .main-content-container{
             height: 75%;
-            width: 75%;
+            width: 85%;
             position: absolute;
             top: 150px;
             overflow: hidden;
@@ -65,10 +65,10 @@
         }
 
         .main-content-container::-webkit-scrollbar {
-    display: none; /* WebKit-based browsers (Chrome, Safari) ke liye scrollbar hide kare */
-}
+            display: none; /* WebKit-based browsers (Chrome, Safari) ke liye scrollbar hide kare */
+        }
         .footer{
-            width: 78%;
+            width: 85%;
             position: absolute;
             bottom: 0;
             justify-content: center;
