@@ -11,9 +11,12 @@ class carousel extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public $images;
+    
+    public function __construct($images)
     {
         //
+        $this->images = $images;
     }
 
     /**

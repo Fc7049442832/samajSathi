@@ -26,7 +26,8 @@ class User extends Authenticatable
         'password',
         'is_verified',
         'role',
-        'custom_id', // Add custom_id to fillable
+        'custom_id',
+        'google_id', // Add custom_id to fillable
     ];
 
     /**
@@ -91,6 +92,8 @@ class User extends Authenticatable
             // Generate the new custom_id
             $user->custom_id = 'SS' . str_pad($nextId, 5, '0', STR_PAD_LEFT);
         });
+
+       
     }
 }
 

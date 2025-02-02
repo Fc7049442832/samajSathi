@@ -6,7 +6,7 @@
     <!-- Hero Section -->
     <div class="hero-section">
         <h1>About Samaj Sathi Matrimony</h1>
-        <p>Welcome to Samaj Sathi Matrimony, your trusted partner in finding your perfect match. Our platform makes it easy to connect, chat, and build meaningful relationships.</p>
+        <p>Welcome to Samaj Sathi Matrimony, your trusted partner in finding your perfect match. <br> Our platform makes it easy to connect, chat, and build meaningful relationships.</p>
     </div>
 
     <!-- Features Section -->
@@ -36,9 +36,21 @@
     <!-- Call to Action Section -->
     <div class="cta-section">
         <h2>Join Samaj Sathi Matrimony Today!</h2>
-        <a href="#">Get Started</a>
+
+        @if(!Auth::check())
+        <a href="#" class="btn btn-primary register-button" data-bs-toggle="modal" data-bs-target="#RegisterModal">
+            Get Started
+        </a>
+        @elseif(Auth::check() && session('profileCompletion') < 40)
+         <a href="{{route('profile')}}">Get Started </a>
+         @elseif(Auth::check() && session('profileCompletion') > 41)
+         <a href="{{route('matching')}}">Get Started</a>
+        @endif
+
+        
     </div>
 </div>
+
 
 <style>
     .container {
@@ -49,7 +61,7 @@
 
     .hero-section {
         text-align: center;
-        background: #6200ea;
+        background:linear-gradient(#ea2300,#8c00ea);
         color: #fff;
         padding: 50px 20px;
     }
@@ -96,7 +108,7 @@
     }
 
     .cta-section {
-        background: #6200ea;
+        background:linear-gradient(#ea2300,#8c00ea);
         color: #fff;
         padding: 40px 20px;
         text-align: center;

@@ -117,7 +117,7 @@
            
             <div class="row justify-content-around">
                 <button class="btn btn-danger col-5 mt-3" onclick=" goBack()" >Back </button>
-                <button class="btn btn-info col-5 mt-3 "> <i class="bi bi-chat icon" title="Chat"></i>Chat </button>
+                <button class="btn btn-info col-5 mt-3" id="openModalLink" > <i class="bi bi-chat icon" title="Chat"></i>Chat </button>
             </div>
         </div>
     </div>

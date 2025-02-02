@@ -1,13 +1,21 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\GoogleController; // Import GoogleController
+use App\Http\Controllers\GoogleSettingController;
 use App\Http\Controllers\HomeController;
+
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PartnerQueryController;
 use App\Http\Controllers\MatchingController;
 use App\Http\Controllers\DataSearchingController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\NotificationController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,9 +33,16 @@ Route::get('/browse-partner',[HomeController::class, 'browsePartner'])->name('Br
 Route::view('/about', 'about')->name('about');
 Route::post('/feedback-submit', [HomeController::class, 'feedbackStore'])->name('feedback.submit');
 
+Route::get('/notification', function () {
+    return view('noticedemo');
+})->middleware('auth');
+
+
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
 // Data searching Routes
 Route::post('/search-partner',[DataSearchingController::class, 'searchPartner'])->name('searchPartner');
-
 
 // user Auth Routes
 Route::post('/register',[HomeController::class, 'ContactStore'])->name('Basic_Contact');
@@ -63,20 +78,44 @@ Route::get('/profile/{profileId}/save',[HomeController::class, 'save'])->name('p
 Route::get('/saved/Profile',[HomeController::class, 'savedProfile'])->name('saved.profile');
 Route::post('/saved/Profile/{delete}',[HomeController::class, 'savedProfileDelete'])->name('saved.profile.delete');
 
-
 // Partner Matching Routes
 Route::get('/partner_matching',[MatchingController::class, 'index'])->name('matching');
 Route::post('/partner_matching',[MatchingController::class,'index']);
 
+// Notification Routes
+Route::get('/notifications',[NotificationController::class, 'index'])->name('notifications');
+Route::get('/notifications/mark-read', [NotificationController::class, 'markAsRead'])->name('mark.read');
 
 // Chating Routes
-Route::get('/partner/chate/{id}',[ChatController::class, 'index'])->name('chate');
+// Route::get('/partner/chate/{id}',[ChatController::class, 'index'])->name('chate');
+Route::get('/partner-contact/{id}', [ChatController::class, 'partnerContact'])->name('partner.contact');
+Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send.message');
 
 
 // Admin page Routes 
-Route::view('/admin', 'layouts/dashboard');
+Route::get('/admin',[AdminController::class, 'index'])->name('admin.dashboard');
+// Notice Routes
+Route::get('/notices',[NoticeController::class, 'index'])->name('notice');
+Route::get('/admin/notices/create', [NoticeController::class, 'index'])->name('notice.create');
+Route::post('/notices/store', [NoticeController::class, 'store'])->name('notice.store');
+
+Route::get('/notices/{id}/edit', [NoticeController::class, 'edit'])->name('admin.notices.edit');
+Route::put('/notices/{id}', [NoticeController::class, 'update'])->name('admin.notices.update');
+Route::delete('/notices/{id}', [NoticeController::class, 'destroy'])->name('admin.notices.destroy');
+
+
+// Admin User Routes
+Route::get('/admin-user',[AdminController::class, 'user'])->name('admin.user');
+
+// Admin Setting Page Routes
 Route::get('/admin/setting', [SettingController::class, 'settingPage'])->name('admin.setting');
 Route::post('/carousel/store', [SettingController::class, 'storeImages'])->name('carousel.store');
 Route::put('/carousel/update/{id}', [SettingController::class, 'update'])->name('carousel.update');
 Route::delete('/carousel/destroy/{id}', [SettingController::class, 'destroy'])->name('carousel.destroy');
+
+Route::get('/admin/google-settings/reset', [GoogleSettingController::class, 'reset'])->name('admin.google.settings.reset');
+Route::get('/admin/google-settings', [GoogleSettingController::class, 'index'])->name('admin.google.settings');
+Route::post('/admin/google-settings/update', [GoogleSettingController::class, 'update'])->name('admin.google.settings.update');
+
+
 

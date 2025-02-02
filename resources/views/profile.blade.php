@@ -62,7 +62,7 @@
 
               <div class="info-content">
                   <div class="row justify-content-start">
-                      <div class="col-md-3 col-6">Gender</div> <div class="col-md-3 col-6"><b>:</b> {{ $user->gender }} </div>
+                      <div class="col-md-3 col-6">Gender</div> <div class="col-md-3 col-6"><b>:</b> {{ strtoupper($user->gender) }} </div>
                       <div class="col-md-3 col-6">Blood Group</div> <div class="col-md-3 col-6"><b>:</b> {{ $userDetail->blood_group }} </div>
                  
                       <div class="col-md-3 col-6">Age</div> <div class="col-md-3 col-6"><b>:</b> {{ $user->age }} </div>

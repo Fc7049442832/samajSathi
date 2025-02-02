@@ -3,20 +3,28 @@
         <h2>Overall Rating</h2>
         
         <div class="feedback-user">
-            <x-carousel />
+            <img src="{{asset('images/rating_image.jpg')}}" alt="">
         </div>
 
         <div class="stars mt-5">
-            @php $rating = 4; @endphp
-            @for ($i = 1; $i <= 5; $i++)
-                @if ($i <= $rating)
-                    <i class="fa fa-star filled"></i> <!-- Filled star -->
-                @else
-                    <i class="fa fa-star"></i> <!-- Empty star -->
-                @endif
-            @endfor
+        @php
+            $count = $images->count(); 
+            $rating = $images->sum('rating'); 
+           
+            $averageRating = $count > 0 ? $rating / $count : 0;
+            $roundedRating = round($averageRating);
+        @endphp
+        
+        <!-- Display stars based on average rating -->
+        @for ($i = 1; $i <= 5; $i++)
+            @if ($i <= $roundedRating)
+                <i class="fa fa-star filled"></i> <!-- Filled star -->
+            @else
+                <i class="fa fa-star"></i> <!-- Empty star -->
+            @endif
+        @endfor
         </div>
-        <p class="rating-text">{{ $rating }} out of 5</p>
+        <p class="rating-text">{{ $roundedRating }} out of 5</p>
     </div>
 
     <div class="feedback-form-container col-md-6">
@@ -198,7 +206,10 @@
         font-size: 1rem;
         color: #555;
     }
-    .feedback-user .carosel-image{
-        height: 48vh;
+    .feedback-user img{
+       height: 400px;
+        
     }
+
+   
 </style>

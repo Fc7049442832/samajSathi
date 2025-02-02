@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Events\UserRegisteredEvent;
 use App\Models\User;
+use App\Models\Carousel_Image;
 use App\Models\Feedback;
 use App\Models\Profile;
 use App\Models\Save_Profile;
 use App\Models\User_Activity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -24,8 +26,14 @@ class HomeController extends Controller
         }else{
             $combinedUsers = array_map(fn($key) =>  $combinedUsers[$key], array_rand( $combinedUsers, min(6, count( $combinedUsers))));
         }
-        // Pass combined data to the view
-         return view('index', compact('combinedUsers'));
+
+        $feedback = Feedback::select('id','rating')->get();
+
+        $data = Carousel_Image::get();
+        
+        $notifications =0 ;
+        return view('index', compact('combinedUsers','data','feedback','notifications'));
+       
     }
 
     // Browse Partner Page for data fetch from database
@@ -52,10 +60,8 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'Thank you for your feedback!');
     }
     
-    // User Registration Data store in database
-    public function ContactStore(Request $request)
+      public function ContactStore(Request $request)
     {
-        // Validate the input fields
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'age' => 'required|integer',
@@ -65,29 +71,31 @@ class HomeController extends Controller
             'password' => 'required|min:5',
         ]);
     
-        // Encrypt the password
         $validatedData['password'] = bcrypt($validatedData['password']);
     
-        // Create the user
         $user = User::create($validatedData);
     
-        // Create a profile for the user
+        event(new UserRegisteredEvent($user));
+        
         Profile::create([
             'user_id' => $user->custom_id,
         ]);
-        
-        // return view('sosForm');
-        // Trigger the event
-        event(new UserRegisteredEvent($user));
-        
-        // Automatically log in the user
-        Auth::login($user);
+       
+        // try {
+        //     
+        // } catch (\Exception $e) {
+        //     \Log::error('Event dispatch failed: ' . $e->getMessage());
+        //     return redirect()->back()->with('error', 'Event could not be processed.');
+        // }
     
-        // Redirect with success message
-            return redirect()->route('home')
-        ->with('success', 'User created and logged in successfully')
-        ->with('user', $user);
+        Auth::login($user);
+        
+    
+        return redirect()->route('home')
+            ->with('success', 'User created and logged in successfully')
+            ->with('user', $user);
     }
+
 
     // User Login Function 
     public function login(Request $request)
@@ -104,14 +112,24 @@ class HomeController extends Controller
         if (Auth::attempt($credentials)) {
             // Fetch authenticated user
             $user = Auth::user();
-    
-            // Redirect with success message and user data
-            return redirect()->route('home')->with('success', 'Logged in successfully!')->with('user', $user);
+            if($user->role == 'admin'){
+
+                return redirect()->route('admin.dashboard');
+                }else{
+                    $user = auth()->user();  // Assuming user is authenticated
+                    $unreadCount = $user->unreadNotifications->count(); // Count unread notifications
+                
+                    // Store the count in the session
+                    Session::put('notification_count', $unreadCount);
+                // Redirect with success message and user data
+                return redirect()->route('home')->with('success', 'Logged in successfully!')->with('user', $user);
+                }
         }
     
         // Authentication failed, redirect back with an error message
         return redirect()->back()->withErrors(['email' => 'Invalid email or password.'])->withInput();
     }
+
     // User Logout Function
     public function logout(Request $request)
     {
@@ -165,8 +183,6 @@ class HomeController extends Controller
         // Return the profile data to the view
         return view('save_profile', compact('profile')); 
     }
-
-   
 
     // Saved profile delete function
     public function savedProfileDelete($delete){

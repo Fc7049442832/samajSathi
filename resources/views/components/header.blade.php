@@ -8,18 +8,20 @@
     @guest
         <a href="#" class="btn btn-primary register-button" data-bs-toggle="modal" data-bs-target="#RegisterModal">
             Registration Free
-        </a>
+        </a>        
     @endguest
-    {{-- <a href="#register" class="">REGISTER FREE</a> --}}
-
+   
     <div class="menu-toggle" onclick="toggleMenu()">
         <i class="fas fa-bars"> </i>
     </div>
     <nav class="nav-links" id="nav-links">
         <a href="{{route('home')}}">Home</a>
-        <a href="{{route('Browse_Partner')}}">Browse Partner</a>
+        <a href="{{route('Browse_Partner')}}">Partner Find</a>
+
         @if(Auth::check())
-        <a href="{{ route('profile')}}">Profiles</a>
+            <a href="{{route('notifications')}}">Notification 
+                <span class="badge text-danger">{{ auth()->user()?->unreadNotifications->count() ?? ''}}</span>
+            </a>
         @else
             <a href="#" data-bs-toggle="modal" data-bs-target="#LoginModal">
                 Login <i class="fas fa-user"></i>
@@ -45,7 +47,6 @@
             </ul>
         </div>
     </nav>
-    
 </div>
 
   <!-- Registration Modal -->
@@ -53,10 +54,14 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Register</h5>
+          <h5 class="modal-title" id="staticBackdropLabel">Register</h5> 
+            <a href="{{ route('google.login') }}" class="btn btn-primary" style="margin-left:80px; ">
+                <i class="fab fa-google"></i> Register with Google
+            </a>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+           
             {{-- Form Start --}}
           <form action="{{route('Basic_Contact')}}" method="post">
             @csrf
@@ -83,6 +88,8 @@
             @enderror
 
             <input type="password" name="password" id="" placeholder="Password (Minmum 5 digit)">
+            
+            
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -93,6 +100,7 @@
       </div>
     </div>
   </div>
+
    <!-- Login Modal -->
    <div class="modal fade" id="LoginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -101,7 +109,7 @@
           <h5 class="modal-title" id="staticBackdropLabel">Member Login </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body ">
             {{-- Form Start --}}
           <form action="{{route('login.submit')}}" method="post">
             @csrf
@@ -112,6 +120,13 @@
             @enderror
 
             <input type="password" name="password" id="" placeholder="Password (Minmum 5 digit)"  value="{{ old('password') }}"  required>
+            <small><a href="#"  class="btn text-white">Reset Password</a></small>
+            <h5 class="text-center text-white mt-3">OR</h5>
+            <p class="text-center">
+                <a href="{{ route('google.login') }}" class="btn btn-primary">
+                    <i class="fab fa-google"></i> Login with Google
+                </a>
+            </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -128,7 +143,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 20px;
+        padding: 6px 20px;
         background-color: #f8f9fa;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
@@ -136,7 +151,7 @@
         width: 60px;
     }
     .logo img {
-        height: 80px;
+        height: 65px;
     }
 
     .menu-toggle {
@@ -153,7 +168,7 @@
 
     .nav-links a {
         text-decoration: none;
-        font-size: 16px;
+        font-size: 14px;
         color: #333;
         font-weight: 500;
         padding: 5px 10px;
@@ -167,7 +182,7 @@
         background-color: #e74c3c;
         color: white;
         border-radius: 5px;
-        padding: 8px 15px;
+        padding: 4px 12px;
         font-size: 14px;
         font-weight: bold;
         width: 140px;
@@ -184,7 +199,7 @@
     }
 
     .modal-dialog {
-        margin-top: 170px ;
+        margin-top: 100px ;
         max-width: 600px;
     }
 

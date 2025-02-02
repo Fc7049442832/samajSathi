@@ -29,7 +29,6 @@
             background-color: #495057;
             color: #ffffff;
         }
-
         .header {
             position: fixed;
             left: 160px;
@@ -63,11 +62,17 @@
         <div class="sidebar p-3">
             <h4 class="text-center">SamajSathi</h4>
             <hr class="text-light">
-            <a href="#">Dashboard</a>
-            <a href="#">Users</a>
+            <a href="{{route('admin.dashboard')}}">Dashboard</a>
+            <a href="{{route('admin.user')}}">Users</a>
+            <a href="{{route('notice')}}">Notice</a>
             <a href="#">Reports</a>
             <a href="{{route('admin.setting')}}">Settings</a>
-            <a href="#">Logout</a>
+            <a class="dropdown-item" href="#">
+                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            </a>
         </div>
 
         <!-- Main Content -->
@@ -85,8 +90,12 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                           <li><a class="dropdown-item" href="#">Profile</a></li>
                           <li><a class="dropdown-item" href="#">Setting</a></li>
-                          <li><a class="dropdown-item" href="#">
-                            <span class="btn btn-danger sm">Logout</span></a>   
+                          <li> <a class="dropdown-item" href="#">
+                                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Logout</button>
+                                </form>
+                            </a>
                           </li>
                         </ul>
                       </div>
@@ -97,52 +106,7 @@
             
             <div class="content">
                 @yield('content')
-                {{-- <div class="row">
-                    <div class="col-md-3">
-                        <div class="card text-white bg-primary mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Total Users</h5>
-                                <p class="card-text">1,234</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card text-white bg-success mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Active Users</h5>
-                                <p class="card-text">567</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card text-white bg-warning mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Pending Requests</h5>
-                                <p class="card-text">45</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card text-white bg-danger mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Reported Issues</h5>
-                                <p class="card-text">12</p>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-
-                {{-- <div class="card">
-                    <div class="card-header">Overview</div>
-                    <div class="card-body">
-                       
-                        <p class="card-text">Welcome to the SamajSathi Dashboard. Use the navigation menu to access different sections.</p>
-
-                        @for($i=0; $i<10; $i++)
-                         <p> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis doloremque esse cum asperiores incidunt placeat iure quae facilis rem reiciendis et natus inventore aut ex eius totam, tempora officiis eum.</p>
-                        @endfor
-                    </div>
-                </div> --}}
+               
             </div>
         </div>
     </div>

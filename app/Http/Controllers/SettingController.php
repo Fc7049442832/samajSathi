@@ -5,18 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Carousel_Image;
+use App\Models\GoogleSetting;
 
 
 class SettingController extends Controller
 {
     //
-
+   
 
     // setting page function
     public function settingPage()
     {
         $data = Carousel_Image::all();
-        return view('admin/settings', compact('data'));
+        $googleSettings = [
+            'client_id' => GoogleSetting::getValue('GOOGLE_CLIENT_ID'),
+            'client_secret' => GoogleSetting::getValue('GOOGLE_CLIENT_SECRET'),
+            'redirect_uri' => GoogleSetting::getValue('GOOGLE_REDIRECT_URI'),
+        ];
+    
+        return view('admin.settings', compact('data', 'googleSettings'));
     }
 
     public function storeImages(Request $request)

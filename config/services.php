@@ -1,4 +1,5 @@
 <?php
+use App\Models\GoogleSetting;
 
 return [
 
@@ -31,4 +32,19 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI'),
+    ],
+   
+
+];
+
+return [
+    'google' => [
+        'client_id' => GoogleSetting::getValue('GOOGLE_CLIENT_ID', env('GOOGLE_CLIENT_ID')),
+        'client_secret' => GoogleSetting::getValue('GOOGLE_CLIENT_SECRET', env('GOOGLE_CLIENT_SECRET')),
+        'redirect' => GoogleSetting::getValue('GOOGLE_REDIRECT_URI', env('GOOGLE_REDIRECT_URI')),
+    ],
 ];

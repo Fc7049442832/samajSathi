@@ -127,20 +127,16 @@
         background: linear-gradient(45deg, rgba(71, 206, 117, 0.4), rgba(106, 240, 177, 0.2));
     }
     #targetDiv.hidden {
-        /* Make the selector more specific */
         visibility: hidden !important;
-        /* Forcefully apply hidden styles */
         opacity: 0 !important;
-        /* Ensure opacity is overridden */
-        /* pointer-events: none; */
+       
     }
 
     #myForm {
         display: flex;
         flex-direction: column;
-        /* Stack the form elements vertically */
+     
         align-items: center;
-        /* Center the form elements */
     }
 
     * {
@@ -246,7 +242,7 @@
     /* Media query for smaller screens */
     @media (max-width: 600px) {
         .overlay {
-            margin-top: -50px;
+            margin-top: -70px;
             /* Adjusted for smaller screens */
             width: 95%;
             padding: 15px;

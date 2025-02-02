@@ -5,8 +5,17 @@
             <div class="profile-image">
                 {{-- image model --}}
                 <button type="button" class="text-center" data-bs-toggle="modal" data-bs-target="#userImageModal">
-                    
                     <img src="{{ asset($profile->profile_image ? 'storage/' . $profile->profile_image : 'images/set_partner_per.jpg')}}" alt="" class="profile-image" >
+                    {{-- // Store the profile image path in the session --}}
+                   @php 
+                        if (Auth::check()) {
+                            $profileImagePath = $profile->profile_image 
+                                ? 'storage/' . $profile->profile_image 
+                                : 'images/set_partner_per.jpg';
+
+                            session(['profile_image' => $profileImagePath]);
+                        }
+                    @endphp
                 </button>
             </div>
             <div class="profile-info">
@@ -18,7 +27,11 @@
         </div>
         <div class="profile-progress">
             <div  class="progress-circle {{ profileCompletion($profile->toArray()) <= 30 ? 'red' : (profileCompletion($profile->toArray()) <= 65 ? 'orange' : 'green') }}">
-                <span>{{ profileCompletion($profile->toArray()) }}%</span>
+                @php 
+                $profileCompletion = profileCompletion($profile->toArray());
+                session(['profileCompletion'=>$profileCompletion]);
+                @endphp
+                <span>{{ session('profileCompletion')}}%</span>
             </div>
             <p>Profile Completion</p>
             <p>Last Edited on {{ \Carbon\Carbon::parse($user->created_at)->format('jS M Y') }}</p>

@@ -1,5 +1,4 @@
 <div class="col-12" >
-
     <h2 class="text-center">Your Soulmate is Here</h2>
     {{-- call to Partner Card --}}
     @php
@@ -29,14 +28,13 @@
             </div>
         @endif
     </div>
-  
 </div>
 <script>
     function goBack() {
-    if (window.history.length > 1) {
-        window.history.back();
-    } else {
-        window.location.href = '/';
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            window.location.href = '/';
+        }
     }
-}
 </script>

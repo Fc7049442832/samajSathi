@@ -7,7 +7,11 @@
         <div class="card">
             <x-PartnerCard :users="$combinedUsers" />
         </div>
+        <div class="row justify-content-center mt-4">
+            <button class="col-2 btn btn-danger" onclick="goBack()" >Back</button>
+        </div>
     </div>
+    
 </div>
 <style>
     .color-section {
@@ -27,7 +31,7 @@
         height: 72vh;
         width: 100%;
         overflow-y: scroll;
-        padding-bottom:210px;
+        padding-bottom:100px;
         /* position:absolute; */
        
         

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
+
+
 return [
 
     /*
@@ -45,6 +47,10 @@ return [
     'debug' => (bool) env('APP_DEBUG', false),
 
     'PDF' => Barryvdh\DomPDF\Facade::class,
+    'aliases' => [
+        // Other aliases...
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------

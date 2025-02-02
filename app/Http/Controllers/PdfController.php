@@ -23,7 +23,7 @@ class PdfController extends Controller
         }
 
         // Pass the image path to the view
-        $pdf = PDF::loadView('demo', ['data' => $data, 'imagePath' => $imagePath]);
+        $pdf = PDF::loadView('download', ['data' => $data, 'imagePath' => $imagePath]);
 
         // Update user_activity table
         $user = User_Activity::where('user_id',$data['custom_id'])->first();
@@ -39,6 +39,6 @@ class PdfController extends Controller
             }
         }
         // Download the PDF file
-        return $pdf->download('demo.pdf');
+        return $pdf->download('download.pdf');
     }
 }
