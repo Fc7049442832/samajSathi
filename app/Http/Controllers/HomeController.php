@@ -10,9 +10,12 @@ use App\Models\Feedback;
 use App\Models\Profile;
 use App\Models\Save_Profile;
 use App\Models\User_Activity;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -60,8 +63,9 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'Thank you for your feedback!');
     }
     
-      public function ContactStore(Request $request)
+    public function ContactStore(Request $request)
     {
+        // Validate request data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'age' => 'required|integer',
@@ -70,27 +74,33 @@ class HomeController extends Controller
             'phone' => 'required|numeric',
             'password' => 'required|min:5',
         ]);
-    
+        
+        // Encrypt password before saving
         $validatedData['password'] = bcrypt($validatedData['password']);
-    
+        
+        // Create new user in the database
         $user = User::create($validatedData);
-    
-        event(new UserRegisteredEvent($user));
-        
-        Profile::create([
-            'user_id' => $user->custom_id,
+
+         // Create associated profile for the user
+         Profile::create([
+            'user_id' => $user->custom_id, // Assuming 'custom_id' is the identifier
         ]);
-       
-        // try {
-        //     
-        // } catch (\Exception $e) {
-        //     \Log::error('Event dispatch failed: ' . $e->getMessage());
-        //     return redirect()->back()->with('error', 'Event could not be processed.');
-        // }
     
+        // Log the user in
         Auth::login($user);
-        
     
+        // Send email to the user
+        try {
+            Mail::to($user->email)->send(new WelcomeMail($user));
+        } catch (\Exception $e) {
+            // Log error if email sending fails
+            Log::error('Email Send Error: ' . $e->getMessage());
+            
+            // Return error response if email sending fails
+            return response()->json(['error' => 'Email sending failed!', 'message' => $e->getMessage()], 500);
+        }
+    
+        // Redirect to home with success message
         return redirect()->route('home')
             ->with('success', 'User created and logged in successfully')
             ->with('user', $user);
@@ -209,7 +219,11 @@ class HomeController extends Controller
         $combinedUsers = [];
         foreach ($users as $u) {
             $profileData = collect($userDetails)->firstWhere('user_id', $u['custom_id']); // Assuming 'user_id' in Profile table
-            $combinedUsers[] = array_merge($u, $profileData ?? []); // Merge user data with profile data
+        
+            // Check if profileData exists and has 'profile_image'
+            if ($profileData && !empty($profileData['profile_image'])) {
+                $combinedUsers[] = array_merge($u, $profileData);
+            }
         }
 
         // Filter data based on authenticated user's gender
