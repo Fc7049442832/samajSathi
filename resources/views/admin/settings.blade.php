@@ -61,6 +61,34 @@
       </div>
     </div>
   </div>
+{{-- User Auto mail Sending Setting --}}
+<div class="card mt-2">
+    <div class="card-header h5">Auto Mail Sending Setting</div>
+    <div class="card-body">
+        <form action="{{ route('admin.google.settings.update') }}" method="POST">
+            @csrf
+        
+            <div class="form-group">
+                <label>Google Client ID</label>
+                <input type="text" name="GOOGLE_CLIENT_ID" class="form-control" placeholder="GOOGLE_CLIENT_ID" value="{{ old('GOOGLE_CLIENT_ID', $googleSettings['client_id'] ?? '' ) }}" required>
+            </div>
+        
+            <div class="form-group">
+                <label>Google Client Secret</label>
+                <input type="text" name="GOOGLE_CLIENT_SECRET" class="form-control" placeholder="GOOGLE_CLIENT_SECRET" value="{{ old('GOOGLE_CLIENT_SECRET', $googleSettings['client_secret'] ?? '') }}" required>
+            </div>
+        
+            <div class="form-group">
+                <label>Google Redirect URI</label>
+                <input type="text" name="GOOGLE_REDIRECT_URI" class="form-control" placeholder="https://page_redirect_url" value="{{ old('GOOGLE_REDIRECT_URI', $googleSettings['redirect_uri'] ?? '') }}" required>
+            </div>
+            <div class="form-group text-end">
+                <button type="submit" class="btn btn-success mt-2">Save Changes</button>
+                <a href="{{ route('admin.google.settings.reset') }}" class="btn btn-danger">Reset to Default</a>
+            </div>
+        </form>
+    </div>
+</div>
 
 {{-- Google User Loging API Setting --}}
 <div class="card mt-2">

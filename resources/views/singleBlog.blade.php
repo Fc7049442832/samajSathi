@@ -4,27 +4,39 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-         <title>SamajSathi - Connecting Hearts, Building Relationships</title>
+        <title>{{ $blog->title }} - SamajSathi</title>
+
+        <!-- Canonical URL -->
+        <link rel="canonical" href="{{ url()->current() }}">
 
         <!-- Basic Meta Tags -->
-        <meta name="description" content="SamajSathi is your trusted platform to connect with potential life partners, fostering meaningful relationships and long-lasting bonds. Start your journey with us today!">
+        <meta name="description" content="{{ Str::limit(strip_tags($blog->content), 150) }}">
         <meta name="author" content="Tech Radar">
-        <meta name="keywords" content="SamajSathi, marriage platform, matchmaking, find life partner, matrimony, relationships, Tech Radar">
-        
-        <!-- Open Graph Meta Tags for Facebook and WhatsApp -->
-        <meta property="og:title" content="SamajSathi - Connecting Hearts, Building Relationships">
-        <meta property="og:description" content="Discover meaningful connections and find your perfect life partner on SamajSathi, the trusted matchmaking platform. Join us now!">
-        <meta property="og:image" content="https://samajsathi.techradar.site/images/marriage-preview.jpg"> <!-- Update with the actual image URL -->
-        <meta property="og:url" content="https://samajsathi.techradar.site">
-        <meta property="og:type" content="website">
+        <meta name="keywords" content="SamajSathi, matrimony, matchmaking, marriage advice, relationships, find life partner, marriage stories, wedding tips, Tech Radar">
+
+        <!-- Open Graph Meta Tags for Facebook & WhatsApp -->
+        <meta property="og:title" content="{{ $blog->title }} - SamajSathi">
+        <meta property="og:description" content="{{ Str::limit(strip_tags($blog->content), 150) }}">
+        <meta property="og:image" content="{{ asset('storage/' . $blog->image) }}">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:type" content="article">
         <meta property="og:site_name" content="SamajSathi">
-        
+        <meta property="og:locale" content="en_US">
+
         <!-- Twitter Card Meta Tags -->
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="SamajSathi - Connecting Hearts, Building Relationships">
-        <meta name="twitter:description" content="Find your life partner on SamajSathi! A trusted platform for meaningful matchmaking and lasting bonds. Start your journey now!">
-        <meta name="twitter:image" content="https://samajsathi.techradar.site/images/marriage-preview.jpg"> <!-- Update with the actual image URL -->
-        <meta name="twitter:url" content="https://samajsathi.techradar.site">
+        <meta name="twitter:title" content="{{ $blog->title }} - SamajSathi">
+        <meta name="twitter:description" content="{{ Str::limit(strip_tags($blog->content), 150) }}">
+        <meta name="twitter:image" content="{{ asset('storage/' . $blog->image) }}">
+        <meta name="twitter:url" content="{{ url()->current() }}">
+        <meta name="twitter:site" content="@techradar">
+        <meta name="twitter:creator" content="@techradar">
+
+        <!-- Mobile & SEO Optimizations -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         
         <!-- Image Previews -->
         <meta property="og:image:width" content="600">
@@ -33,10 +45,7 @@
     
         <!-- Robots Meta Tag -->
         <meta name="robots" content="index, follow">
-    
-        <!-- Canonical URL -->
-        <link rel="canonical" href="https://samajsathi.techradar.site">
-
+        
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
@@ -46,6 +55,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
         <!-- Bootstrap CSS -->
+        
+        
         <link rel="stylesheet" href="{{asset('bootstrap.min.css')}}">
         {{-- JQuery cdn Path --}}
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> 
@@ -133,8 +144,6 @@
 
         }
         /* Chat Box style */
-        
-    
             /* Hidden modal by default */
             #customModal {
                 display: none;
@@ -149,7 +158,6 @@
                 border-radius: 8px;
                 z-index: 1000;
             }
-    
             /* Header of the modal (for dragging) */
             #modalHeader {
                 cursor: move;
@@ -159,7 +167,6 @@
                 border-top-left-radius: 8px;
                 border-top-right-radius: 8px;
             }
-    
             /* Close button */
             #modalClose {
                 position: absolute;
@@ -174,7 +181,6 @@
                 cursor: pointer;
                 text-align: center;
             }
-    
             /* Content of the modal */
             #modalContent {
                 padding: 20px;
@@ -190,32 +196,65 @@
             </div>
         @endif
         @if (session('error'))
-        <div id="alert-box" class="alert alert-danger ">
-            {{ session('error') }}
-        </div>
-    @endif
+            <div id="alert-box" class="alert alert-danger ">
+                {{ session('error') }}
+            </div>
+        @endif
 
         <x-header />
 
-        @if (Auth::check())
-            {{-- page header code  --}}
-            <div class="row page-header text-center mb-1 justify-content-around" id="pageHeader" >
-                <div class="col-md-3 col-3 btn ">
-                <a href="{{ route('profile')}}" class="text-white ">Profile</a>
-                </div>
-                <div class="col-md-3 col-3 btn ">
-                <a href="{{ route('partner_query')}}" class="text-white">Requirement</a>
-                </div>
-                <div class="col-md-3 col-3 btn ">
-                <a href="{{ route('matching')}}" class="text-white">Matching</a>
-                </div>
-                <div class="col-md-3 col-3 btn ">
-                    <a href="{{ route('saved.profile')}}" class="text-white">Save</a>
-                </div>
-            </div>
-        @endif
         <div class="main-content-container">
-            @yield('content')
+            <h3>{{$blog->title}}</h3>
+            <small>{{$blog->created_at}} </small>
+            <hr>
+            <div class="row justify-content-around">
+                <div class="col-md-8">
+                    {{-- image section code.. --}}
+                    <div class="row justify-content-center">
+                        <div class="col-5 mb-4">
+                            <img src="{{ asset('storage/' . $blog->image) }}" class="card-img-top" alt="{{ $blog->title }}">
+                        </div>
+                    </div>
+                    <p>
+                        {!! nl2br(e($blog->content)) !!}
+                    </p>
+                    <!-- Like & View Count -->
+                    <div class="d-flex justify-content-end mt-3">
+                        <span class="text-primary"><i class="fas fa-eye"></i> {{ $blog->views }} </span>..
+                        <span class="text-danger"><i class="fas fa-heart"></i> {{ $blog->likes }} </span>
+                    </div>
+
+                    <!-- Back Button -->
+                    <div class="text-center mt-3">
+                        <button class="btn btn-primary like-btn" data-id="{{ $blog->id }}">
+                            👍 Like <span class="like-count">{{ $blog->likes }}</span>
+                        </button>
+                        <button class="btn btn-success share-btn" data-url="{{ url()->current() }}">
+                            🔗 Share
+                        </button>
+                        {{-- <a href="{{ route('pblog.index') }}" class="btn btn-primary">Back to Blogs</a> --}}
+                    </div>
+                </div>
+                {{--  --}}
+                <div class="col-md-3">
+                    @foreach($blogs as $post)
+                    <div class="card shadow-sm">
+                        <img src="{{ asset('storage/' . $post->image) }}" class="card-img-top" alt="{{ $post->title }}" style="height: 120px; width: 100%; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{{route('blog.show',$post->id)}}">{{ $post->title }}</a></h5>
+                          
+                            <div class="d-flex justify-content-between">
+                                <span class="likes">❤️ {{ $post->likes }}</span>
+                                <span class="views">👁️ {{ $post->views }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    @endforeach
+                </div>
+
+            </div>
+
         </div> 
         
          {{-- footer section code  --}}    
@@ -223,18 +262,6 @@
             <p class="text-light" style="font-size:15px;">Power By <a href="" style="text-decoration: none; color:rgb(209, 212, 247); width:100%;">Tech Radar</a> @ 2024</p>
         </div>
 
-    </div>
-
-    
-
-    <div id="customModal">
-        <div id="modalHeader">
-            Chat Box
-            <button id="modalClose">×</button>
-        </div>
-        <div id="modalContent">
-            <p>This is a draggable and resizable div. You can move it around the screen.</p>
-        </div>
     </div>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -270,6 +297,52 @@
                     pageHeader.classList.add('deactive');
                 }
             });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                document.querySelectorAll(".like-btn").forEach((button) => {
+                    button.addEventListener("click", function () {
+                        let blogId = this.getAttribute("data-id");
+
+                        fetch(`/blog/${blogId}/like`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+                            },
+                            body: JSON.stringify({})
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            this.querySelector(".like-count").textContent = data.likes;
+                        })
+                        .catch(error => console.error("Error:", error));
+                    });
+                });
+            });
+
+
+            document.addEventListener("DOMContentLoaded", function () {
+                document.querySelectorAll(".share-btn").forEach((button) => {
+                    button.addEventListener("click", function () {
+                        let blogUrl = this.getAttribute("data-url");
+
+                        if (navigator.share) {
+                            navigator.share({
+                                title: document.title,
+                                text: "Check out this amazing blog!",
+                                url: blogUrl
+                            }).then(() => {
+                                console.log("Thanks for sharing!");
+                            }).catch(console.error);
+                        } else {
+                            // Fallback for unsupported browsers
+                            prompt("Copy this link and share:", blogUrl);
+                        }
+                    });
+                });
+            });
+
+
     </script>
     {{-- Chat Box for script --}}
     <script>

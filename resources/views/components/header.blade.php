@@ -33,8 +33,11 @@
                 <a href="#help">Other</a>
             </button>
             <ul class="dropdown-menu text-center " aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item " href="#">Setting</a></li>
+             
+              <li><a class="dropdown-item " href="{{route('blog')}}">Blog</a></li>
               <li><a class="dropdown-item " href="{{route('about')}}">About</a></li>
+              <li><a class="dropdown-item " href="#">Setting</a></li>
+              <li><a class="dropdown-item " href="#">Contact</a></li>
               <li><a class="dropdown-item" href="#">Help</a></li>
                 @if(Auth::check())
                     <li><a class="dropdown-item" href="#">

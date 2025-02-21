@@ -6,6 +6,8 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\GoogleController; // Import GoogleController
 use App\Http\Controllers\GoogleSettingController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CommentController;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PartnerQueryController;
@@ -15,6 +17,8 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\NotificationController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +30,6 @@ use App\Http\Controllers\NotificationController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 // Base Data Routes 
 Route::get('/',[HomeController::class, 'index'])->name('home');
 Route::get('/browse-partner',[HomeController::class, 'browsePartner'])->name('Browse_Partner');
@@ -36,7 +39,6 @@ Route::post('/feedback-submit', [HomeController::class, 'feedbackStore'])->name(
 Route::get('/notification', function () {
     return view('noticedemo');
 })->middleware('auth');
-
 
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
@@ -48,6 +50,12 @@ Route::post('/search-partner',[DataSearchingController::class, 'searchPartner'])
 Route::post('/register',[HomeController::class, 'ContactStore'])->name('Basic_Contact');
 Route::post('/Userlogin', [HomeController::class, 'login'])->name('login.submit');
 Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
+
+// Blog Routes
+Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+Route::get('/blog/{id}', [BlogController::class, 'show'])->name('blog.show');
+Route::post('/blog/{id}/like', [BlogController::class, 'like'])->name('blog.like');
+Route::post('/comment', [CommentController::class, 'store'])->name('comment.store')->middleware('auth');
 
 // Profile page routes
 Route::get('/profile',[ProfileController::class, 'index'])->name('profile');
@@ -91,7 +99,6 @@ Route::get('/notifications/mark-read', [NotificationController::class, 'markAsRe
 Route::get('/partner-contact/{id}', [ChatController::class, 'partnerContact'])->name('partner.contact');
 Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send.message');
 
-
 // Admin page Routes 
 Route::get('/admin',[AdminController::class, 'index'])->name('admin.dashboard');
 // Notice Routes
@@ -103,6 +110,12 @@ Route::get('/notices/{id}/edit', [NoticeController::class, 'edit'])->name('admin
 Route::put('/notices/{id}', [NoticeController::class, 'update'])->name('admin.notices.update');
 Route::delete('/notices/{id}', [NoticeController::class, 'destroy'])->name('admin.notices.destroy');
 
+// Manage Blog Routes
+Route::get('/admin/blog',[BlogController::class, 'manage_blog'])->name('admin.blog');
+Route::post('/admin/blog/store', [BlogController::class, 'blog_store'])->name('admin.blog.store');
+Route::get('/admin/blog/{id}/edit', [BlogController::class, 'blog_edit'])->name('admin.blog.edit');
+Route::put('/admin/blog/{id}', [BlogController::class, 'blog_update'])->name('admin.blog.update');
+Route::delete('/admin/blog/{id}', [BlogController::class, 'blog_destroy'])->name('admin.blog.delete');
 
 // Admin User Routes
 Route::get('/admin-user',[AdminController::class, 'user'])->name('admin.user');
@@ -116,6 +129,3 @@ Route::delete('/carousel/destroy/{id}', [SettingController::class, 'destroy'])->
 Route::get('/admin/google-settings/reset', [GoogleSettingController::class, 'reset'])->name('admin.google.settings.reset');
 Route::get('/admin/google-settings', [GoogleSettingController::class, 'index'])->name('admin.google.settings');
 Route::post('/admin/google-settings/update', [GoogleSettingController::class, 'update'])->name('admin.google.settings.update');
-
-
-

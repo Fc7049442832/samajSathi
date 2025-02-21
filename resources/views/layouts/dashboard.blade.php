@@ -65,6 +65,7 @@
             <a href="{{route('admin.dashboard')}}">Dashboard</a>
             <a href="{{route('admin.user')}}">Users</a>
             <a href="{{route('notice')}}">Notice</a>
+            <a href="{{route('admin.blog')}}">Blog</a>
             <a href="#">Reports</a>
             <a href="{{route('admin.setting')}}">Settings</a>
             <a class="dropdown-item" href="#">

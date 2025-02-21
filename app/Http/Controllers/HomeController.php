@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Carousel_Image;
 use App\Models\Feedback;
 use App\Models\Profile;
+use App\Models\Blog;
+use App\Models\Comment;
 use App\Models\Save_Profile;
 use App\Models\User_Activity;
 use App\Mail\WelcomeMail;
@@ -33,9 +35,12 @@ class HomeController extends Controller
         $feedback = Feedback::select('id','rating')->get();
 
         $data = Carousel_Image::get();
+
+        $blogs = Blog::latest()->take(4)->get();
+
         
         $notifications =0 ;
-        return view('index', compact('combinedUsers','data','feedback','notifications'));
+        return view('index', compact('combinedUsers','data','feedback','notifications', 'blogs'));
        
     }
 
