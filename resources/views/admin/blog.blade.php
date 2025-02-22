@@ -32,7 +32,7 @@
                         </div>
                         <div class="row mt-3">
                             <small class="col-2">Type : {{$blog->type}}</small>
-                            <small class="col-4">Date : {{$blog->created_at}}</small>
+                            <small class="col-4">Date : {{ \Carbon\Carbon::parse($blog->created_at)->format('d M Y h:i A') }}</small>
                             <small class="col-2">View : {{$blog->views}}</small>
                             <small class="col-2">Like : {{$blog->likes}}</small>
                         </div>

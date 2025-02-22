@@ -1,5 +1,5 @@
 <div class="blog-section">
-    <h2>Tips, Stories & Relationship Advice!</h2>
+    <h2><a href="{{route('blog')}}" style="text-decoration: none; color:black;"> Tips, Stories & Relationship Advice!</a></h2>
     <p>"Perfect Partner, Happy Life – Dating Tips, Marriage Stories & More"</p>
 
     <div class="row justify-content-around">

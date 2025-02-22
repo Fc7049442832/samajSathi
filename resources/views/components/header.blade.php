@@ -34,10 +34,10 @@
             </button>
             <ul class="dropdown-menu text-center " aria-labelledby="dropdownMenuButton1">
              
-              <li><a class="dropdown-item " href="{{route('blog')}}">Blog</a></li>
-              <li><a class="dropdown-item " href="{{route('about')}}">About</a></li>
-              <li><a class="dropdown-item " href="#">Setting</a></li>
-              <li><a class="dropdown-item " href="#">Contact</a></li>
+              <li><a class="dropdown-item" href="{{route('blog')}}">Blog</a></li>
+              <li><a class="dropdown-item" href="{{route('about')}}">About</a></li>
+              <li><a class="dropdown-item" href="#">Setting</a></li>
+              <li><a class="dropdown-item" href="#">Contact</a></li>
               <li><a class="dropdown-item" href="#">Help</a></li>
                 @if(Auth::check())
                     <li><a class="dropdown-item" href="#">
@@ -123,7 +123,7 @@
             @enderror
 
             <input type="password" name="password" id="" placeholder="Password (Minmum 5 digit)"  value="{{ old('password') }}"  required>
-            <small><a href="#"  class="btn text-white">Reset Password</a></small>
+            <small><a href="#" class="btn text-white" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">Reset Password</a></small>
             <h5 class="text-center text-white mt-3">OR</h5>
             <p class="text-center">
                 <a href="{{ route('google.login') }}" class="btn btn-primary">
@@ -140,6 +140,41 @@
       </div>
     </div>
   </div>
+
+
+<!-- Password Reset Modal -->
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title" id="resetPasswordModalLabel">Reset Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-secondary">
+                <form action="{{route('ResetPassword')}}" method="post" >
+                    @csrf
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+                    </div>
+                
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Mobile No</label>
+                        <input type="text" class="form-control" name="phone" placeholder="Enter your mobile number" required>
+                    </div>
+                
+                    <div class="mb-3">
+                        <label for="password" class="form-label">New Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Enter new password" required>
+                    </div>
+                
+                    <button type="submit" class="btn btn-primary">Reset Password</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
 
 <style>
     .header-container {

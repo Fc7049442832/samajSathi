@@ -270,6 +270,28 @@
                     pageHeader.classList.add('deactive');
                 }
             });
+
+            // Share Button code..
+            document.addEventListener("DOMContentLoaded", function () {
+                document.querySelectorAll(".share-btn").forEach((button) => {
+                    button.addEventListener("click", function () {
+                        let blogUrl = this.getAttribute("data-url");
+
+                        if (navigator.share) {
+                            navigator.share({
+                                title: document.title,
+                                text: "Check out this amazing blog!",
+                                url: blogUrl
+                            }).then(() => {
+                                console.log("Thanks for sharing!");
+                            }).catch(console.error);
+                        } else {
+                            // Fallback for unsupported browsers
+                            prompt("Copy this link and share:", blogUrl);
+                        }
+                    });
+                });
+            });
     </script>
     {{-- Chat Box for script --}}
     <script>

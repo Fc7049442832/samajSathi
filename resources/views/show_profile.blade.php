@@ -83,9 +83,9 @@
                     <a href="{{route('profile.save', $user->custom_id)}}">
                         <i class="bi bi-bookmark-heart-fill"></i></i>Save
                     </a>
-                    <div class="dropdown">
+                    {{-- <div class="dropdown">
                         <a href="#" class="dropdown-toggle" id="shareDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-share icon" title="Share" style="margin-right:2px;"></i> Share
+                             Share
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="shareDropdown">
                             <li>
@@ -109,7 +109,10 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> --}}
+                    <button class="btn  share-btn" data-url="{{ url()->current() }}">
+                        <i class="bi bi-share icon" title="Share" style="margin-right:2px;"></i> <b>Share</b>
+                    </button>
 
                         
                 </div>
@@ -117,7 +120,12 @@
            
             <div class="row justify-content-around">
                 <button class="btn btn-danger col-5 mt-3" onclick=" goBack()" >Back </button>
-                <button class="btn btn-info col-5 mt-3" id="openModalLink" > <i class="bi bi-chat icon" title="Chat"></i>Chat </button>
+
+                <a href="{{ route('partner.contact', ['id' => $user->custom_id]) }}" class="btn btn-info col-5 mt-3">
+                    <i class="bi bi-chat icon" title="Chat"></i>Chat
+                </a>
+                
+                {{-- <button class="btn btn-info col-5 mt-3"  > <i class="bi bi-chat icon" title="Chat"></i>Chat </button> --}}
             </div>
         </div>
     </div>

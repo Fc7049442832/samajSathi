@@ -50,9 +50,12 @@ Route::post('/search-partner',[DataSearchingController::class, 'searchPartner'])
 Route::post('/register',[HomeController::class, 'ContactStore'])->name('Basic_Contact');
 Route::post('/Userlogin', [HomeController::class, 'login'])->name('login.submit');
 Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
+Route::any('/password/email', [HomeController::class, 'ResetPassword'])->name('ResetPassword');
+
 
 // Blog Routes
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+Route::post('/blogs/filter', [BlogController::class, 'filterBlogs'])->name('blog.filter');
 Route::get('/blog/{id}', [BlogController::class, 'show'])->name('blog.show');
 Route::post('/blog/{id}/like', [BlogController::class, 'like'])->name('blog.like');
 Route::post('/comment', [CommentController::class, 'store'])->name('comment.store')->middleware('auth');

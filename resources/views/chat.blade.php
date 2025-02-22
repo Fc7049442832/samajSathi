@@ -44,13 +44,17 @@
             @endphp
             @if(Auth::user()->custom_id === $message->sender_id)
                 <div class="message text-end " style="min-width: 80px;">
-                    <span>{{ $message->message }}</span>
-                    <img src="{{ asset(session('profile_image')) }}" alt="Profile Image" class="profile-image">
+                    <div class="btn  text-left">
+                        <span>{{ $message->message }}</span>
+                    </div>
+                  
                 </div>
             @else
                 <div class="message text-start " style="min-width: 80px;">
-                    <img src="{{asset($user->profile->profile_image ? 'storage/' . $user->profile->profile_image : 'images/set_partner_per.jpg')}}" alt="">
-                    <span>{{ $message->message }}</span>
+                    <div class="btn btn-success text-left">
+                        <span>{{ $message->message }}</span>
+                    </div>
+                    
                 </div>
             @endif
             @if ($key + 1 === $messagesCount) 
@@ -73,21 +77,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const chatBox = document.getElementById('chatBox');
-        chatBox.scrollTop = chatBox.scrollHeight;
-    });
-    import Echo from 'laravel-echo';
-    import Pusher from 'pusher-js';
-
-    window.Pusher = Pusher;
-    window.Echo = new Echo({
-        broadcaster: 'pusher',
-        key: process.env.MIX_PUSHER_APP_KEY,
-        cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-        forceTLS: true
-    });
-
+ 
     document.addEventListener('DOMContentLoaded', () => {
     const chatForm = document.getElementById('chat-form');
 

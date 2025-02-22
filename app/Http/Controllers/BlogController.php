@@ -12,8 +12,19 @@ class BlogController extends Controller
 {
     public function index()
     {
-        return view('Blog');
-        $blogs = Blog::latest()->take(4)->get();
+        $blogs = Blog::latest()->get();
+        return view('Blog', compact('blogs'));
+    }
+    
+    public function filterBlogs(Request $request)
+    {
+        $type = $request->category;
+        
+    
+        $blogs = Blog::when($type, function ($query) use ($type) {
+            return $query->where('type', $type);
+        })->latest()->get();
+    
         return view('Blog', compact('blogs'));
     }
 

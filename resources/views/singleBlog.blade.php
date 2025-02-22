@@ -1,97 +1,117 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <title>{{ $blog->title }} - SamajSathi</title>
-
-        <!-- Canonical URL -->
-        <link rel="canonical" href="{{ url()->current() }}">
-
-        <!-- Basic Meta Tags -->
-        <meta name="description" content="{{ Str::limit(strip_tags($blog->content), 150) }}">
-        <meta name="author" content="Tech Radar">
-        <meta name="keywords" content="SamajSathi, matrimony, matchmaking, marriage advice, relationships, find life partner, marriage stories, wedding tips, Tech Radar">
-
-        <!-- Open Graph Meta Tags for Facebook & WhatsApp -->
-        <meta property="og:title" content="{{ $blog->title }} - SamajSathi">
-        <meta property="og:description" content="{{ Str::limit(strip_tags($blog->content), 150) }}">
-        <meta property="og:image" content="{{ asset('storage/' . $blog->image) }}">
-        <meta property="og:url" content="{{ url()->current() }}">
-        <meta property="og:type" content="article">
-        <meta property="og:site_name" content="SamajSathi">
-        <meta property="og:locale" content="en_US">
-
-        <!-- Twitter Card Meta Tags -->
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="{{ $blog->title }} - SamajSathi">
-        <meta name="twitter:description" content="{{ Str::limit(strip_tags($blog->content), 150) }}">
-        <meta name="twitter:image" content="{{ asset('storage/' . $blog->image) }}">
-        <meta name="twitter:url" content="{{ url()->current() }}">
-        <meta name="twitter:site" content="@techradar">
-        <meta name="twitter:creator" content="@techradar">
-
-        <!-- Mobile & SEO Optimizations -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        
-        <!-- Image Previews -->
-        <meta property="og:image:width" content="600">
-        <meta property="og:image:height" content="315">
-
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
-        <!-- Robots Meta Tag -->
-        <meta name="robots" content="index, follow">
-        
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-        {{-- icon cdn Link --}}
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <title>{{ $blog->title }} - SamajSathi</title>
 
-        <!-- Bootstrap CSS -->
-        
-        
-        <link rel="stylesheet" href="{{asset('bootstrap.min.css')}}">
-        {{-- JQuery cdn Path --}}
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> 
-        
-         
-        <!-- Styles -->
-        <style>
-           
-            #alert-box {
-                position: fixed;
-                top: 20px;
-                right: 25px;
-                z-index: 1050;
-                padding: 8px;
-                font-size:14px;
-                border-radius: 5px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                background-color: #28a745; /* Success green */
-                color: white;
-                transition: opacity 0.5s ease-out;
-            }
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
 
-            .page-header{
-                font-size: 12px;
-                position: relative;
-                background-image: radial-gradient(circle, rgba(212, 55, 27, 0.849), rgba(241, 64, 168, 0.7));
-                border-radius:8px;
-            }
-            .page-header a {
-                text-decoration: none;
-                font-weight: 600;
-            }
+    <!-- Basic Meta Tags -->
+    <meta name="description" content="{{ Str::limit(strip_tags($blog->content), 150) }}">
+    <meta name="author" content="Tech Radar">
+    <meta name="keywords" content="SamajSathi, matrimony, matchmaking, marriage advice, relationships, find life partner, marriage stories, wedding tips, Tech Radar">
 
-            /* icon for sytles */
-            .icon {
+    <!-- Open Graph Meta Tags for Facebook & WhatsApp -->
+    <meta property="og:title" content="{{ $blog->title }} - SamajSathi">
+    <meta property="og:description" content="{{ Str::limit(strip_tags($blog->content), 150) }}">
+    <meta property="og:image" content="{{ asset('storage/' . $blog->image) }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="SamajSathi">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $blog->title }} - SamajSathi">
+    <meta name="twitter:description" content="{{ Str::limit(strip_tags($blog->content), 150) }}">
+    <meta name="twitter:image" content="{{ asset('storage/' . $blog->image) }}">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    <meta name="twitter:site" content="@techradar">
+    <meta name="twitter:creator" content="@techradar">
+
+    <!-- Mobile & SEO Optimizations -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
+    <!-- Image Previews -->
+    <meta property="og:image:width" content="600">
+    <meta property="og:image:height" content="315">
+
+
+    <!-- Robots Meta Tag -->
+    <meta name="robots" content="index, follow">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+    {{-- icon cdn Link --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{asset('bootstrap.min.css')}}">
+    {{-- JQuery cdn Path --}}
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> 
+     {{--Blog google Schema code   --}}
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "{{ $blog->title }}",
+            "description": "{{ Str::limit(strip_tags($blog->content), 150) }}",
+            "image": "{{ asset('storage/' . $blog->image) }}",
+            "author": {
+                "@type": "Person",
+                "name": "Admin"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Samaj Sathi",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "http://samajsathi.techradar.site/images/logo.png"
+                }
+            },
+            "datePublished": "{{ $blog->created_at->toIso8601String() }}",
+            "dateModified": "{{ $blog->updated_at->toIso8601String() }}"
+        }
+    </script>         
+    <!-- Styles -->
+    <style>
+        
+        #alert-box {
+            position: fixed;
+            top: 20px;
+            right: 25px;
+            z-index: 1050;
+            padding: 8px;
+            font-size:14px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: #28a745; /* Success green */
+            color: white;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .page-header{
+            font-size: 12px;
+            position: relative;
+            background-image: radial-gradient(circle, rgba(212, 55, 27, 0.849), rgba(241, 64, 168, 0.7));
+            border-radius:8px;
+        }
+        .page-header a {
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* icon for sytles */
+        .icon {
             margin: 0 10px;
             cursor: pointer;
             transition: transform 0.2s, color 0.2s;
@@ -139,55 +159,55 @@
             }
 
             .footer{
-             width: 95%;
+            width: 95%;
             }
 
         }
         /* Chat Box style */
-            /* Hidden modal by default */
-            #customModal {
-                display: none;
-                position: absolute;
-                top: 100;
-                left: 100px;
-                width: 400px;
-                height: 500px;
-                background-color: #fff;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                border: 1px solid #ccc;
-                border-radius: 8px;
-                z-index: 1000;
-            }
-            /* Header of the modal (for dragging) */
-            #modalHeader {
-                cursor: move;
-                padding: 10px;
-                background-color: #007bff;
-                color: white;
-                border-top-left-radius: 8px;
-                border-top-right-radius: 8px;
-            }
-            /* Close button */
-            #modalClose {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                background-color: red;
-                color: white;
-                border: none;
-                border-radius: 50%;
-                width: 25px;
-                height: 25px;
-                cursor: pointer;
-                text-align: center;
-            }
-            /* Content of the modal */
-            #modalContent {
-                padding: 20px;
-                height: calc(100% - 50px); /* Adjust height to exclude header */
-            }
-        </style>
-    </head>
+        /* Hidden modal by default */
+        #customModal {
+            display: none;
+            position: absolute;
+            top: 100;
+            left: 100px;
+            width: 400px;
+            height: 500px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            z-index: 1000;
+        }
+        /* Header of the modal (for dragging) */
+        #modalHeader {
+            cursor: move;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        /* Close button */
+        #modalClose {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            text-align: center;
+        }
+        /* Content of the modal */
+        #modalContent {
+            padding: 20px;
+            height: calc(100% - 50px); /* Adjust height to exclude header */
+        }
+    </style>
+</head>
 <body>
     <div class="container">
         @if (session('success'))
@@ -205,7 +225,7 @@
 
         <div class="main-content-container">
             <h3>{{$blog->title}}</h3>
-            <small>{{$blog->created_at}} </small>
+            <small>{{ \Carbon\Carbon::parse($blog->created_at)->format('d M Y h:i A') }}</small>
             <hr>
             <div class="row justify-content-around">
                 <div class="col-md-8">
@@ -320,7 +340,7 @@
                 });
             });
 
-
+            // Share Button code..
             document.addEventListener("DOMContentLoaded", function () {
                 document.querySelectorAll(".share-btn").forEach((button) => {
                     button.addEventListener("click", function () {

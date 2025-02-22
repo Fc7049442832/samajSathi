@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
@@ -110,7 +111,6 @@ class HomeController extends Controller
             ->with('success', 'User created and logged in successfully')
             ->with('user', $user);
     }
-
 
     // User Login Function 
     public function login(Request $request)
@@ -213,6 +213,28 @@ class HomeController extends Controller
         
     }
 
+    // Password reset function code..
+    public function ResetPassword(Request $request)
+    {
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+            'phone' => 'required|digits:10',
+            'password' => 'required|min:5',
+        ]);
+        $user = User::where('email', $validatedData['email'])
+                    ->where('phone', $validatedData['phone'])
+                    ->first();
+    
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+    
+        $user->password = bcrypt($validatedData['password']);
+        $user->save();
+    
+        return redirect()->route('home')->with('success', 'Update password successfully') ;
+    }
+    
     // Private function to handle data processing
     private function getFilteredUsers()
     {
