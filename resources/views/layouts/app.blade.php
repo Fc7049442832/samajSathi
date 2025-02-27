@@ -3,36 +3,39 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-         <title>SamajSathi - Connecting Hearts, Building Relationships</title>
-
-        <!-- Basic Meta Tags -->
-        <meta name="description" content="SamajSathi is your trusted platform to connect with potential life partners, fostering meaningful relationships and long-lasting bonds. Start your journey with us today!">
-        <meta name="author" content="Tech Radar">
-        <meta name="keywords" content="SamajSathi, marriage platform, matchmaking, find life partner, matrimony, relationships, Tech Radar">
-        
-        <!-- Open Graph Meta Tags for Facebook and WhatsApp -->
-        <meta property="og:title" content="SamajSathi - Connecting Hearts, Building Relationships">
-        <meta property="og:description" content="Discover meaningful connections and find your perfect life partner on SamajSathi, the trusted matchmaking platform. Join us now!">
-        <meta property="og:image" content="https://samajsathi.techradar.site/images/marriage-preview.jpg"> <!-- Update with the actual image URL -->
-        <meta property="og:url" content="https://samajsathi.techradar.site">
-        <meta property="og:type" content="website">
-        <meta property="og:site_name" content="SamajSathi">
-        
-        <!-- Twitter Card Meta Tags -->
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="SamajSathi - Connecting Hearts, Building Relationships">
-        <meta name="twitter:description" content="Find your life partner on SamajSathi! A trusted platform for meaningful matchmaking and lasting bonds. Start your journey now!">
-        <meta name="twitter:image" content="https://samajsathi.techradar.site/images/marriage-preview.jpg"> <!-- Update with the actual image URL -->
-        <meta name="twitter:url" content="https://samajsathi.techradar.site">
-        
-        <!-- Image Previews -->
-        <meta property="og:image:width" content="600">
-        <meta property="og:image:height" content="315">
-
     
-        <!-- Robots Meta Tag -->
-        <meta name="robots" content="index, follow">
+        <title>@yield('title', 'Samaj Sathi Matrimony')</title>
+
+        <!-- SEO Meta Tags -->
+        @sectionMissing('meta')
+            <meta name="description" content="Find your perfect life partner with Samaj Sathi Matrimony, India's trusted matchmaking platform.">
+            <meta name="keywords" content="matrimony, matchmaking, marriage, life partner, wedding, samaj sathi">
+            <meta property="og:title" content="Samaj Sathi Matrimony - Find Your Perfect Match">
+            <meta property="og:description" content="Join India's leading matchmaking platform with verified profiles and secure chat.">
+            <meta property="og:image" content="https://samajsathi.techradar.site/images/marriage-preview.jpg">
+            <meta property="og:type" content="website">
+        @else
+            @yield('meta')
+        @endif   
+        
+        <!-- Favicon for Browsers -->
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
+
+        <!-- Apple Touch Icon (For iOS Home Screen) -->
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/apple-touch-icon.png') }}">
+
+        <!-- Android Chrome Icons -->
+        <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('images/android-chrome-192x192.png') }}">
+        <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('images/android-chrome-512x512.png') }}">
+
+        <!-- Microsoft Windows Icons -->
+        {{-- <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="{{ asset('images/mstile-150x150.png') }}">
+        <meta name="theme-color" content="#ffffff"> --}}
+
+        <!-- Favicon (Avoids Missing Icon Errors) -->
+        <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
     
         <!-- Canonical URL -->
         <link rel="canonical" href="https://samajsathi.techradar.site">
@@ -81,60 +84,58 @@
 
             /* icon for sytles */
             .icon {
-            margin: 0 10px;
-            cursor: pointer;
-            transition: transform 0.2s, color 0.2s;
-        }
-        .icon:hover {
-            transform: scale(1.2); /* Slightly enlarge on hover */
-        }
-        .main-content-container{
-            height: 75%;
-            width: 82%;
-            position: absolute;
-            top: 130px;
-            overflow: hidden;
-            overflow-y: scroll;
-            padding-bottom: 50px;
-        }
-
-        .main-content-container::-webkit-scrollbar {
-            display: none; /* WebKit-based browsers (Chrome, Safari) ke liye scrollbar hide kare */
-        }
-        .footer{
-            width: 85%;
-            position: absolute;
-            bottom: 0;
-            justify-content: center;
-            align-items: center;
-        }
-
-        @media (max-width: 768px) {
-            *{
-                font-size: 13px;
+                margin: 0 10px;
+                cursor: pointer;
+                transition: transform 0.2s, color 0.2s;
             }
-            .page-header a {
-                position: relative;
-                font-size: 12px;
+            .icon:hover {
+                transform: scale(1.2); /* Slightly enlarge on hover */
             }
             .main-content-container{
-            height: 82%;
-            width: 94%;
-            position: absolute;
-            top: 95px;
-            overflow: hidden;
-            overflow-y: scroll;
-            padding-bottom: 0px;
+                height: 75%;
+                width: 82%;
+                position: absolute;
+                top: 130px;
+                overflow: hidden;
+                overflow-y: scroll;
+                padding-bottom: 50px;
             }
-
+            .main-content-container::-webkit-scrollbar {
+                display: none; /* WebKit-based browsers (Chrome, Safari) ke liye scrollbar hide kare */
+            }
             .footer{
-             width: 95%;
+                width: 85%;
+                position: absolute;
+                bottom: 0;
+                justify-content: center;
+                align-items: center;
             }
 
-        }
-        /* Chat Box style */
+            @media (max-width: 768px) {
+                *{
+                    font-size: 13px;
+                }
+                .page-header a {
+                    position: relative;
+                    font-size: 12px;
+                }
+                .main-content-container{
+                height: 82%;
+                width: 94%;
+                position: absolute;
+                top: 95px;
+                overflow: hidden;
+                overflow-y: scroll;
+                padding-bottom: 0px;
+                }
+
+                .footer{
+                width: 95%;
+                }
+
+            }
+            /* Chat Box style */
         
-    
             /* Hidden modal by default */
             #customModal {
                 display: none;
@@ -184,17 +185,20 @@
     </head>
 <body>
     <div class="container">
+    
         @if (session('success'))
             <div id="alert-box" class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
-        @if (session('error'))
-        <div id="alert-box" class="alert alert-danger ">
-            {{ session('error') }}
-        </div>
-    @endif
-
+       
+        @if(session('error'))
+            <script>
+                alert("{{ session('error') }}");
+            </script>
+        @endif
+   
+        {{-- header component --}}
         <x-header />
 
         @if (Auth::check())
@@ -225,129 +229,61 @@
 
     </div>
 
-    
-
-    <div id="customModal">
-        <div id="modalHeader">
-            Chat Box
-            <button id="modalClose">×</button>
-        </div>
-        <div id="modalContent">
-            <p>This is a draggable and resizable div. You can move it around the screen.</p>
-        </div>
-    </div>
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script>
-        // back Button function 
-        function goBack() {
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                window.location.href = '/';
-            }
+<!-- Bootstrap js script code -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script>
+    // back Button function 
+    function goBack() {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            window.location.href = '/';
         }
+    }
 
-            document.addEventListener('DOMContentLoaded', () => {
-                const alertBox = document.getElementById('alert-box');
-                if (alertBox) {
-                    setTimeout(() => {
-                        alertBox.style.opacity = '0'; // Fade out
-                        setTimeout(() => {
-                            alertBox.remove(); // Remove element
-                        }, 500); // Wait for fade-out transition
-                    }, 5000); // Display for 5 seconds
-                }
-            });
+    document.addEventListener('DOMContentLoaded', () => {
+        const alertBox = document.getElementById('alert-box');
+        if (alertBox) {
+            setTimeout(() => {
+                alertBox.style.opacity = '0'; // Fade out
+                setTimeout(() => {
+                    alertBox.remove(); // Remove element
+                }, 500); // Wait for fade-out transition
+            }, 5000); // Display for 5 seconds
+        }
+    });
 
-            window.addEventListener('scroll', function() {
-                const pageHeader = document.getElementByClass('page-header');
+    window.addEventListener('scroll', function() {
+        const pageHeader = document.getElementByClass('page-header');
 
-                if (window.scrollY > 10) {
-                    pageHeader.classList.add('active');
+        if (window.scrollY > 10) {
+            pageHeader.classList.add('active');
+        } else {
+            pageHeader.classList.add('deactive');
+        }
+    });
+
+    // Share Button code..
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".share-btn").forEach((button) => {
+            button.addEventListener("click", function () {
+                let blogUrl = this.getAttribute("data-url");
+
+                if (navigator.share) {
+                    navigator.share({
+                        title: document.title,
+                        text: "Check out this amazing blog!",
+                        url: blogUrl
+                    }).then(() => {
+                        console.log("Thanks for sharing!");
+                    }).catch(console.error);
                 } else {
-                    pageHeader.classList.add('deactive');
+                    // Fallback for unsupported browsers
+                    prompt("Copy this link and share:", blogUrl);
                 }
             });
-
-            // Share Button code..
-            document.addEventListener("DOMContentLoaded", function () {
-                document.querySelectorAll(".share-btn").forEach((button) => {
-                    button.addEventListener("click", function () {
-                        let blogUrl = this.getAttribute("data-url");
-
-                        if (navigator.share) {
-                            navigator.share({
-                                title: document.title,
-                                text: "Check out this amazing blog!",
-                                url: blogUrl
-                            }).then(() => {
-                                console.log("Thanks for sharing!");
-                            }).catch(console.error);
-                        } else {
-                            // Fallback for unsupported browsers
-                            prompt("Copy this link and share:", blogUrl);
-                        }
-                    });
-                });
-            });
-    </script>
-    {{-- Chat Box for script --}}
-    <script>
-        const modal = document.getElementById('customModal');
-        const openModalLink = document.getElementById('openModalLink');
-        const closeModalButton = document.getElementById('modalClose');
-        const modalHeader = document.getElementById('modalHeader');
-
-        // Function to open modal
-        function openModal() {
-            modal.style.display = 'block';
-            localStorage.setItem('modalState', 'open'); // Save state
-        }
-
-        // Function to close modal
-        function closeModal() {
-            modal.style.display = 'none';
-            localStorage.setItem('modalState', 'closed'); // Save state
-        }
-
-        // Event listener to open modal
-        openModalLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            openModal();
         });
-
-        // Event listener to close modal
-        closeModalButton.addEventListener('click', closeModal);
-
-        // Check localStorage to persist modal state
-        if (localStorage.getItem('modalState') === 'open') {
-            openModal();
-        }
-
-        // Dragging functionality
-        let isDragging = false;
-        let offsetX, offsetY;
-
-        modalHeader.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            offsetX = e.clientX - modal.offsetLeft;
-            offsetY = e.clientY - modal.offsetTop;
-            document.body.style.userSelect = 'none'; // Disable text selection
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            if (isDragging) {
-                modal.style.left = `${e.clientX - offsetX}px`;
-                modal.style.top = `${e.clientY - offsetY}px`;
-            }
-        });
-
-        document.addEventListener('mouseup', () => {
-            isDragging = false;
-            document.body.style.userSelect = ''; // Re-enable text selection
-        });
-    </script>
+    });
+</script>
 </body>
 </html>

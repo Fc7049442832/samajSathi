@@ -1,13 +1,18 @@
+<!-- Schema Markup for Better SEO (Article Structured Data) -->
 <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Samaj Sathi Blog",
-        "url": "https://samajsathi.techradar.site/blog",
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://samajsathi.techradar.site/blog",
-            "query-input": "required name=search_term_string"
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Samaj Sathi Matrimony Blog",
+      "url": "https://samajsathi.techradar.site/blog",
+      "description": "Explore expert matchmaking advice, relationship tips, and real success stories on the Samaj Sathi Matrimony blog.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Samaj Sathi Matrimony",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "URL_TO_LOGO"
         }
+      }
     }
-</script>
+    </script>

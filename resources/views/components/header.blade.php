@@ -22,6 +22,7 @@
             <a href="{{route('notifications')}}">Notification 
                 <span class="badge text-danger">{{ auth()->user()?->unreadNotifications->count() ?? ''}}</span>
             </a>
+            <a href="{{route('wallet')}}">Wallet</a>
         @else
             <a href="#" data-bs-toggle="modal" data-bs-target="#LoginModal">
                 Login <i class="fas fa-user"></i>
@@ -37,8 +38,8 @@
               <li><a class="dropdown-item" href="{{route('blog')}}">Blog</a></li>
               <li><a class="dropdown-item" href="{{route('about')}}">About</a></li>
               <li><a class="dropdown-item" href="#">Setting</a></li>
-              <li><a class="dropdown-item" href="#">Contact</a></li>
-              <li><a class="dropdown-item" href="#">Help</a></li>
+              <li><a class="dropdown-item" href="{{route('contact')}}">Contact</a></li>
+             
                 @if(Auth::check())
                     <li><a class="dropdown-item" href="#">
                         <form action="{{ route('logout') }}" method="POST" style="display: inline;">
@@ -90,7 +91,7 @@
             <span class="text-danger">{{ $message }} </span>
             @enderror
 
-            <input type="password" name="password" id="" placeholder="Password (Minmum 5 digit)">
+            <input type="password" name="password"  placeholder="Password (Minimum 5 digit)" value="{{ old('password') }}" required style="width: 81%;">
             
             
         </div>
@@ -122,7 +123,9 @@
             <span class="text-danger">{{ $message }}</span>
             @enderror
 
-            <input type="password" name="password" id="" placeholder="Password (Minmum 5 digit)"  value="{{ old('password') }}"  required>
+            <input type="password" name="password" id="password" placeholder="Password (Minimum 5 digit)" value="{{ old('password') }}" required style="width: 81%;">
+            <button type="button" onclick="togglePassword()">👁️</button>
+
             <small><a href="#" class="btn text-white" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">Reset Password</a></small>
             <h5 class="text-center text-white mt-3">OR</h5>
             <p class="text-center">
@@ -175,6 +178,8 @@
         </div>
     </div>
 </div>
+
+
 
 <style>
     .header-container {
@@ -243,7 +248,7 @@
 
     /* Make modal background 60% transparent */
     .modal-content {
-        background-color: rgba(48, 70, 99, 0.6); /* White background with 60% transparency */
+        background-color: rgba(7, 9, 12, 0.904); /* White background with 60% transparency */
         border: none; /* Optional: Removes border if needed */
         box-shadow: none; /* Optional: Removes shadow if needed */
     }
@@ -325,6 +330,15 @@
     }
 </style>
 <script>
+     function togglePassword() {
+        var passwordInput = document.getElementById("password");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+        } else {
+            passwordInput.type = "password";
+        }
+    }
+
     function toggleMenu() {
         const navLinks = document.getElementById('nav-links');
         if (navLinks.style.display === 'flex') {

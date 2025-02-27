@@ -31,18 +31,35 @@ class BlogController extends Controller
     public function show($id)
     {
         $blog = Blog::with('comments.replies.user')->findOrFail($id);
-        $blogs = Blog::latest()->get()->where('id', '!=', $id);
-
-        // Increase view count
-        $blog->increment('views');
-
-        return view('singleBlog', compact('blog','blogs'));
+        $blogs = Blog::latest()->where('id', '!=', $id)->get();
+    
+        // Check session to prevent multiple increments from the same user
+        $sessionKey = 'blog_viewed_' . $id;
+    
+        if (!session()->has($sessionKey)) {
+            $blog->increment('views');
+            session()->put($sessionKey, true);
+        }
+    
+        return view('singleBlog', compact('blog', 'blogs'));
     }
-
+    
     public function like($id)
     {
         $blog = Blog::findOrFail($id);
-        $blog->increment('likes');
+        $sessionKey = 'liked_blog_' . $id;
+
+        if (session()->has($sessionKey)) {
+            // If already liked, decrement and remove session
+            $blog->decrement('likes');
+            session()->forget($sessionKey);
+            $liked = false;
+        } else {
+            // If not liked, increment and store session
+            $blog->increment('likes');
+            session()->put($sessionKey, true);
+            $liked = true;
+        }
         return response()->json(['likes' => $blog->likes]);
     }
 
@@ -63,18 +80,12 @@ class BlogController extends Controller
         return back()->with('success', 'Comment added!');
     }
 
-
     // Blog manage for  functions 
     public function manage_blog()
     {
         $blogs = Blog::latest()->get();
         return view('admin.blog', compact('blogs'));
     }
-
-    // public function blog_create()
-    // {
-    //     return view('blog_create');
-    // }
 
     public function blog_store(Request $request)
     {

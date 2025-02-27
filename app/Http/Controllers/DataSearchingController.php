@@ -20,7 +20,11 @@ class DataSearchingController extends Controller
         $religion =$request->religion;
     
         $combinedUsers = $this->searchDataProcess($gender, $minAge, $maxAge, $religion); // call the Private searchDataProcess function
-        
+
+        if (empty($combinedUsers)) {
+            return redirect()->route('home')->with('error', 'No matching profiles found');
+        }
+
         return view('browsepartner', compact('combinedUsers'));
     }
 

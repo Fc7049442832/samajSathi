@@ -17,7 +17,8 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\NotificationController;
-
+use App\Http\Controllers\WalletController;
+use App\Http\Controllers\ContactController;
 
 
 /*
@@ -31,10 +32,19 @@ use App\Http\Controllers\NotificationController;
 |
 */
 // Base Data Routes 
+Route::view('/demo','game/demo');
 Route::get('/',[HomeController::class, 'index'])->name('home');
 Route::get('/browse-partner',[HomeController::class, 'browsePartner'])->name('Browse_Partner');
 Route::view('/about', 'about')->name('about');
 Route::post('/feedback-submit', [HomeController::class, 'feedbackStore'])->name('feedback.submit');
+
+
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
+Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact.submit');
+
 
 Route::get('/notification', function () {
     return view('noticedemo');
@@ -52,10 +62,17 @@ Route::post('/Userlogin', [HomeController::class, 'login'])->name('login.submit'
 Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
 Route::any('/password/email', [HomeController::class, 'ResetPassword'])->name('ResetPassword');
 
+// wallet Routes
+Route::middleware(['auth'])->group(function () {
+    Route::view('/wallet','wallet')->name('wallet');
+    Route::post('/wallet/deposit', [WalletController::class, 'deposit'])->name('wallet.deposit');
+    Route::post('/wallet/withdraw', [WalletController::class, 'withdraw'])->name('wallet.withdraw');
+    Route::get('/wallet/transactions', [WalletController::class, 'transactions']);
+});
 
 // Blog Routes
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
-Route::post('/blogs/filter', [BlogController::class, 'filterBlogs'])->name('blog.filter');
+Route::get('/blogs/filter', [BlogController::class, 'filterBlogs'])->name('blog.filter');
 Route::get('/blog/{id}', [BlogController::class, 'show'])->name('blog.show');
 Route::post('/blog/{id}/like', [BlogController::class, 'like'])->name('blog.like');
 Route::post('/comment', [CommentController::class, 'store'])->name('comment.store')->middleware('auth');
