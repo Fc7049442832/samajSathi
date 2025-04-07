@@ -4,17 +4,53 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Blog;
+use App\Models\BlogFollower;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class BlogController extends Controller
 {
     public function index()
     {
         $blogs = Blog::latest()->get();
-        return view('Blog', compact('blogs'));
+        $followers = BlogFollower::count('email');
+
+        return view('Blog', ['blogs'=>$blogs,'followers' => $followers]);
+        // return view('', compact('blogs', 'followers'));
+
+
     }
+
+   
+    public function submitEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+        
+        $existing = BlogFollower::where('email', $request->email)->first();
+        Log::info('Fetched follower:', ['data' => $existing]);
+       
+        if ($existing) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Email already subscribed!'
+            ]);
+        }
+    
+        // Save to DB
+        BlogFollower::create([
+            'email' => $request->email
+        ]);
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Email submitted successfully!'
+        ]);
+    }
+    
     
     public function filterBlogs(Request $request)
     {
@@ -31,7 +67,7 @@ class BlogController extends Controller
     public function show($id)
     {
         $blog = Blog::with('comments.replies.user')->findOrFail($id);
-        $blogs = Blog::latest()->where('id', '!=', $id)->get();
+        $blogs = Blog::latest()->where('id', '!=', $id)->limit(5)->get();
     
         // Check session to prevent multiple increments from the same user
         $sessionKey = 'blog_viewed_' . $id;

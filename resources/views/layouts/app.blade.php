@@ -56,7 +56,6 @@
          
         <!-- Styles -->
         <style>
-           
             #alert-box {
                 position: fixed;
                 top: 20px;
@@ -218,6 +217,7 @@
                 </div>
             </div>
         @endif
+        
         <div class="main-content-container">
             @yield('content')
         </div> 

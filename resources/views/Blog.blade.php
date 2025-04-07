@@ -32,11 +32,83 @@
 
 @section('content')
 
-    <div class="row justify-content-between">
-        <div class="col-6">
-            <h4><a href="{{route('blog')}}" style="text-decoration: none; color:black;"> Tips, Stories & Relationship Advice!</a></h4>
+    <div class="row">
+        <div class="col-12 blog-cover">
+            <img src="{{ asset('images/cover_blog_page.jpg')}}" alt="" srcset="">
         </div>
-        <div class="col-md-4 mb-4 ">
+        <div class="row">
+            <div class="col-12 pt-3">
+                <h1>Samaj Sathi Blog Page</h1>
+                
+                <h4><a href="{{route('blog')}}" style="text-decoration: none; color:black;">Tips, Stories & Relationship Advice!</a></h4>
+            </div>
+            <div class="col-6 p-3 pt-2 ml-2 pb-1 ">
+                <h6 id="follower-count">0 Followers</h6>
+            </div>
+            <div class="col-6 text-end p-2 pb-1">
+                
+               <!-- Follow Button -->
+                <button type="button" class="btn btn-info text-white" id="followButton">
+                    Follow
+                </button>
+
+                <!-- Custom Popup -->
+                <div id="customPopup" style="
+                    display: none;
+                    position: fixed;
+                    top: 30%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: white;
+                    padding: 20px;
+                    box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+                    border-radius: 10px;
+                    z-index: 9999;
+                    width: 300px;
+                ">
+                    <input type="email" id="email1" name="email" class="form-control mb-2" placeholder="Enter your email">
+                    
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-secondary me-2" id="closePopup">Close</button>
+                        <button class="btn btn-primary" id="submitEmail">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <style>
+            .blog-cover img {
+                width: 100%;
+                height: 198px;
+            }
+            h1{
+                font-size: 28px;
+                font-family: 'Times New Roman', Times, serif;
+                font-weight: 500;
+            }
+            h4{
+                font-size: 16px;
+            }
+
+            /* For tablets and below */
+            @media (max-width: 768px) {
+                .blog-cover img {
+                    height: 140px;
+                }
+            }
+
+            /* For mobile phones */
+            @media (max-width: 480px) {
+                .blog-cover img {
+                    height: 98px;
+                }
+            }
+        </style>
+
+    </div>
+    <hr>
+
+    <div class="row justify-content-end">
+        <div class="col-4 mb-4  ">
             <select id="categorySelect" name="category" class="form-select w-auto" onchange="filterBlogs()">
                 <option class="bg-white text-dark" value="" selected>All Categories</option>
                 <option class="bg-white text-dark" value="tips">Tips</option>
@@ -67,13 +139,12 @@
                         </p>
 
                         <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-secondary">👁️ {{ $post->views }}</span>
+
                             <span class="text-danger">❤️ {{ $post->likes }}</span>
-                            
-                            <button class="btn btn-outline-secondary btn-sm share-btn" data-url="{{ route('blog.show', $post->id) }}">
+                            <button class="btn btn-outline-secondary  share-btn" data-url="{{ route('blog.show', $post->id) }}">
                                 🔗 Share
                             </button>
-
-                            <span class="text-secondary">👁️ {{ $post->views }}</span>
                         </div>
                     </div>
                 </div>
@@ -88,5 +159,77 @@
             // Redirect with category as URL parameter
             window.location.href = category ? url + "?category=" + category : url;
         }
+   
+        function animateFollowers(target, elementId, duration = 1000) {
+          const element = document.getElementById(elementId);
+          let start = 0;
+          const increment = target / (duration / 10);
+      
+          const counter = setInterval(() => {
+            start += increment;
+            if (start >= target) {
+              start = target;
+              clearInterval(counter);
+            }
+            element.innerText = `${Math.floor(start)} Followers`;
+          }, 10);
+        }
+      
+        // Trigger the animation on page load
+        let followers = @json($followers);
+        window.addEventListener('DOMContentLoaded', () => {
+            animateFollowers(followers, 'follower-count', 1500);
+        });
+    
+    
+    const followBtn = document.getElementById('followButton');
+    const popup = document.getElementById('customPopup');
+    const closeBtn = document.getElementById('closePopup');
+    const submitBtn = document.getElementById('submitEmail');
+
+    // Show popup on Follow button click
+    followBtn.addEventListener('click', () => {
+        popup.style.display = 'block';
+    });
+
+    // Close popup on Close button click
+    closeBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
+
+    // Submit email via fetch
+    submitBtn.addEventListener('click', function () {
+        const email = document.getElementById('email1').value;
+        // console.log('Email is :',email);
+        
+        // if (email.trim() === '') {
+        //     alert('Please enter your email!');
+        //     return;
+        // }
+
+        fetch("{{ route('submit.email') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({ email: email })
+        })
+        .then(res => res.json())
+        .then(data => {
+            alert(data.message);
+            if (data.success) {
+                popup.style.display = 'none';
+                document.getElementById('email').value = '';
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Something went wrong!');
+        });
+    });
+
+
     </script>
+      
 @endsection

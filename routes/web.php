@@ -77,6 +77,8 @@ Route::get('/blog/{id}', [BlogController::class, 'show'])->name('blog.show');
 Route::post('/blog/{id}/like', [BlogController::class, 'like'])->name('blog.like');
 Route::post('/comment', [CommentController::class, 'store'])->name('comment.store')->middleware('auth');
 
+Route::post('/submit-email', [BlogController::class, 'submitEmail'])->name('submit.email');
+
 // Profile page routes
 Route::get('/profile',[ProfileController::class, 'index'])->name('profile');
 Route::post('/profile',[ProfileController::class, 'userImageStore'])->name('profile.update');
