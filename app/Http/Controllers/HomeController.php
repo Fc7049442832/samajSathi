@@ -37,7 +37,7 @@ class HomeController extends Controller
 
         $data = Carousel_Image::get();
 
-        $blogs = Blog::latest()->take(4)->get();
+        $blogs = Blog::latest()->select('id','title', 'type', 'image', 'views', 'likes')->take(4)->get();
 
         
         $notifications =0 ;

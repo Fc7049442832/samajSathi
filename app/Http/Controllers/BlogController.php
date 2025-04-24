@@ -14,14 +14,14 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $blogs = Blog::latest()->get();
+        $blogs = Blog::latest()->select('id','title', 'type', 'image', 'views', 'likes')->get();
         $followers = BlogFollower::count('email');
 
         return view('Blog', ['blogs'=>$blogs,'followers' => $followers]);
         // return view('', compact('blogs', 'followers'));
 
-
     }
+    
 
    
     public function submitEmail(Request $request)
@@ -61,7 +61,9 @@ class BlogController extends Controller
             return $query->where('type', $type);
         })->latest()->get();
     
-        return view('Blog', compact('blogs'));
+        $followers = BlogFollower::count('email');
+
+        return view('Blog', ['blogs'=>$blogs,'followers' => $followers]);
     }
 
     public function show($id)

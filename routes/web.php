@@ -19,6 +19,7 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\MoreController;
 
 
 /*
@@ -37,6 +38,8 @@ Route::get('/',[HomeController::class, 'index'])->name('home');
 Route::get('/browse-partner',[HomeController::class, 'browsePartner'])->name('Browse_Partner');
 Route::view('/about', 'about')->name('about');
 Route::post('/feedback-submit', [HomeController::class, 'feedbackStore'])->name('feedback.submit');
+
+Route::get('/more-setting', [MoreController::class,'home'] )->name('more-setting');
 
 
 Route::get('/contact', function () {
@@ -76,6 +79,8 @@ Route::get('/blogs/filter', [BlogController::class, 'filterBlogs'])->name('blog.
 Route::get('/blog/{id}', [BlogController::class, 'show'])->name('blog.show');
 Route::post('/blog/{id}/like', [BlogController::class, 'like'])->name('blog.like');
 Route::post('/comment', [CommentController::class, 'store'])->name('comment.store')->middleware('auth');
+Route::get('/blog/load-more', [BlogController::class, 'loadMore']);
+
 
 Route::post('/submit-email', [BlogController::class, 'submitEmail'])->name('submit.email');
 

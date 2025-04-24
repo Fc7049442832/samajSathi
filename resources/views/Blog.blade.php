@@ -12,17 +12,17 @@
     <meta property="og:title" content="Samaj Sathi Matrimony Blog | Expert Tips & Success Stories">
     <meta property="og:description" content="Explore expert matchmaking advice, relationship tips, and real success stories on the Samaj Sathi Matrimony blog.">
     <meta property="og:image" content="URL_TO_FEATURED_IMAGE">
-    <meta property="og:url" content="https://samajsathi.techradar.site/images/blog_hero.jpg">
+    <meta property="og:url" content="https://samajsathi.techsathi.it/images/blog_hero.jpg">
     <meta property="og:type" content="website">
 
     <!-- Twitter Card for Better Sharing -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Samaj Sathi Matrimony Blog | Expert Tips & Success Stories">
     <meta name="twitter:description" content="Discover matchmaking tips, relationship guidance, and inspiring success stories on the Samaj Sathi Matrimony blog.">
-    <meta name="twitter:image" content="https://samajsathi.techradar.site/images/blog_hero.jpg">
+    <meta name="twitter:image" content="https://samajsathi.techsathi.it/images/blog_hero.jpg">
 
     <!-- Canonical URL (Prevents Duplicate Content Issues) -->
-    <link rel="canonical" href="https://samajsathi.techradar.site/images/blog_hero.jpg">
+    <link rel="canonical" href="https://samajsathi.techsathi.it/images/blog_hero.jpg">
 
     <!-- Robots Meta Tag (Ensure search engine indexing) -->
     <meta name="robots" content="index, follow">
@@ -38,15 +38,19 @@
         </div>
         <div class="row">
             <div class="col-12 pt-3">
-                <h1>Samaj Sathi Blog Page</h1>
+                <h1>Samaj Sathi Media</h1>
                 
                 <h4><a href="{{route('blog')}}" style="text-decoration: none; color:black;">Tips, Stories & Relationship Advice!</a></h4>
             </div>
             <div class="col-6 p-3 pt-2 ml-2 pb-1 ">
-                <h6 id="follower-count">0 Followers</h6>
+                <i class="bi bi-people" style="font-size: 1.5rem;"></i>
+                <span id="follower-count"></span>
             </div>
             <div class="col-6 text-end p-2 pb-1">
                 
+                <button class="btn share-btn" data-url="{{ url()->current() }}">
+                    <i class="bi bi-share icon" title="Share" style="margin-right:2px;"></i> <b>Share</b>
+                </button>
                <!-- Follow Button -->
                 <button type="button" class="btn btn-info text-white" id="followButton">
                     Follow
@@ -108,18 +112,25 @@
     <hr>
 
     <div class="row justify-content-end">
-        <div class="col-4 mb-4  ">
+        <div class="col-8">
+            <marquee behavior="" direction="">
+                Welcome to Samajsathi Media Blog – Your source for inspiring stories, helpful tips, and trusted advice. Stay tuned for regular updates and insights from our vibrant community!
+            </marquee>
+        </div>
+        <div class="col-4">
             <select id="categorySelect" name="category" class="form-select w-auto" onchange="filterBlogs()">
                 <option class="bg-white text-dark" value="" selected>All Categories</option>
                 <option class="bg-white text-dark" value="tips">Tips</option>
                 <option class="bg-white text-dark" value="stories">Stories</option>
-                <option class="bg-white text-dark" value="advices">Advices</option>
+                <option class="bg-white text-dark" value="advice">Advices</option>
             </select>
         </div>
     </div>
-    <div class="row">
+
+    
+    <div class="row mt-3">
         @foreach ($blogs as $post)
-            <div class="col-md-6 col-lg-4 col-xl-3 mb-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-6 col-lg-4 col-xl-3 mb-4" data-aos="fade-up" data-aos-delay="100">
                 <div class="card shadow-sm border-0 rounded-lg">
                     <img src="{{ asset('storage/' . $post->image) }}" class="card-img-top rounded-top" alt="{{ $post->title }}" height="160px" style="object-fit: cover;">
 
@@ -130,20 +141,12 @@
                             </a>
                         </h6>
 
-                        <p class="card-text text-muted">
-                            @php
-                                $words = explode(' ', $post->content);
-                                $content = implode(' ', array_slice($words, 0, 20)) . (count($words) > 20 ? '...' : '');
-                            @endphp
-                            {{ $content }} <a href="{{ route('blog.show', $post->id) }}" class="text-primary">more</a>
-                        </p>
-
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="text-secondary">👁️ {{ $post->views }}</span>
 
                             <span class="text-danger">❤️ {{ $post->likes }}</span>
-                            <button class="btn btn-outline-secondary  share-btn" data-url="{{ route('blog.show', $post->id) }}">
-                                🔗 Share
+                            <button class="btn share-btn" data-url="{{ route('blog.show', $post->id) }}">
+                                <i class="bi bi-share icon" title="Share"></i>
                             </button>
                         </div>
                     </div>

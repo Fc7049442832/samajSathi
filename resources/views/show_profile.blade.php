@@ -139,7 +139,37 @@
                 
                 {{-- <button class="btn btn-info col-5 mt-3"  > <i class="bi bi-chat icon" title="Chat"></i>Chat </button> --}}
             </div>
-        </div>     
+        </div>  
+    </div>  
+    
+    <script>
+         document.getElementById('send-data-link').addEventListener('click', function (e) {
+            e.preventDefault();
+            // Laravel Blade will output JSON here
+            let data1 = @json($user); 
+            // Flatten function for the JSON object
+            function flattenArray(obj, parent = '', result = {}) {
+                for (let key in obj) {
+                    if (obj.hasOwnProperty(key)) {
+                        let newKey = parent ? `${parent}_${key}` : key;
+
+                        if (typeof obj[key] === 'object' && obj[key] !== null && !Array.isArray(obj[key])) {
+                            flattenArray(obj[key], newKey, result);
+                        } else {
+                            result[newKey] = obj[key];
+                        }
+                    }
+                }
+                return result;
+            }
+
+            // Flatten the Laravel data
+            let flattenedData = flattenArray(data1);
+            // Redirect with the flattened data
+            const queryString = new URLSearchParams(flattenedData).toString();
+            window.location.href = `/send-data?${queryString}`;
+        });
+    </script>
 
 
 @endsection

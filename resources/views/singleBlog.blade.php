@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', '{{ $blog->title }} - SamajSathi')
+@section('title',  $blog->title)
 
 @section('meta')
 
@@ -58,7 +58,7 @@
             "name": "Samaj Sathi",
             "logo": {
                 "@type": "ImageObject",
-                "url": "http://samajsathi.techradar.site/images/logo.png"
+                "url": "http://samajsathi.techsathi.it/images/logo.png"
             }
         },
         "datePublished": "{{ $blog->created_at->toIso8601String() }}",
@@ -116,7 +116,6 @@
                 <hr>
                 @endforeach
             </div>
-
         </div>
     
 @endsection
@@ -156,8 +155,6 @@
     .icon:hover {
         transform: scale(1.2); /* Slightly enlarge on hover */
     }
-
-
     .main-content-container::-webkit-scrollbar {
         display: none; /* WebKit-based browsers (Chrome, Safari) ke liye scrollbar hide kare */
     }

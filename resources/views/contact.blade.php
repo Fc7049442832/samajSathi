@@ -68,7 +68,7 @@
         <div class="col-md-6">
             <div class="p-4 border rounded shadow-sm">
                 <h5>Contact Information</h5>
-                <p><strong>Email:</strong> support@samajsathi.techradar.site</p>
+                <p><strong>Email:</strong> support@samajsathi.techsathi.it</p>
                 <p><strong>Phone:</strong> +91 123456789</p>
                 <p><strong>Address:</strong> 123, LIG Indore , MP, India</p>
 

@@ -22,12 +22,12 @@
         Warm regards, <br>
         <strong>
             <a href="" style="text-decoration: none; color:black;">Team</a>
-            <a href="https://samajsathi.techradar.site" style="text-decoration: none; color:black;">Samaj Sathi</a> 
+            <a href="https://samajsathi.techsathi.it" style="text-decoration: none; color:black;">Samaj Sathi</a> 
         </strong>
     </p>
     
     <div style="margin:20px auto; text-align:center;">
-        <a href="https://samajsathi.techradar.site" style="text-decoration: none; color:rgb(50, 85, 129);">Visit Our Website</a>
+        <a href="https://samajsathi.techsathi.it" style="text-decoration: none; color:rgb(50, 85, 129);">Visit Our Website</a>
     </div>
 
 </body>

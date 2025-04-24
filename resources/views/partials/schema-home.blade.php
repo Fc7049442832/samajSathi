@@ -3,8 +3,8 @@
     {
       "@context": "https://schema.org",
       "@type": "Blog",
-      "name": "Samaj Sathi Matrimony Blog",
-      "url": "https://samajsathi.techradar.site/blog",
+      "name": "Samaj Sathi Blog",
+      "url": "https://samajsathi.techsathi.it/blog",
       "description": "Explore expert matchmaking advice, relationship tips, and real success stories on the Samaj Sathi Matrimony blog.",
       "publisher": {
         "@type": "Organization",

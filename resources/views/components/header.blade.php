@@ -29,27 +29,9 @@
             </a>
         @endif
 
-        <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                <a href="#help">Other</a>
-            </button>
-            <ul class="dropdown-menu text-center " aria-labelledby="dropdownMenuButton1">
-             
-              <li><a class="dropdown-item" href="{{route('blog')}}">Blog</a></li>
-              <li><a class="dropdown-item" href="{{route('about')}}">About</a></li>
-              <li><a class="dropdown-item" href="#">Setting</a></li>
-              <li><a class="dropdown-item" href="{{route('contact')}}">Contact</a></li>
-             
-                @if(Auth::check())
-                    <li><a class="dropdown-item" href="#">
-                        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Logout</button>
-                        </form>
-                    </a></li>
-                @endif
-            </ul>
-        </div>
+        <a href="{{route('Browse_Partner')}}">Help</a>
+
+       
     </nav>
 </div>
 

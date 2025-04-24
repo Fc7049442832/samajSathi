@@ -12,7 +12,7 @@
             <meta name="keywords" content="matrimony, matchmaking, marriage, life partner, wedding, samaj sathi">
             <meta property="og:title" content="Samaj Sathi Matrimony - Find Your Perfect Match">
             <meta property="og:description" content="Join India's leading matchmaking platform with verified profiles and secure chat.">
-            <meta property="og:image" content="https://samajsathi.techradar.site/images/marriage-preview.jpg">
+            <meta property="og:image" content="https://samajsathi.techsathi.it/images/marriage-preview.jpg">
             <meta property="og:type" content="website">
         @else
             @yield('meta')
@@ -38,7 +38,7 @@
         <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
     
         <!-- Canonical URL -->
-        <link rel="canonical" href="https://samajsathi.techradar.site">
+        <link rel="canonical" href="https://samajsathi.techsathi.it">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -53,7 +53,6 @@
         {{-- JQuery cdn Path --}}
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> 
         
-         
         <!-- Styles -->
         <style>
             #alert-box {
@@ -70,17 +69,6 @@
                 transition: opacity 0.5s ease-out;
             }
 
-            .page-header{
-                font-size: 12px;
-                position: relative;
-                background-image: radial-gradient(circle, rgba(212, 55, 27, 0.849), rgba(241, 64, 168, 0.7));
-                border-radius:8px;
-            }
-            .page-header a {
-                text-decoration: none;
-                font-weight: 600;
-            }
-
             /* icon for sytles */
             .icon {
                 margin: 0 10px;
@@ -91,10 +79,10 @@
                 transform: scale(1.2); /* Slightly enlarge on hover */
             }
             .main-content-container{
-                height: 75%;
+                height: 82%;
                 width: 82%;
                 position: absolute;
-                top: 130px;
+                top: 85px;
                 overflow: hidden;
                 overflow-y: scroll;
                 padding-bottom: 50px;
@@ -119,10 +107,10 @@
                     font-size: 12px;
                 }
                 .main-content-container{
-                height: 82%;
+                height: 85%;
                 width: 94%;
                 position: absolute;
-                top: 95px;
+                top: 72px;
                 overflow: hidden;
                 overflow-y: scroll;
                 padding-bottom: 0px;
@@ -180,6 +168,15 @@
                 padding: 20px;
                 height: calc(100% - 50px); /* Adjust height to exclude header */
             }
+            .custom-padding {
+                padding: 0px 250px;
+            }
+
+            @media (max-width: 767.98px) {
+            .custom-padding {
+                padding: 0;
+            }
+            }
         </style>
     </head>
 <body>
@@ -203,18 +200,8 @@
         @if (Auth::check())
             {{-- page header code  --}}
             <div class="row page-header text-center mb-1 justify-content-around" id="pageHeader" >
-                <div class="col-md-3 col-3 btn ">
-                <a href="{{ route('profile')}}" class="text-white ">Profile</a>
-                </div>
-                <div class="col-md-3 col-3 btn ">
-                <a href="{{ route('partner_query')}}" class="text-white">Requirement</a>
-                </div>
-                <div class="col-md-3 col-3 btn ">
-                <a href="{{ route('matching')}}" class="text-white">Matching</a>
-                </div>
-                <div class="col-md-3 col-3 btn ">
-                    <a href="{{ route('saved.profile')}}" class="text-white">Save</a>
-                </div>
+               
+                
             </div>
         @endif
         
@@ -223,8 +210,18 @@
         </div> 
         
          {{-- footer section code  --}}    
-        <div class="bg-secondary text-center p-1 footer" style="height: 30px;">
-            <p class="text-light" style="font-size:15px;">Power By <a href="" style="text-decoration: none; color:rgb(209, 212, 247); width:100%;">Tech Radar</a> @ 2024</p>
+        <div class=" text-center p-1 footer" style="height: 30px; background-color:rgba(224, 72, 16, 0.822); ">
+            <div class="row justify-content-around text-white">
+                <div class="col-2"><a class="btn text-white" href="{{route('home')}}" >Home</a></div>
+                <div class="col-2"><a class="btn text-white" href="{{route('Browse_Partner')}}" >Matches</a></div>
+                
+                {{-- <div class="col-2"></div> --}}
+                <div class="col-2"><a class="btn text-white" href="{{route('blog')}}">Blog</a></div>
+                <div class="col-2"><a class="btn text-white" href="{{route('more-setting')}}">More</a></div>
+                
+            </div>
+
+            {{-- <p class="text-light" style="font-size:15px;">Power By <a href="" style="text-decoration: none; color:rgb(209, 212, 247); width:100%;">Tech Radar</a> @ 2024</p> --}}
         </div>
 
     </div>
