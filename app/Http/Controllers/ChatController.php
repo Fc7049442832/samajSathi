@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Chat;
 use App\Models\Profile;
 use App\Models\User;
+use App\Models\Notice;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Events\MessageSent;
+use Illuminate\Notifications\DatabaseNotification;
 
 class ChatController extends Controller
 {
@@ -58,20 +60,41 @@ class ChatController extends Controller
     public function sendMessage(Request $request)
     {
         $validated = $request->validate([
-            'receiver_id' => 'required|string',
+            'receiver_id' => 'required',
             'message' => 'required|string',
         ]);
-    
+
+        // Create the chat message
         $message = Chat::create([
             'sender_id' => auth()->id(),
             'receiver_id' => $validated['receiver_id'],
             'message' => $validated['message'],
         ]);
-    
-        broadcast(new MessageSent($message));
-    
+
+        // Optional: Add a system notification (optional use-case)
+        $senderName = auth()->user()->name;
+        $header = $senderName . ' sent you a message';
+
+        $notice = Notice::create([
+            'header' => $header,
+            'message' => $validated['message'],
+            'media' => '',
+        ]);
+
+        // Send notification to the receiver (ensure receiver is a User model instance)
+        $receiver = User::find($validated['receiver_id']); // assuming you have a User model
+        return $receiver;
+
+        if ($receiver) {
+            Notification::send($receiver, new NoticeNotification($notice));
+        }
+
+        // Broadcast the event
+        broadcast(new MessageSent($message))->toOthers();
+
         return response()->json(['success' => 'Message sent successfully!']);
     }
+
     
 
 }

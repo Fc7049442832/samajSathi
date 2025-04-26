@@ -10,4 +10,5 @@ class MoreController extends Controller
     public function home(){
         return view('more-setting');
     }
+    
 }

@@ -44,7 +44,7 @@
             @endphp
             @if(Auth::user()->custom_id === $message->sender_id)
                 <div class="message text-end " style="min-width: 80px;">
-                    <div class="btn  text-left">
+                    <div class="btn text-left">
                         <span>{{ $message->message }}</span>
                     </div>
                   
@@ -57,7 +57,7 @@
                     
                 </div>
             @endif
-            @if ($key + 1 === $messagesCount) 
+            @if($key + 1 === $messagesCount) 
                 <!-- Check if this is the last iteration -->
                 @if ($currentDate !== $lastDate)
                     <div class="date">{{ $currentDate }}</div>
@@ -78,8 +78,49 @@
 </div>
 <script>
  
-    document.addEventListener('DOMContentLoaded', () => {
+//     document.addEventListener('DOMContentLoaded', () => {
+//     const chatForm = document.getElementById('chat-form');
+
+//     chatForm.addEventListener('submit', async function (e) {
+//         e.preventDefault();
+
+//         const formData = new FormData(chatForm);
+//         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+//         try {
+//             const response = await fetch(chatForm.action, {
+//                 method: chatForm.method,
+//                 headers: {
+//                     'X-CSRF-TOKEN': csrfToken, // Add CSRF token
+//                     'Accept': 'application/json', // Expect JSON response
+//                 },
+//                 body: formData, // Send form data
+//             });
+
+//             if (response.ok) {
+//                 // const result = await response.json(); // Parse JSON response
+//                 chatForm.reset(); // Clear form fields
+//                 // Update the UI with the new message
+//             } else {
+//                 const errorData = await response.json();
+//                 alert(`Error: ${errorData.message || 'Something went wrong.'}`);
+//             }
+//         } catch (error) {
+//             console.error('Error:', error);
+//             alert('Failed to send message. Please try again.');
+//         }
+//     });
+
+//     Echo.private('chat')
+//         .listen('MessageSent', (e) => {
+//             console.log('New message:', e.message);
+//             // Update the UI with the new message
+//         });
+// });
+
+document.addEventListener('DOMContentLoaded', () => {
     const chatForm = document.getElementById('chat-form');
+    const chatMessages = document.getElementById('chat-messages'); // Target the message container
 
     chatForm.addEventListener('submit', async function (e) {
         e.preventDefault();
@@ -91,16 +132,15 @@
             const response = await fetch(chatForm.action, {
                 method: chatForm.method,
                 headers: {
-                    'X-CSRF-TOKEN': csrfToken, // Add CSRF token
-                    'Accept': 'application/json', // Expect JSON response
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
                 },
-                body: formData, // Send form data
+                body: formData,
             });
 
             if (response.ok) {
-                // const result = await response.json(); // Parse JSON response
-                chatForm.reset(); // Clear form fields
-                // Update the UI with the new message
+                chatForm.reset();
+                // You can show "sending..." or spinner here if needed
             } else {
                 const errorData = await response.json();
                 alert(`Error: ${errorData.message || 'Something went wrong.'}`);
@@ -111,12 +151,24 @@
         }
     });
 
+    // Laravel Echo listener
     Echo.private('chat')
         .listen('MessageSent', (e) => {
-            console.log('New message:', e.message);
-            // Update the UI with the new message
+            if (chatMessages) {
+                const messageEl = document.createElement('div');
+                messageEl.classList.add('chat-message');
+                messageEl.innerHTML = `
+                    <strong>${e.message.user.name}</strong>: ${e.message.content}
+                `;
+                chatMessages.appendChild(messageEl);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
         });
 });
+
+
+
+
 
 </script>
 <style>

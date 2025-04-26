@@ -35,7 +35,9 @@
     
    
     <div class="col-12">
-        <a class="dropdown-item" href="{{route('about')}}"><strong>Privacy Setting</strong></a>
+        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <strong>Privacy Setting</strong>
+        </button>
     </div>
     <div class="col-12">
         <a class="dropdown-item" href="{{route('about')}}"><strong>About</strong></a>
@@ -71,9 +73,83 @@
 </div>
 
 
+  
+  <!-- Privacy setting Model -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Privacy Setting</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <ul class="text-white">
+                <li>Phone Number Privacy</li>
+                <ul>
+                    <li>
+                        <span>
+                            Show mobile number only paid members.
+                        </span>
+                        <span>
+                            <input type="checkbox" name="" id="">
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            Show mobile number only to whom I grant access to view.
+                        </span>
+                        <span>
+                            <input type="checkbox" name="" id="">
+                        </span>
+                    </li>
+                </ul>
+                <br>
+                <li>Profile View Settings</li>
+                <ul>
+                    <li>
+                        <span>
+                            Let Other members Know that you have Short-listed their Profile.
+                        </span>
+                        <span>
+                            <input type="checkbox" name="" id="">
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                           Let other members know that you have viewed their profile.
+                        </span>
+                        <span>
+                            <input type="checkbox" name="" id="">
+                        </span>
+                    </li>
+                </ul>
+            </ul>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Understood</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 @endsection
 <style>
     .col-12{
         padding: 4px 30px;
     }
+
+    ul li {
+        display: flex;
+        justify-content: space-between;
+        align-items: right;
+    }
+
+    ul li input[type="checkbox"] {
+        margin-left: 0px;
+    }
+
+
 </style>

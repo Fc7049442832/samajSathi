@@ -7,6 +7,16 @@
         <div class="card">
             <x-PartnerCard :users="$combinedUsers" />
         </div>
+        <div class="row justify-content-around p-2" id="user-container">
+            @include('partials._user_cards', ['users' => $combinedUsers])
+        </div>
+        
+        <div class="text-center mt-3">
+            <button id="load-more" class="btn btn-primary">Load More</button>
+        </div>
+
+
+
         <div class="row justify-content-center mt-4">
             <button class="col-2 btn btn-danger" onclick="goBack()" >Back</button>
         </div>
@@ -32,9 +42,7 @@
         width: 100%;
         overflow-y: scroll;
         padding-bottom:100px;
-        /* position:absolute; */
-       
-        
+        /* position:absolute; */        
     }
     .partner_box::-webkit-scrollbar {
       display: none;
