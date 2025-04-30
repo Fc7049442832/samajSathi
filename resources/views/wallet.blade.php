@@ -12,7 +12,7 @@
     <div class="col-md-8">
         <form action="{{ route('wallet.deposit') }}" method="POST">
             @csrf
-            <input type="hidden" name="amount" value="99">
+            <input type="hidden" name="amount" value="10">
             <button type="submit">Add 10 Coins</button>
         </form>
 

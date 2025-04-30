@@ -1,51 +1,79 @@
 @extends('layouts.app')
+
+@section('title', 'Samaj Sathi Matrimony | Perfect Life Partner | Tech Sathi')
+
+@section('meta')
+<meta name="description" content="Samaj Sathi Matrimony by Tech Sathi is your trusted platform to find verified profiles, chat securely, and meet your perfect life partner. Join now!">
+<meta name="keywords" content="Samaj Sathi, Tech Sathi, Matrimony Site, Marriage, Life Partner, Matchmaking, Best Matrimonial Platform, Indian Matrimony">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="{{ url()->current() }}" />
+@endsection
+
 @section('content')
+
 <div class="color-section"></div>
+
 <div class="content main-container">
-    {{-- User Details Display Card code  --}}
+    <!-- Partner Box Section -->
     <div class="partner_box">
         <div class="card">
             <x-PartnerCard :users="$combinedUsers" />
         </div>
-        <div class="row justify-content-around p-2" id="user-container">
-            @include('partials._user_cards', ['users' => $combinedUsers])
-        </div>
-        
-        <div class="text-center mt-3">
-            <button id="load-more" class="btn btn-primary">Load More</button>
-        </div>
 
-
-
+        <!-- Back Button -->
         <div class="row justify-content-center mt-4">
-            <button class="col-2 btn btn-danger" onclick="goBack()" >Back</button>
+            <button class="col-6 col-md-2 btn btn-danger" onclick="goBack()">Back</button>
         </div>
     </div>
-    
 </div>
+
+@endsection
+
+@push('styles')
 <style>
+    /* Background Color Section */
     .color-section {
-        width: 100%; /* Puri width */
-        height: 35vh; /* Viewport height ka 40% */
-        background-color: #eeb843; /* Aapka desired color */
-        position: fixed; /* Position fix, taki scroll ka effect na ho */
-        top: 10; /* Top par fix karna */
+        width: 100%;
+        height: 35vh;
+        background-color: #eeb843;
+        position: fixed;
+        top: 0;
         left: 0;
+        z-index: -1;
     }
+
+    /* Main Content Area */
     .content {
         position: relative;
-        margin-top: 40vh; /* 40% height ke baad content start hoga */
-        margin-top: 0vh;     
+        padding-top: 40vh;
     }
-    .partner_box{
+
+    /* Partner Box Styling */
+    .partner_box {
         height: 78vh;
         width: 100%;
-        overflow-y: scroll;
-        padding-bottom:100px;
-        /* position:absolute; */        
+        overflow-y: auto;
+        padding: 20px;
     }
+
     .partner_box::-webkit-scrollbar {
-      display: none;
+        display: none;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .partner_box {
+            height: auto;
+            padding-bottom: 100px;
+        }
     }
 </style>
-@endsection
+@endpush
+
+@push('scripts')
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+@endpush

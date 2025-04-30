@@ -5,11 +5,7 @@
         </a>
     </div>
     <!-- Link trigger modal -->
-    @guest
-        <a href="#" class="btn btn-primary register-button" data-bs-toggle="modal" data-bs-target="#RegisterModal">
-            Registration Free
-        </a>        
-    @endguest
+    
    
     <div class="menu-toggle" onclick="toggleMenu()">
         <i class="fas fa-bars"> </i>
@@ -24,14 +20,17 @@
             </a>
             <a href="{{route('wallet')}}">Wallet</a>
         @else
+     
+            <a href="#"  data-bs-toggle="modal" data-bs-target="#RegisterModal">
+                Registration Free
+            </a>        
+   
             <a href="#" data-bs-toggle="modal" data-bs-target="#LoginModal">
                 Login <i class="fas fa-user"></i>
             </a>
         @endif
 
-        <a href="{{route('Browse_Partner')}}">Help</a>
-
-       
+        <a href="{{route('contact')}}">Help</a>
     </nav>
 </div>
 

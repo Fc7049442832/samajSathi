@@ -19,11 +19,8 @@ class BlogController extends Controller
 
         return view('Blog', ['blogs'=>$blogs,'followers' => $followers]);
         // return view('', compact('blogs', 'followers'));
-
     }
     
-
-   
     public function submitEmail(Request $request)
     {
         $request->validate([
@@ -50,7 +47,6 @@ class BlogController extends Controller
             'message' => 'Email submitted successfully!'
         ]);
     }
-    
     
     public function filterBlogs(Request $request)
     {

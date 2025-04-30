@@ -29,11 +29,11 @@
     <meta name="robots" content="index, follow">
 
     {{-- Schema file include --}}
-    {{-- @include('partials.schema-contact') --}}
+     @include('partials.schema-contact')
 @endsection
 
 @section('content')
-<div class="container mt-1">
+<div class="container mt-5">
     <h2 class="text-center mb-4">Get in Touch with Us</h2>
     
     <p class="text-center text-muted mb-4">
@@ -69,7 +69,7 @@
             <div class="p-4 border rounded shadow-sm">
                 <h5>Contact Information</h5>
                 <p><strong>Email:</strong> support@samajsathi.techsathi.it</p>
-                <p><strong>Phone:</strong> +91 123456789</p>
+                <p><strong>Phone:</strong> +91 9977176989</p>
                 <p><strong>Address:</strong> 123, LIG Indore , MP, India</p>
 
                 <h5>Follow Us</h5>

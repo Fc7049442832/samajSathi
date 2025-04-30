@@ -275,9 +275,13 @@ class HomeController extends Controller
     private function getRandomUsersByGender(array $users, $no ): array
     {
         $no ;
+        if(empty($no)){
+            $no = 3;
+        }
 
         // Separate users by gender
         $males = array_filter($users, fn($user) => $user['gender'] === 'male');
+        
         $females = array_filter($users, fn($user) => $user['gender'] === 'female');
 
         // Randomly select up to 3 males and 3 females

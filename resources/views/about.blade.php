@@ -1,299 +1,160 @@
-{{-- @extends('layouts.app')
-@section('content')
-
-<div class="container" style="margin-left: -20px; ">
-    
-    <!-- Hero Section -->
-    <div class="hero-section">
-        <h1>About Samaj Sathi Matrimony</h1>
-        <p>Welcome to Samaj Sathi Matrimony, your trusted partner in finding your perfect match. <br> Our platform makes it easy to connect, chat, and build meaningful relationships.</p>
-    </div>
-
-    <!-- Features Section -->
-    <div class="features-section">
-        <div class="feature-card">
-            <i class="bi bi-people-fill"></i>
-            <h3>Find Your Ideal Match</h3>
-            <p>Explore profiles based on your preferences and connect with like-minded individuals.</p>
-        </div>
-        <div class="feature-card">
-            <i class="bi bi-chat-dots-fill"></i>
-            <h3>Secure Chat</h3>
-            <p>Communicate securely with your potential match through our in-built chat feature.</p>
-        </div>
-        <div class="feature-card">
-            <i class="bi bi-file-earmark-pdf-fill"></i>
-            <h3>Create Biodata</h3>
-            <p>Generate a personalized biodata and download it as a PDF for easy sharing.</p>
-        </div>
-        <div class="feature-card">
-            <i class="bi bi-bookmark-heart-fill"></i>
-            <h3>Save Favorite Profiles</h3>
-            <p>Bookmark profiles to keep track of your preferred matches.</p>
-        </div>
-    </div>
-
-    <!-- Call to Action Section -->
-    <div class="cta-section">
-        <h2>Join Samaj Sathi Matrimony Today!</h2>
-
-        @if(!Auth::check())
-        <a href="#" class="btn btn-primary register-button" data-bs-toggle="modal" data-bs-target="#RegisterModal">
-            Get Started
-        </a>
-        @elseif(Auth::check() && session('profileCompletion') < 40)
-         <a href="{{route('profile')}}">Get Started </a>
-         @elseif(Auth::check() && session('profileCompletion') > 41)
-         <a href="{{route('matching')}}">Get Started</a>
-        @endif
-
-        
-    </div>
-</div>
-<style>
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-    }
-    .hero-section {
-        text-align: center;
-        background:linear-gradient(#ea2300,#8c00ea);
-        color: #fff;
-        padding: 50px 20px;
-    }
-
-    .hero-section h1 {
-        font-size: 3rem;
-        margin-bottom: 10px;
-    }
-
-    .hero-section p {
-        font-size: 1.2rem;
-        line-height: 1.6;
-    }
-
-    .features-section {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-        margin-top: 40px;
-    }
-
-    .feature-card {
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        text-align: center;
-    }
-
-    .feature-card i {
-        font-size: 2rem;
-        color: #6200ea;
-        margin-bottom: 15px;
-    }
-
-    .feature-card h3 {
-        font-size: 1.5rem;
-        margin-bottom: 10px;
-    }
-
-    .feature-card p {
-        font-size: 1rem;
-        line-height: 1.5;
-    }
-
-    .cta-section {
-        background:linear-gradient(#ea2300,#8c00ea);
-        color: #fff;
-        padding: 40px 20px;
-        text-align: center;
-        margin-top: 40px;
-        border-radius: 8px;
-    }
-
-    .cta-section h2 {
-        font-size: 2rem;
-        margin-bottom: 20px;
-    }
-
-    .cta-section a {
-        text-decoration: none;
-        background: #fff;
-        color: #6200ea;
-        padding: 10px 20px;
-        font-size: 1rem;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: background 0.3s, color 0.3s;
-    }
-
-    .cta-section a:hover {
-        background: #fff5e6;
-    }
-</style>
-@endsection --}}
-
-
-
 @extends('layouts.app')
 
-@section('title', 'About Samaj Sathi Matrimony | Find Your Perfect Match')
+@section('title', 'Samaj Sathi Matrimony | Find Your Perfect Match | Tech Sathi Matrimony')
 
 @section('meta')
-<meta name="description" content="Samaj Sathi Matrimony is India's leading matchmaking platform. Find your perfect life partner with verified profiles, secure chat, and advanced matchmaking.">
-<meta name="keywords" content="matrimony, matchmaking, life partner, best matrimonial site, samaj sathi, marriage, wedding">
+<meta name="description" content="Find your perfect life partner at Samaj Sathi Matrimony. India's trusted matchmaking site offering verified profiles, secure chat, biodata creation, and real love stories. Also explore Tech Sathi for modern matchmaking.">
+<meta name="keywords" content="Samaj Sathi Matrimony, Tech Sathi Matrimony, Best Matrimony Site, Find Life Partner, Indian Matrimony, Matchmaking, Marriage, Wedding, Relationship Tips, Love Stories, Biodata Creation">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="{{ url()->current() }}">
 @endsection
 
 @section('content')
 
 <!-- Hero Section -->
-<div class="hero-section text-center">
-    <h1>About Samaj Sathi Matrimony</h1>
-    <p>Find your perfect life partner with our trusted and secure matchmaking platform.</p>
-</div>
+<section class="hero-section text-center">
+    <div class="container">
+        <h1>Welcome to Samaj Sathi Matrimony</h1>
+        <p>Find your perfect life partner with India's most trusted and secure matchmaking platform - Samaj Sathi and Tech Sathi Matrimony.</p>
+    </div>
+</section>
 
 <!-- Features Section -->
-<div class="features-section container">
+<section class="features-section container">
+    <h2 class="text-center mb-5">Why Choose Samaj Sathi?</h2>
     <div class="row">
         <div class="col-md-3 feature-card">
-            <i class="bi bi-people-fill"></i>
+            <i class="bi bi-people-fill" aria-hidden="true"></i>
             <h3>Find Your Ideal Match</h3>
-            <p>Explore verified profiles and connect with like-minded individuals.</p>
+            <p>Explore 1000+ verified profiles and connect with like-minded individuals for marriage through Samaj Sathi Matrimony.</p>
         </div>
         <div class="col-md-3 feature-card">
-            <i class="bi bi-chat-dots-fill"></i>
-            <h3>Secure Chat</h3>
-            <p>Communicate privately with potential matches through our secure chat system.</p>
+            <i class="bi bi-chat-dots-fill" aria-hidden="true"></i>
+            <h3>Secure Chat System</h3>
+            <p>Communicate safely with your matches using our end-to-end encrypted chat platform at Tech Sathi Matrimony.</p>
         </div>
         <div class="col-md-3 feature-card">
-            <i class="bi bi-file-earmark-pdf-fill"></i>
-            <h3>Create Biodata</h3>
-            <p>Generate a personalized biodata and download it as a PDF for easy sharing.</p>
+            <i class="bi bi-file-earmark-pdf-fill" aria-hidden="true"></i>
+            <h3>Easy Biodata Creation</h3>
+            <p>Quickly create and download a beautiful biodata PDF to share with families and relatives.</p>
         </div>
         <div class="col-md-3 feature-card">
-            <i class="bi bi-bookmark-heart-fill"></i>
+            <i class="bi bi-bookmark-heart-fill" aria-hidden="true"></i>
             <h3>Save Favorite Profiles</h3>
-            <p>Bookmark profiles and keep track of your preferred matches.</p>
+            <p>Bookmark and manage your favorite profiles for easy reference anytime.</p>
         </div>
     </div>
-</div>
+</section>
 
 <!-- Blog Section -->
-<div class="blog-section text-center">
-    <h2 class="text-primary">Explore Our Blog</h2>
-    <p>Discover love stories, relationship tips, marriage advice, and much more.</p>
+<section class="blog-section text-center">
+    <h2>Explore Love, Relationships & Marriage Tips</h2>
+    <p>Learn from inspiring love stories, expert relationship advice, and marriage preparation tips at Samaj Sathi Matrimony.</p>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-4">
         <div class="col-md-3 blog-card">
             <h3>Love Stories</h3>
-            <p>Read inspiring real-life love stories of couples who found their perfect match.</p>
+            <p>Real success stories from Samaj Sathi and Tech Sathi couples who found love online.</p>
             <a href="{{ route('blog.filter', ['category' => 'stories']) }}" class="btn btn-secondary">Read More</a>
-
         </div>
         <div class="col-md-3 blog-card">
             <h3>Relationship Tips</h3>
-            <p>Get expert advice on building strong and lasting relationships.</p>
-            <a href="{{ route('blog.filter',['category'=>'tips']) }}" class="btn btn-secondary">Read More</a>
+            <p>Strengthen your relationship with expert guidance and proven strategies for success.</p>
+            <a href="{{ route('blog.filter', ['category' => 'tips']) }}" class="btn btn-secondary">Read More</a>
         </div>
         <div class="col-md-3 blog-card">
             <h3>Marriage Advice</h3>
-            <p>Learn how to create a happy and fulfilling marriage with our expert advice.</p>
-            <a href="{{ route('blog.filter',['category'=>'advice']) }}" class="btn btn-secondary">Read More</a>
+            <p>Prepare for a fulfilling marriage life with advice from experienced counselors and real couples.</p>
+            <a href="{{ route('blog.filter', ['category' => 'advice']) }}" class="btn btn-secondary">Read More</a>
         </div>
     </div>
-</div>
+</section>
 
 <!-- Call to Action Section -->
-<div class="cta-section text-center">
-    <h2>Join Samaj Sathi Matrimony Today!</h2>
+<section class="cta-section text-center">
+    <h2>Start Your Journey with Samaj Sathi Matrimony</h2>
 
-    @if(!Auth::check())
+    @guest
         <a href="#" class="btn btn-primary register-button" data-bs-toggle="modal" data-bs-target="#RegisterModal">
-            Get Started
+            Register Now
         </a>
-    @elseif(Auth::check() && session('profileCompletion') < 40)
-        <a href="{{ route('profile') }}" class="btn btn-primary">Complete Profile</a>
-    @elseif(Auth::check() && session('profileCompletion') > 41)
-        <a href="{{ route('matching') }}" class="btn btn-primary">Find Matches</a>
-    @endif
-</div>
+    @else
+        @if(session('profileCompletion') < 40)
+            <a href="{{ route('profile') }}" class="btn btn-primary">Complete Your Profile</a>
+        @else
+            <a href="{{ route('matching') }}" class="btn btn-primary">Find Your Match</a>
+        @endif
+    @endguest
+</section>
 
 @endsection
+
 <style>
-    /* General Styles */
-    h2 {
-        color: #e40000;
-    }
+/* General */
+h2 {
+    color: #e40000;
+}
 
-    /* Hero Section */
-    .hero-section {
-        background: url("{{asset('images/couple2.jpeg')}}") no-repeat center center/cover;
-        color: white;
-        padding: 80px 20px;
-    }
-    .hero-section h1 {
-        font-size: 2.5rem;
-    }
-    .hero-section p {
-        font-size: 1.2rem;
-    }
+/* Hero Section */
+.hero-section {
+    background: url("{{ asset('images/couple2.jpeg') }}") no-repeat center center/cover;
+    color: white;
+    padding: 80px 20px;
+}
+.hero-section h1 {
+    font-size: 2.8rem;
+    font-weight: bold;
+}
+.hero-section p {
+    font-size: 1.3rem;
+}
 
-    /* Features Section */
-    .features-section {
-        padding: 50px 0;
-        text-align: center;
-    }
-    .feature-card {
-        padding: 20px;
-        background: rgb(238, 255, 230);
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-    }
-    .feature-card i {
-        font-size: 80px;
-        padding: 4px;
-        color: #ff433d;
-    }
+/* Features Section */
+.features-section {
+    padding: 60px 0;
+    text-align: center;
+}
+.feature-card {
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+}
+.feature-card i {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: #ff433d;
+}
 
-    /* Blog Section */
-    .blog-section {
-        background: rgba(208, 245, 237, 0.87);
-        padding: 50px 20px;
-    }
-    .blog-card {
-        background: #fff3f3;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        margin: 0px 10px 20px 10px;
-    }
-    .blog-card h3 {
-        color: #d9534f;
-    }
+/* Blog Section */
+.blog-section {
+    background: #f1f9f7;
+    padding: 50px 20px;
+}
+.blog-card {
+    background: #fff3f3;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+}
+.blog-card h3 {
+    color: #d9534f;
+}
 
-    /* CTA Section */
-    .cta-section {
-        /* background: #d9534f; */
-        color: white;
-        padding: 50px 20px;
-    }
-    .cta-section .btn-primary {
-        width: 200px;
-        align-items: center;
-        background: white;
-        color: #d9534f;
-        font-weight: bold;
-        padding: 12px 20px;
-        border-radius: 30px;
-    }
-
-    .features-section {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-        margin-top: 40px;
-    }
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(#ffe46b, #4df3ff);
+    color: white;
+    padding: 50px 20px;
+}
+.cta-section .btn-primary {
+    background: white;
+    color: #d9534f;
+    font-weight: bold;
+    border-radius: 30px;
+    width: 220px;
+    padding: 12px;
+}
 </style>

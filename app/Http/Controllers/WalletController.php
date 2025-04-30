@@ -14,35 +14,30 @@ class WalletController extends Controller
     
     public function deposit(Request $request)
     {
-        // Validate the request
         $request->validate([
             'amount' => 'required|numeric|min:1',
         ]);
-    
-        $user = Auth::user();
-    
-        // Ensure user has a wallet
-        if (!$user->wallet) {
-            return response()->json(['message' => 'Wallet not found'], 404);
-        }
-    
-        // Use transaction for data integrity
+
+        $user = Auth::user(); // Authenticated user
+
         DB::beginTransaction();
         try {
-            $user->wallet->increment('balance', $request->amount);
+            $user->deposit($request->amount);
+
             DB::commit();
-    
+
             return response()->json([
                 'message' => 'Coins added successfully',
-                'balance' => $user->wallet->balance
+                'balance' => $user->balance,
             ]);
-    
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['message' => 'Deposit failed', 'error' => $e->getMessage()], 500);
+            return response()->json([
+                'message' => 'Deposit failed',
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
-    
     
 
     public function withdraw(Request $request)

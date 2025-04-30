@@ -1,17 +1,18 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="row justify-content-Between">
-    <div class="col-md-1 col-2">
-        <button class="btn btn-danger" onclick="goBack()" >Back</button>
-    </div>
-    <div class="col-10 pt-2">
-        <h4>More Page</h4>
+<div class="row justify-content-center">
+    <div class="col-12 blog-cover">
+        <img src="{{ asset('images\Earn_by_Helping_Others.png') }}" alt="Samaj Sathi from Earn" class="img-fluid" style="border-radius:20px; ">
     </div>
 </div>
 <hr>
 
 <div class="row">
+
+    <div class="col-12">
+        <a class="dropdown-item" href="{{route('home')}}"><strong>Home</strong></a>
+    </div>
 
     @if(Auth::check())
         <div class="col-12">
@@ -35,9 +36,12 @@
     
    
     <div class="col-12">
-        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#privacySetting">
             <strong>Privacy Setting</strong>
         </button>
+    </div>
+    <div class="col-12">
+        <a class="dropdown-item" href="{{route('partner-program')}}"><strong>Earn with Us</strong></a>
     </div>
     <div class="col-12">
         <a class="dropdown-item" href="{{route('about')}}"><strong>About</strong></a>
@@ -75,7 +79,7 @@
 
   
   <!-- Privacy setting Model -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal fade" id="privacySetting" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="privacySettingLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -128,7 +132,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Understood</button>
+          <button type="button" class="btn btn-primary">Save</button>
         </div>
       </div>
     </div>

@@ -21,7 +21,6 @@ use App\Http\Controllers\WalletController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MoreController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,9 +37,9 @@ Route::get('/',[HomeController::class, 'index'])->name('home');
 Route::get('/browse-partner',[HomeController::class, 'browsePartner'])->name('Browse_Partner');
 Route::view('/about', 'about')->name('about');
 Route::post('/feedback-submit', [HomeController::class, 'feedbackStore'])->name('feedback.submit');
+Route::view('/partner-program','partner')->name('partner-program');
 
 Route::get('/more-setting', [MoreController::class,'home'] )->name('more-setting');
-
 
 Route::get('/contact', function () {
     return view('contact');

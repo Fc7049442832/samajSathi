@@ -1,134 +1,122 @@
 <div class="steps-container">
-    <h2>Four Simple Steps to Find Your Life Partner</h2>
-    <div class="steps">
-      <div class="step">
-        <img src=" {{ asset('images/profileCreateLogo.png')}} " alt="Create Profile">
-        <div class="step-no"><span class="stepNo">1</span></div>
-        <h3>Create Your Profile</h3>
-        <p>Just fill basic details & access the huge database of Brides / Grooms.</p>
-      </div>
-      <div class="step">
-        <img src="{{ asset('images/call.jpg')}}" alt="Set Preference">
-        <div class="step-no"><span class="stepNo">2</span></div>
-        <h3>Set Partner Preference</h3>
-        <p>Set your Partner Preference & let’s match your requirement with others.</p>
-      </div>
-      <div class="step">
-        <img src="{{ asset('images/matching.png')}}" alt="Receive Profiles">
-        <div class="step-no"><span class="stepNo">3</span></div>
-        <h3>Receive Matching Profiles</h3>
-        <p>Receive matching profiles daily as per your set partner preference.</p>
-      </div>
-      <div class="step">
-        <img src="{{ asset('images/set_partner_per.jpg')}}" alt="Send Interest">
-        <div class="step-no"><span class="stepNo">4</span></div>
-        <h3>Send/Receive Interest & Calls</h3>
-        <p>Send/receive interest to suitable profiles and connect.</p>
-      </div>
-    </div>
-    <a href="#" class="register-btn">Register FREE</a>
+  <h2>Four Easy Steps to Find Your Life Partner Online</h2> <!-- keyword in H2 -->
+
+  <div class="steps">
+      @php
+          $steps = [
+              ['image' => 'images/profileCreateLogo.png', 'number' => 1, 'title' => 'Create Your Profile on Matrimony Site', 'desc' => 'Sign up and create your detailed profile to find your perfect life partner online.'],
+              ['image' => 'images/call.jpg', 'number' => 2, 'title' => 'Set Your Life Partner Preferences', 'desc' => 'Define what you seek in a life partner and get personalized matches.'],
+              ['image' => 'images/matching.png', 'number' => 3, 'title' => 'Get Daily Matching Profiles', 'desc' => 'Receive daily updates with profiles matching your partner criteria.'],
+              ['image' => 'images/set_partner_per.jpg', 'number' => 4, 'title' => 'Connect with Potential Life Partners', 'desc' => 'Send interest or chat with suitable matches and find your soulmate.']
+          ];
+      @endphp
+
+      @foreach($steps as $step)
+          <div class="step" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 100 }}">
+              <div class="step-img-wrapper">
+                  <img src="{{ asset($step['image']) }}" alt="{{ $step['title'] }} - Find Life Partner" loading="lazy"> <!-- alt optimized -->
+                  <div class="step-no">{{ $step['number'] }}</div>
+              </div>
+              <h3>{{ $step['title'] }}</h3> <!-- Keyword inside H3 -->
+              <p>{{ $step['desc'] }}</p>    <!-- Keyword in description -->
+          </div>
+      @endforeach
+  </div>
+  <a href="#" class="btn btn-primary register-button" data-bs-toggle="modal" data-bs-target="#RegisterModal" title="Register Free">
+    Registration Free
+  </a> <!-- CTA keyword -->
 </div>
 
-<style>  
-
-    .steps-container {
+<style>
+  .steps-container {
       text-align: center;
-      padding: 30px;
-      max-width: 100%;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .steps-container h2 {
-      font-size: 24px;
-      margin-bottom: 20px;
-      color: #333;
-    }
-    h2{
-      font-size: 24px;
+      padding: 50px 20px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      margin-top: 40px;
+  }
+  .steps-container h2 {
+      font-size: 2rem;
       font-weight: 800;
-      margin-top: 50px;
-      margin-bottom: 30px;
-    }
-
-    .steps {
+      margin-bottom: 40px;
+      color: #222;
+  }
+  .steps {
       display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 20px;
       flex-wrap: wrap;
-    }
-
-    .step {
-      flex: 1;
-      min-width: 150px;
-      text-align: center;
-    }
-    .step-no{
-      font-size: 24px;
+      gap: 30px;
+      justify-content: center;
+  }
+  .step {
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 20px;
+      flex: 0 0 220px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .step:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+  .step-img-wrapper {
+      position: relative;
+      margin-bottom: 20px;
+  }
+  .step img {
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
-      height: 30px;
-      width: 100%;
-      margin-top: -35px;
-      margin-bottom: 35px;
-      text-align: center;
-      align-self: center;
-    }
-    .stepNo{
-      padding: 10px 20px;
-      font-size: 22px;
-      font-weight: 800; 
+      object-fit: cover;
+      border: 4px solid #44517e;
+  }
+  .step-no {
+      position: absolute;
+      top: -10px;
+      right: -10px;
       background: #44517e;
+      color: #fff;
+      width: 35px;
+      height: 35px;
+      font-size: 1.1rem;
+      font-weight: bold;
       border-radius: 50%;
-    }
-
-    .step img {
-      width: 180px;
-      height: 180px;
-      margin-bottom: 10px;
-      border-radius: 50%;
-    }
-
-    .step h3 {
-      font-size: 20px;
-      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+  .step h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
       color: #333;
-      margin-bottom: 5px;
-    }
-
-    .step p {
-      font-size: 18px;
+      margin-bottom: 10px;
+  }
+  .step p {
+      font-size: 0.95rem;
       color: #666;
-    }
-
-    .register-btn {
+  }
+  .register-btn {
+      margin-top: 30px;
       display: inline-block;
-      padding: 10px 20px;
-      background-color: #e74c3c;
-      color: white;
-      font-size: 16px;
+      padding: 12px 30px;
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: #fff;
+      font-size: 1rem;
+      border-radius: 8px;
       text-decoration: none;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-    }
-
-    .register-btn:hover {
-      background-color: #c0392b;
-    }
-
-    @media (max-width: 768px) {
-      .steps {
-        flex-direction: column;
-      }
-      .step h3 {
-      font-size: 16px;
       font-weight: 600;
-    }
-
-    .step p {
-      font-size: 13px;
-      color: #666;
-    }
-    }
+      transition: background 0.3s ease;
+  }
+  .register-btn:hover {
+      background: linear-gradient(135deg, #c0392b, #a83226);
+  }
+  @media (max-width: 768px) {
+      .steps {
+          flex-direction: column;
+          align-items: center;
+      }
+      .step {
+          width: 80%;
+      }
+  }
 </style>
