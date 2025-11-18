@@ -5,12 +5,20 @@
     <div class="col-4 text-start">
         <h4>User Details</h4>
     </div>
-    <div class="col-4">
-        Fitter 
+    <div class="container mt-3">
+    <div class="row">
+        <div class="col-12 d-flex align-items-center">
+            <label for="search" class="me-2">Search:</label>
+            <input type="text" id="search" class="form-control w-25" placeholder="Search users...">
+        </div>
     </div>
+
+    <div id="search-results" class="mt-3"></div>
 </div>
 
-<div class="row" style="width:88vw;">
+</div>
+
+<div class="row mt-2" style="width:88vw;">
 <table class="table table-hover">
     <thead>
         <th> #</th>
@@ -42,7 +50,7 @@
             <td>{{$user->phone ? $user->phone: 'Null'}} </td>
             <td>{{strtolower($user->email)}} </td>
             <td>
-                <a href="">View</a> |
+                <a href="{{ route('admin.userProfile',$user->custom_id) }}">View</a> |
                 <a href="">Edit</a> |
                 <a href="">Delete</a> 
             

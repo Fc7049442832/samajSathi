@@ -41,10 +41,8 @@ Route::view('/partner-program','partner')->name('partner-program');
 
 Route::get('/more-setting', [MoreController::class,'home'] )->name('more-setting');
 
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
 
+Route::get('/contact',[ContactController::class, 'show'])->name('contact');
 Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact.submit');
 
 
@@ -74,6 +72,7 @@ Route::middleware(['auth'])->group(function () {
 
 // Blog Routes
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+Route::get('/load-more-blogs', [BlogController::class, 'fetchBlogs']);
 Route::get('/blogs/filter', [BlogController::class, 'filterBlogs'])->name('blog.filter');
 Route::get('/blog/{id}', [BlogController::class, 'show'])->name('blog.show');
 Route::post('/blog/{id}/like', [BlogController::class, 'like'])->name('blog.like');
@@ -137,6 +136,7 @@ Route::put('/notices/{id}', [NoticeController::class, 'update'])->name('admin.no
 Route::delete('/notices/{id}', [NoticeController::class, 'destroy'])->name('admin.notices.destroy');
 
 // Manage Blog Routes
+Route::view('/admin/create-blog', 'admin/create_blog')->name('newblog');
 Route::get('/admin/blog',[BlogController::class, 'manage_blog'])->name('admin.blog');
 Route::post('/admin/blog/store', [BlogController::class, 'blog_store'])->name('admin.blog.store');
 Route::get('/admin/blog/{id}/edit', [BlogController::class, 'blog_edit'])->name('admin.blog.edit');
@@ -145,6 +145,23 @@ Route::delete('/admin/blog/{id}', [BlogController::class, 'blog_destroy'])->name
 
 // Admin User Routes
 Route::get('/admin-user',[AdminController::class, 'user'])->name('admin.user');
+Route::get('/search-users', [AdminController::class, 'search'])->name('search.users');
+Route::get('/admin-user-profile/{id}',[AdminController::class, 'userProfile'])->name('admin.userProfile');
+Route::post('/profile/update-physical/{custom_id}',[AdminController::class, 'updatePhysical'])->name('profile.updatePhysical');
+Route::post('/user/toggle-verified/{id}', [AdminController::class, 'toggleVerified'])->name('user.toggleVerified');
+Route::post('/profile/update-family/{id}', [AdminController::class, 'updateFamily'])->name('profile.updateFamily');
+Route::post('/profile/update-education/{custom_id}', [AdminController::class, 'updateEducation'])->name('profile.updateEducation');
+Route::post('/admin/update-location/{custom_id}', [AdminController::class, 'updateLocation'])->name('admin.updateLocation');
+
+
+
+
+
+// Admin user Contact data management 
+Route::get('admin/user-contact-admin', [AdminController::class, 'userContactAdmin'])->name('userContactAdmin');
+Route::post('/admin/reply-mail', [AdminController::class, 'sendReply'])->name('admin.replyMail');
+
+
 
 // Admin Setting Page Routes
 Route::get('/admin/setting', [SettingController::class, 'settingPage'])->name('admin.setting');

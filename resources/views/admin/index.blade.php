@@ -2,9 +2,7 @@
 @section('content')
 @php
 $totalUser = count($user);    
-
 @endphp
-
 
 
 <div class="row">

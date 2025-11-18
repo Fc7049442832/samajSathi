@@ -94,37 +94,15 @@
 </div>
 
 <!-- Blog Post Grid -->
-<div class="row mt-3">
-    @foreach ($blogs as $post)
-        <div class="col-6 col-lg-4 col-xl-3 mb-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="card shadow-sm border-0 rounded-lg">
+<div class="row mt-3" id="blog-container">
+    {{-- Initial posts yahin dikh rahe hain --}}
+</div>
 
-                <img 
-                    src="{{ $post->image ? asset('storage/'.$post->image) : asset('images/default_blogs.jpg') }}" 
-                    class="card-img-top rounded-top" 
-                    alt="{{ $post->title }}" 
-                    style="object-fit: cover; height: 160px;">
-                
-                {{-- <img src="{{ $imageUrl }}" class="card-img-top rounded-top" alt="{{ $post->title }}" style="object-fit: cover; height: 160px;">
-                 --}}
-                <div class="card-body">
-                    <h6 class="card-title">
-                        <a href="{{ route('blog.show', $post->id) }}" class="text-dark text-decoration-none">
-                            {{ Str::limit($post->title, 50) }}
-                        </a>
-                    </h6>
-
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="text-secondary">👁️ {{ $post->views }}</span>
-                        <span class="text-danger">❤️ {{ $post->likes }}</span>
-                        <button class="btn share-btn" data-url="{{ route('blog.show', $post->id) }}">
-                            <i class="bi bi-share icon" title="Share"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
+<div class="text-center mt-4">
+    <button id="load-more-btn" class="btn btn-primary">Show More</button>
+    <div id="loader" style="display: none;">
+        <span>Loading...</span>
+    </div>
 </div>
 
 <!-- Styles -->
@@ -168,6 +146,66 @@
 </style>
 
 <!-- Scripts -->
+
+<script>
+    let offset = 0;
+    const limit = 8;
+    let isLoading = false;
+
+    document.getElementById('load-more-btn').addEventListener('click', fetchMoreBlogs);
+
+    function fetchMoreBlogs() {
+        if (isLoading) return;
+        isLoading = true;
+        document.getElementById('loader').style.display = 'block';
+
+        fetch(`/load-more-blogs?offset=${offset}&limit=${limit}`)
+            .then(response => response.json())
+            .then(blogs => {
+                const container = document.getElementById('blog-container');
+
+                blogs.forEach(post => {
+                    const col = document.createElement('div');
+                    col.className = "col-6 col-lg-4 col-xl-3 mb-4";
+                    col.innerHTML = `
+                        <div class="card shadow-sm border-0 rounded-lg" data-aos="fade-up" data-aos-delay="100">
+                            <img src="${post.image ? '/storage/' + post.image : '/images/default_blogs.jpg'}" 
+                                class="card-img-top rounded-top" 
+                                alt="${post.title}" 
+                                style="object-fit: cover; height: 160px;">
+                            <div class="card-body">
+                                <h6 class="card-title">
+                                    <a href="/blog/${post.id}" class="text-dark text-decoration-none">
+                                        ${post.title.length > 50 ? post.title.slice(0, 47) + '...' : post.title}
+                                    </a>
+                                </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-secondary">👁️ ${post.views}</span>
+                                    <span class="text-danger">❤️ ${post.likes}</span>
+                                    <button class="btn share-btn" data-url="/blog/${post.id}">
+                                        <i class="bi bi-share icon" title="Share"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>`;
+                    container.appendChild(col);
+                });
+
+                offset += limit;
+                isLoading = false;
+                document.getElementById('loader').style.display = 'none';
+
+                // Hide the button if no more blogs
+                if (blogs.length === 0) {
+                    document.getElementById('load-more-btn').style.display = 'none';
+                }
+            });
+    }
+
+    // Initial load
+    fetchMoreBlogs();
+</script>
+
 <script>
     // Filter blogs based on category selection
     function filterBlogs() {

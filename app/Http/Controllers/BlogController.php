@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\BlogFollower;
 use App\Models\Comment;
+use App\Helpers\AiSimilarity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -14,12 +15,26 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $blogs = Blog::latest()->select('id','title', 'type', 'image', 'views', 'likes')->get();
         $followers = BlogFollower::count('email');
 
-        return view('Blog', ['blogs'=>$blogs,'followers' => $followers]);
-        // return view('', compact('blogs', 'followers'));
+        return view('Blog', ['followers' => $followers]);
+        
     }
+   
+    public function fetchBlogs(Request $request)
+    {
+        $limit = $request->input('limit', 8);
+        $offset = $request->input('offset', 0);
+
+        $blogs = Blog::latest()
+            ->select('id', 'title', 'type', 'image', 'views', 'likes')
+            ->skip($offset)
+            ->take($limit)
+            ->get();
+
+        return response()->json($blogs);
+    }
+
     
     public function submitEmail(Request $request)
     {
@@ -62,21 +77,51 @@ class BlogController extends Controller
         return view('Blog', ['blogs'=>$blogs,'followers' => $followers]);
     }
 
+   
+
     public function show($id)
     {
         $blog = Blog::with('comments.replies.user')->findOrFail($id);
-        $blogs = Blog::latest()->where('id', '!=', $id)->limit(5)->get();
-    
-        // Check session to prevent multiple increments from the same user
+
+        // Get text vector of the current article
+        $currentText = $blog->getTextForAi();
+        $currentVector = AiSimilarity::textToVector($currentText);
+
+        // Fetch all blogs except current
+        $allBlogs = Blog::where('id', '!=', $id)->get();
+
+        // AI score map
+        $scores = [];
+
+        foreach ($allBlogs as $b) {
+            $vector = AiSimilarity::textToVector($b->getTextForAi());
+            $similarity = AiSimilarity::cosineSimilarity($currentVector, $vector);
+
+            $scores[] = [
+                'blog' => $b,
+                'score' => $similarity,
+            ];
+        }
+
+        // Sort by similarity (highest first)
+        $blogs = collect($scores)
+                    ->sortByDesc('score')
+                    ->pluck('blog')
+                    ->take(5);
+
+        // Handle view count
         $sessionKey = 'blog_viewed_' . $id;
-    
         if (!session()->has($sessionKey)) {
             $blog->increment('views');
             session()->put($sessionKey, true);
         }
-    
-        return view('singleBlog', compact('blog', 'blogs'));
+
+        return view('singleBlog', [
+            'blog' => $blog,
+            'blogs' => $blogs
+        ]);
     }
+
     
     public function like($id)
     {
@@ -128,7 +173,8 @@ class BlogController extends Controller
             'title' => 'required|string',
             'type' => 'required|string',
             'content'=> 'required| string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048,'
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048,',
+            'keywords'=> 'nullable|string',
         ]);
 
         $imagePath = null; // Default NULL if no image is uploaded
@@ -141,6 +187,7 @@ class BlogController extends Controller
             'type'    => $request->type,
             'image'   => $imagePath, // Store image path if uploaded
             'content' => $request->content,
+            'keywords' => $request->keywords,
         ]);
 
         return redirect()->back()->with('success', 'Blog post created successfully!');
@@ -160,6 +207,7 @@ class BlogController extends Controller
             'type' => 'required|string',
             'content' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Image is optional
+            'keywords'=> 'nullable|string', // Keywords is optional
         ]);
     
         $blog = Blog::findOrFail($id); // Fetch the blog post
@@ -180,6 +228,7 @@ class BlogController extends Controller
         $blog->title = $request->title;
         $blog->type = $request->type;
         $blog->content = $request->content;
+        $blog->keywords = $request->keywords;
         $blog->save();
     
         return redirect()->route('admin.blog')->with('success', 'Blog updated successfully!');

@@ -9,7 +9,7 @@
     <!-- Basic Meta Tags -->
     <meta name="description" content="{{ Str::limit(strip_tags($blog->content), 150) }}">
     <meta name="author" content="SamajSathi Team">
-    <meta name="keywords" content="SamajSathi, Find Life Partner, Matrimony Services, Indian Matchmaking, Wedding Planning, Marriage Tips, Relationship Advice, Love and Marriage, Wedding Stories, Tech Radar">
+    <meta name="keywords" content="SamajSathi Blog, {{$blog->keywords}}">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:title" content="{{ $blog->title }} | SamajSathi">
@@ -37,7 +37,7 @@
     <meta property="og:image:height" content="630">
 
     <!-- Schema Markup -->
-    <script type="application/ld+json">
+ <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Article",
@@ -50,7 +50,7 @@
       },
       "publisher": {
         "@type": "Organization",
-        "name": "SamajSathi",
+        "name": "SamajSathi blog",
         "logo": {
           "@type": "ImageObject",
           "url": "http://samajsathi.techsathi.it/images/logo.png"
@@ -59,13 +59,14 @@
       "datePublished": "{{ $blog->created_at->toIso8601String() }}",
       "dateModified": "{{ $blog->updated_at->toIso8601String() }}"
     }
-    </script>
+ </script>
 @endsection
 
 @section('content')
     <div class="container mt-4">
         <h1 class="text-center">{{ $blog->title }}</h1>
         <small class="d-block text-center mb-3">{{ $blog->created_at->format('d M Y h:i A') }}</small>
+        <small></small>
         <hr>
 
         <div class="row justify-content-around">
@@ -75,8 +76,13 @@
                 </div>
 
                 <article class="mb-4">
-                    {!! nl2br(e($blog->content)) !!}
+                    @if($blog->content != strip_tags($blog->content))
+                        {!! $blog->content !!}
+                    @else
+                        {!! nl2br(e($blog->content)) !!}
+                    @endif
                 </article>
+                <small><b>Keywords :</b> {!! $blog->keywords !!}</small>
 
                 <div class="d-flex justify-content-end mb-3">
                     <span class="me-3 text-primary"><i class="fas fa-eye"></i> {{ $blog->views }}</span>
@@ -159,7 +165,6 @@
     .btn {
         border-radius: 50px; /* Smooth round buttons */
     }
-
     .page-header {
         font-size: 12px;
         background: radial-gradient(circle, rgba(212,55,27,0.85), rgba(241,64,168,0.7));

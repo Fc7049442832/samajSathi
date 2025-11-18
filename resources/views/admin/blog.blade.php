@@ -3,17 +3,15 @@
 <div class="card ">
     <div class="card-header h5">Manage Blog</div>
         <div class="card-body">
-             <!-- Button to Open Modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#blogModal">
-                Create Blog
-            </button>
+             <!-- blog write page link -->
+            <a href="{{ route('newblog')}}" class="btn btn-primary">New Blog</a>
             <hr>
 
             @foreach($blogs as  $key=>$blog)
                 <div class="row m-2">
                     <div class="col-2">
                         <button type="button" class="btn btn-secondary" >
-                            <img src="{{ asset('storage/'.$blog->image) }}" alt="Blog Image" width="150px" height="140px">                        
+                            <img src="{{ asset('storage/'.$blog->image) }}" alt="Blog Image" width="140px" height="130px">                        
                         </button>                       
                     </div>
 
@@ -26,11 +24,14 @@
                         <div class="row">
                             @php
                             $words = explode(' ', $blog->content);
-                            $content = implode(' ', array_slice($words, 0, 40)) . (count($words) > 40 ? '...' : '');
+                            $content = implode(' ', array_slice($words, 0, 25)) . (count($words) > 25 ? '...' : '');
                             @endphp
-                            {{$content}}
+                            {!!$content!!}
                         </div>
-                        <div class="row mt-3">
+                        <small>
+                               <b>Keywords : </b>  {!!$blog->keywords!!}
+                        </small>
+                        <div class="row">
                             <small class="col-2">Type : {{$blog->type}}</small>
                             <small class="col-4">Date : {{ \Carbon\Carbon::parse($blog->created_at)->format('d M Y h:i A') }}</small>
                             <small class="col-2">View : {{$blog->views}}</small>
@@ -51,62 +52,6 @@
         </div>
     </div>
 </div>
-
-  <!-- Blog Create Modal -->
-<div class="modal fade" id="blogModal" tabindex="-1" aria-labelledby="blogModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="noticeModalLabel">Blog Write</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- blog creating Form -->
-                <form action="{{ route('admin.blog.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="header" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="header" name="title" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="header" class="form-label">Type</label>
-                        <select class="form-select" name="type" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option value="Tips">Tips</option>
-                            <option value="Stories">Stories</option>
-                            <option value="Advice">Advice</option>
-                            <option value="Other">Other</option>
-                          </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="media" class="form-label">Image</label>
-
-                        <input type="file" class="form-control" id="media" name="image" >
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="message" class="form-label">Content</label>
-                        <textarea class="form-control" id="message" name="content" rows="9" required></textarea>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-{{-- image show modal --}}
-<!-- Modal -->
-
-
-
-
 @endsection
 <style>
     .card-body {
@@ -117,7 +62,6 @@
     }
     a h5{
         text-decoration: none;
-       
         color: black;
     }
 </style>
