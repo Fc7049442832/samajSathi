@@ -147,7 +147,9 @@ Route::delete('/admin/blog/{id}', [BlogController::class, 'blog_destroy'])->name
 // Mail Send Routes
 Route::get('/admin-mail', [MailController::class, 'index'])->name('admin.mail');
 Route::get('/admin/write-mail',[MailController::class,'writeNewMail'])->name('write.new.mail');
-Route::post('/mail/send', [MailController::class, 'send'])->name('mail.send');
+Route::post('/admin/mail/send', [MailController::class,'send'])->name('mail.send');
+Route::post('/admin/mail/retry/{id}', [MailController::class,'retry'])->name('mail.retry');
+Route::get('/admin/mail/export', [MailController::class,'exportCsv'])->name('mail.export');
 
 
 

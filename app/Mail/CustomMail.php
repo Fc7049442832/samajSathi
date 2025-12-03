@@ -11,20 +11,18 @@ class CustomMail extends Mailable
     use Queueable, SerializesModels;
 
     public $subjectText;
-    public $bodyText;
+    public $bodyHtml;
 
-    public function __construct($subject, $body)
+    public function __construct(string $subject, string $bodyHtml)
     {
         $this->subjectText = $subject;
-        $this->bodyText = $body;
+        $this->bodyHtml = $bodyHtml;
     }
 
     public function build()
     {
         return $this->subject($this->subjectText)
-                    ->view('emails.default')
-                    ->with([
-                        'bodyText' => $this->bodyText
-                    ]);
+                    ->view('emails.default')   // use view below
+                    ->with(['bodyText' => $this->bodyHtml]);
     }
 }

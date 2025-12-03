@@ -34,18 +34,29 @@ return [
     */
 
     'mailers' => [
-        'smtp' => [
+        'hostinger' => [
             'transport' => 'smtp',
-            'url' => env('MAIL_URL'),
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
+            'host' => env('MAIL_HOSTINGER_HOST'),
+            'port' => env('MAIL_HOSTINGER_PORT'),
+            'username' => env('MAIL_HOSTINGER_USERNAME'),
+            'password' => env('MAIL_HOSTINGER_PASSWORD'),
+            'encryption' => env('MAIL_HOSTINGER_ENCRYPTION'),
             'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+           
         ],
 
+        'gmail' => [
+            'transport' => 'smtp',
+            'host' => env('MAIL_GMAIL_HOST'),
+            'port' => env('MAIL_GMAIL_PORT'),
+            'username' => env('MAIL_GMAIL_USERNAME'),
+            'password' => env('MAIL_GMAIL_PASSWORD'),
+            'encryption' => env('MAIL_GMAIL_ENCRYPTION'),
+            'timeout' => null,
+           
+        ],
+
+        
         'ses' => [
             'transport' => 'ses',
         ],
