@@ -7,34 +7,59 @@ use App\Models\Blog;
 use App\Models\BlogFollower;
 use App\Models\Comment;
 use App\Helpers\AiSimilarity;
+use App\Helpers\UserAi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 class BlogController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $followers = BlogFollower::count('email');
 
-        return view('Blog', ['followers' => $followers]);
-        
+        // Detect user interest
+        $interests = UserAi::detectUserInterest($request);
+
+        // If interest exists → show interest blogs
+        if (!empty($interests)) {
+            $blogs = Blog::whereIn('type', $interests)
+                        ->limit(6)
+                        ->get();
+        } else {
+            // No interest → show trending/random
+            $blogs = Blog::orderBy('views', 'desc')
+                        ->limit(6)
+                        ->get();
+        }
+
+        // Store shown categories to avoid repetition later
+        session()->put('shown_categories', $interests);
+
+        return view('Blog', compact('followers', 'blogs'));
     }
    
     public function fetchBlogs(Request $request)
     {
-        $limit = $request->input('limit', 8);
-        $offset = $request->input('offset', 0);
+        $limit = $request->input('limit', 6);
 
-        $blogs = Blog::latest()
-            ->select('id', 'title', 'type', 'image', 'views', 'likes')
-            ->skip($offset)
-            ->take($limit)
-            ->get();
+        $shown = session()->get('shown_categories', []);
+        $visited = session()->get('user_categories', []);
+
+        // Mix both
+        $avoidCategories = array_unique(array_merge($shown, $visited));
+
+        // Fetch new categories (not shown before)
+        $blogs = Blog::whereNotIn('type', $avoidCategories)
+                    ->inRandomOrder()
+                    ->limit($limit)
+                    ->get();
+
+        // Update shown categories
+        session()->put('shown_categories', array_merge($avoidCategories, $blogs->pluck('type')->toArray()));
 
         return response()->json($blogs);
     }
-
     
     public function submitEmail(Request $request)
     {

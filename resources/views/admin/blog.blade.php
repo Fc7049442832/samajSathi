@@ -28,9 +28,9 @@
                             @endphp
                             {!!$content!!}
                         </div>
-                        <small>
+                        {{-- <small>
                                <b>Keywords : </b>  {!!$blog->keywords!!}
-                        </small>
+                        </small> --}}
                         <div class="row">
                             <small class="col-2">Type : {{$blog->type}}</small>
                             <small class="col-4">Date : {{ \Carbon\Carbon::parse($blog->created_at)->format('d M Y h:i A') }}</small>

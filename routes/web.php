@@ -17,6 +17,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MoreController;
@@ -142,6 +143,13 @@ Route::post('/admin/blog/store', [BlogController::class, 'blog_store'])->name('a
 Route::get('/admin/blog/{id}/edit', [BlogController::class, 'blog_edit'])->name('admin.blog.edit');
 Route::put('/admin/blog/{id}', [BlogController::class, 'blog_update'])->name('admin.blog.update');
 Route::delete('/admin/blog/{id}', [BlogController::class, 'blog_destroy'])->name('admin.blog.delete');
+
+// Mail Send Routes
+Route::get('/admin-mail', [MailController::class, 'index'])->name('admin.mail');
+Route::get('/admin/write-mail',[MailController::class,'writeNewMail'])->name('write.new.mail');
+Route::post('/mail/send', [MailController::class, 'send'])->name('mail.send');
+
+
 
 // Admin User Routes
 Route::get('/admin-user',[AdminController::class, 'user'])->name('admin.user');

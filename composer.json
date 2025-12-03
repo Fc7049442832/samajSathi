@@ -70,6 +70,9 @@
             "php-http/discovery": true
         }
     },
+    "files": [
+        "app/Helpers/MailHelper.php"
+    ],
     "minimum-stability": "stable",
     "prefer-stable": true
 }
